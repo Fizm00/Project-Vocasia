@@ -7,10 +7,10 @@ import LoginPage from './pages/LoginPage'
 
 function App() {
   return (
-    <div className="w-full h-screen flex justify-center items-center">
+    <div>
       <Router>
         <Routes>
-          <Route path="/" element={<Register />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/login" element={<LoginPage />} />
         </Routes>
       </Router>

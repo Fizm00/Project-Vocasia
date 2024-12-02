@@ -19,7 +19,7 @@ const Register = () => {
     <div className="flex w-full min-h-screen">
       <div className="w-full md:w-1/2 h-screen">
         <img
-          src="/registerPhoto.jpg"
+          src="../registerImage.jpg"
           alt="Registrasi"
           className="w-full h-full object-cover"
         />
