@@ -1,4 +1,5 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const routes = require("./routes");
 const connectDB = require("./config/db");
@@ -10,6 +11,9 @@ routes.use(cors());
 dotenv.config();
 
 connectDB();
+
+app.use(cors());
+app.use(bodyParser.json());
 
 app.use(express.json());
 
@@ -25,6 +29,9 @@ app.use("/api/v1", routes);
 // start server
 const port = process.env.PORT;
 app.listen(port, () => {
+  console.log("Email User:", process.env.EMAIL_USER);
+  console.log("Email Pass:", process.env.EMAIL_PASS);
+
   console.log(`Example app listening on port ${port}`);
   console.log("MONGODB_URI:", process.env.MONGODB_URI);
 });
