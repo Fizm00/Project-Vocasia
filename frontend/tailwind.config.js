@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,jsx,ts,tsx}"
+  ],
   theme: {
     extend: {
       boxShadow: {
@@ -9,6 +12,10 @@ export default {
       scale: {
         102: '1.02',
       },
+      colors: {
+        darkGreen: '#193F3D',
+        hoverGreen: '#145B54'
+      }
     },
   },
   plugins: [],
