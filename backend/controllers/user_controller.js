@@ -1,6 +1,42 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 
+// const registerUser = async (req, res) => {};
+
+// const loginUser = async (req, res) => {
+//   try {
+//     const user = await User.findOne({ email: req.body.email });
+//     if (!user) {
+//       res.status(400).json({
+//         status: "failed",
+//         message: "User Not Found",
+//         success: false,
+//         data: null,
+//       });
+//     }
+
+//     const isMatch = await bcrypt.compare(req.body.password, user.password);
+//     if (!isMatch) {
+//       res.status(400).json({
+//         status: "failed",
+//         message: "Password Not Match",
+//         success: false,
+//         data: null,
+//       });
+//     }
+
+//     res.status(200).json({
+//       status: "success | OK",
+//       message: "Login Success",
+//       success: true,
+//       data: user,
+//     })
+
+//   } catch (error) {
+
+//   }
+// };
+
 const getuser = async (req, res) => {
   try {
     // === default or normal get ===
