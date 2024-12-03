@@ -33,5 +33,5 @@ app.listen(port, () => {
   console.log("Email Pass:", process.env.EMAIL_PASS);
 
   console.log(`Example app listening on port ${port}`);
-  console.log("MONGODB_URI:", process.env.MONGODB_URI);
+  console.log("MONGODB_URI:", process.env.MONGO_URI);
 });
