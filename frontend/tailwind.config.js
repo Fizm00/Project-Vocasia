@@ -14,7 +14,8 @@ export default {
       },
       colors: {
         darkGreen: '#193F3D',
-        hoverGreen: '#145B54'
+        hoverGreen: '#145B54',
+        greenButton: '#8C9F9E'
       }
     },
   },
