@@ -6,4 +6,30 @@
 
 :root {
   font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+@media (max-width: 768px) {
+  .search-bar-container {
+    max-width: 100%;
+    margin: 0 16px;
+}
+
+  .search-bar-button {
+    margin-left: 12px;
+  }
 }

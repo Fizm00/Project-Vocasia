@@ -5,6 +5,7 @@ import './index.css';
 import Register from './pages/Register.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import ForgotPassword from './pages/ForgotPassword';
+import Home from './pages/Home';
 import SearchResultPage from './pages/SearchResultPage.jsx';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
     <div>
       <Router>
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/search" element={<SearchResultPage />} />
