@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+require("dotenv").config();
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -15,7 +16,7 @@ const transporter = nodemailer.createTransport({
 
 transporter.verify((error, success) => {
   if (error) {
-    console.error("SMTP Configuration Error: ", error);
+    console.error("SMTP Configuration Error test dong: ", error);
   } else {
     console.log("SMTP Server Ready");
   }

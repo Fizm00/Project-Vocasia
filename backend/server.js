@@ -1,4 +1,6 @@
 const express = require("express");
+const passport = require("passport");
+const session = require("express-session");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const routes = require("./routes");
@@ -16,6 +18,22 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.use(express.json());
+
+// Konfigurasi Session
+app.use(
+  session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Konfigurasi Passport
+require("./config/passport")(passport);
 
 // routes setup
 app.use("/api/v1", routes);
