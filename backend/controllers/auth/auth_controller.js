@@ -4,6 +4,44 @@ const jwt = require("jsonwebtoken");
 const transporter = require("../../config/email");
 require("dotenv").config();
 
+const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ message: "Email and password are required" });
+    }
+
+    if (email && password) {
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.status(404).json({ message: "User Not Found" });
+      }
+
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+        return res.status(400).json({ message: "Password Not Match" });
+      }
+
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
+        expiresIn: "1d",
+      });
+
+      return res.status(200).json({
+        status: "success | OK",
+        message: "Login Success",
+        success: true,
+        data: { id: user._id, name: user.name, email: user.email, token },
+        token,
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
 const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -115,4 +153,5 @@ module.exports = {
   registerUser,
   verificationOTP,
   send_otp_email,
+  loginUser,
 };
