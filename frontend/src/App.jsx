@@ -8,6 +8,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import Home from './pages/Home';
 import SearchResultPage from './pages/SearchResultPage.jsx';
 import RentalHistory from './pages/RentalHistory.jsx';
+import About from './pages/About.jsx';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/search" element={<SearchResultPage />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/riwayat-sewa" element={<RentalHistory />} />
+          <Route path="/about" element={<About />} />
         </Routes>
       </Router>
     </div>
