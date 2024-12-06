@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage.jsx';
 import ForgotPassword from './pages/ForgotPassword';
 import Home from './pages/Home';
 import SearchResultPage from './pages/SearchResultPage.jsx';
+import RentalHistory from './pages/RentalHistory.jsx';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/search" element={<SearchResultPage />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/riwayat-sewa" element={<RentalHistory />} />
         </Routes>
       </Router>
     </div>
