@@ -1,5 +1,6 @@
 const express = require("express");
 const Property = require("../models/Property");
+const upload = require("../middleware/upload_image");
 
 const getProperties = async (req, res) => {
   try {
@@ -41,8 +42,30 @@ const getPropertyById = async (req, res) => {
 
 const createProperty = async (req, res) => {
   try {
-    const property = new Property(req.body);
+    // Validasi jika tidak ada file yang diunggah
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({
+        status: "failed",
+        message: "No images uploaded. Please upload at least one image.",
+        success: false,
+        data: null,
+      });
+    }
+
+    // Ambil semua path dari file yang diunggah
+    const imagePaths = req.files.map((file) => file.path);
+
+    // Buat properti baru dengan data dari req.body dan images
+    const property = new Property({
+      ...req.body,
+      images: imagePaths, // Menyimpan path gambar ke database
+    });
+
+    console.log("Request files:", req.files);
+
+    // Simpan properti ke database
     await property.save();
+
     res.status(200).json({
       status: "success | OK",
       message: "Property Created Successfully",
@@ -52,7 +75,7 @@ const createProperty = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       status: "failed",
-      message: error.message,
+      message: `Error occurred: ${error.message}`,
       success: false,
       data: null,
     });

@@ -12,7 +12,7 @@ const propertySchema = new mongoose.Schema({
   },
   name: { type: String, required: true },
   facility: { type: String, required: true },
-  image: { type: String, required: true },
+  image: { type: [String], required: true },
   property_type: { type: String, required: true },
   price: { type: Number, required: true },
   city: { type: String, required: true },

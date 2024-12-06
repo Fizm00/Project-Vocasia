@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 const routes = require("./routes");
 const connectDB = require("./config/db");
 const cors = require("cors");
+const upload = require("./middleware/upload_image");
 
 const app = express();
 routes.use(cors());
@@ -18,6 +19,10 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public"));
+app.use(express.static("uploads"));
+app.use(upload.array("images", 10));
 
 // Konfigurasi Session
 app.use(
