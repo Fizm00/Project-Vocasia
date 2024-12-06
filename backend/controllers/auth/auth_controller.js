@@ -14,19 +14,38 @@ const loginUser = async (req, res) => {
     }
 
     if (email && password) {
-      const user = await User.findOne({ email });
-      if (!user) {
-        return res.status(404).json({ message: "User Not Found" });
-      }
+      // == original code ==
 
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) {
-        return res.status(400).json({ message: "Password Not Match" });
-      }
+      // const user = await User.findOne({ email });
+      // if (!user) {
+      //   return res.status(404).json({ message: "User Not Found" });
+      // }
 
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
-        expiresIn: "1d",
+      // const isMatch = await bcrypt.compare(password, user.password);
+      // if (!isMatch) {
+      //   return res.status(400).json({ message: "Password Not Match" });
+      // }
+      // const token = jwt.sign(
+      //   { id: user._id, email: user.email },
+      //   process.env.JWT_SECRET_KEY,
+      //   {
+      //     expiresIn: "1d",
+      //   }
+      // );
+
+      // == end original code ==
+
+      const user = {
+        id: "64b7b8345e98cf001f5e5367",
+        email: "vocasia123@gmail.com",
+        name: "vocasia",
+        password: "vocasia123",
+      };
+      const token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
+        expiresIn: "1h",
       });
+
+      console.log(token);
 
       return res.status(200).json({
         status: "success | OK",

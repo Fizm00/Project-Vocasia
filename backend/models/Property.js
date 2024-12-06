@@ -1,27 +1,33 @@
-const express = require("express");
-
 const mongoose = require("mongoose");
 
-const user = require("./User");
-
-const propertySchema = new mongoose.Schema({
-  user_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
+const propertySchema = new mongoose.Schema(
+  {
+    user_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    name: { type: String, required: true },
+    facility: [{ type: String, required: true }],
+    images: [{ type: String, required: true }],
+    gender_type: {
+      type: String,
+      required: true,
+      enum: ["Putra", "Putri", "Campur"],
+    },
+    property_type: {
+      type: String,
+      required: true,
+      enum: ["Kost", "Rumah", "Apartemen", "Villa"],
+    },
+    price: { type: Number, required: true },
+    city: { type: String, required: true },
+    address: { type: String, required: true },
+    description: { type: String, required: true },
   },
-  name: { type: String, required: true },
-  facility: { type: String, required: true },
-  image: { type: String, required: true },
-  property_type: { type: String, required: true },
-  price: { type: Number, required: true },
-  city: { type: String, required: true },
-  address: { type: String, required: true },
-  description: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
-});
+  { timestamps: true }
+);
 
-const property = mongoose.model("Property", propertySchema);
+const Property = mongoose.model("Property", propertySchema);
 
-module.exports = property;
+module.exports = Property;
