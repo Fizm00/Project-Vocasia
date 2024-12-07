@@ -2,10 +2,11 @@ const express = require("express");
 const passport = require("passport");
 
 const auth_controller = require("../controllers/auth/auth_controller");
+const authenticateJWT = require("../middleware/authenticateJWT");
 
 const router = express.Router();
 
-router.post("/login", auth_controller.loginUser);
+router.post("/login", authenticateJWT, auth_controller.loginUser);
 
 router.post("/register", auth_controller.registerUser);
 // router.post("/login", auth_controller.loginUser);
@@ -28,13 +29,15 @@ router.get(
   }
 );
 
+router.post("/logout", authenticateJWT, auth_controller.logoutUser);
+
 // Logout
-router.get("/logout", (req, res) => {
-  req.logout((err) => {
-    if (err) return next(err);
-    res.redirect("/");
-  });
-});
+// router.get("/logout", (req, res) => {
+//   req.logout((err) => {
+//     if (err) return next(err);
+//     res.redirect("/");
+//   });
+// });
 //== end oauth
 
 module.exports = router;
