@@ -2,6 +2,7 @@ const User = require("../../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const transporter = require("../../config/email");
+const redis = require("../../config/redis");
 require("dotenv").config();
 
 const loginUser = async (req, res) => {
@@ -14,6 +15,8 @@ const loginUser = async (req, res) => {
     }
 
     if (email && password) {
+      // == original code ==
+
       const user = await User.findOne({ email });
       if (!user) {
         return res.status(404).json({ message: "User Not Found" });
@@ -24,9 +27,16 @@ const loginUser = async (req, res) => {
         return res.status(400).json({ message: "Password Not Match" });
       }
 
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
-        expiresIn: "1d",
-      });
+      // payload
+      const token = jwt.sign(
+        { id: user._id, email: user.email },
+        process.env.JWT_SECRET_KEY,
+        {
+          expiresIn: "1d",
+        }
+      );
+
+      console.log("Generate Token dari Login :" + token);
 
       return res.status(200).json({
         status: "success | OK",
@@ -38,7 +48,7 @@ const loginUser = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: "Internal Server Error | Login" });
   }
 };
 
@@ -149,7 +159,54 @@ const verificationOTP = async (req, res) => {
   }
 };
 
+const logoutUser = async (req, res) => {
+  const authorization = req.headers.authorization;
+
+  if (!authorization) {
+    return res
+      .status(401)
+      .json({ message: "No Authorization header provided" });
+  }
+
+  const token = authorization.split(" ")[1];
+
+  if (!token) {
+    return res.status(401).json({ message: "No token provided for logout" });
+  }
+
+  try {
+    // Verifikasi token untuk memastikan validitasnya
+    jwt.verify(token, process.env.JWT_SECRET_KEY);
+
+    // Pastikan Redis Client aktif
+    if (!redis.isOpen) {
+      await redis.connect();
+    }
+
+    // Tambahkan token ke Redis dengan waktu kadaluwarsa
+    await redis.set(
+      `BLACKLIST_TOKEN:${token}`,
+      "blacklist",
+      { EX: 60 * 60 } // Token akan di-*blacklist* selama 1 jam
+    );
+
+    return res.status(200).json({
+      status: "success | OK",
+      message: "Logout Success",
+      success: true,
+      token,
+    });
+  } catch (error) {
+    if (error.name === "JsonWebTokenError") {
+      return res.status(400).json({ message: "Invalid token dari logoutuser" });
+    }
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error| Logout" });
+  }
+};
+
 module.exports = {
+  logoutUser,
   registerUser,
   verificationOTP,
   send_otp_email,
