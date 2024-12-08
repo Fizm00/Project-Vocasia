@@ -1,4 +1,6 @@
 const redisClient = require("../config/redis");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 const authenticateJWT = async (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
@@ -22,7 +24,6 @@ const authenticateJWT = async (req, res, next) => {
         .status(403)
         .json({ message: "Warning: Token has been blacklisted" });
     }
-
     next(); // Token valid
   } catch (error) {
     console.error("Redis Error:", error);
