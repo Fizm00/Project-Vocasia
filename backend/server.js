@@ -51,6 +51,7 @@ const port = process.env.PORT;
 app.listen(port, () => {
   console.log("Email User:", process.env.EMAIL_USER);
   console.log("Email Pass:", process.env.EMAIL_PASS);
+  console.log("cek host || nurdian:", process.env.EMAIL_HOST);
 
   console.log(`Example app listening on port ${port}`);
   console.log("MONGODB_URI:", process.env.MONGO_URI);
