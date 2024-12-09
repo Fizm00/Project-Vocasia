@@ -35,7 +35,7 @@ router.post("/logout", authenticateJWT, auth_controller.logoutUser);
 //== end oauth
 
 // == reset password
-// router.post("/reset-password", auth_controller.resetPassword);
+router.post("/reset-password", get_password.forgotPassword);
 router.post("/change-password", authenticateJWT, get_password.changePassword);
 // == end reset password
 
