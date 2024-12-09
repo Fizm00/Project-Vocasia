@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage.jsx';
 import ForgotPassword from './pages/ForgotPassword';
 import Home from './pages/Home';
 import SearchResultPage from './pages/SearchResultPage.jsx';
+import DetailPage from './pages/DetailPage.jsx';
 import RentalHistory from './pages/RentalHistory.jsx';
 import About from './pages/About.jsx';
 import Payment from './pages/Payment.jsx';
@@ -23,6 +24,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/search" element={<SearchResultPage />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/detail/:id" element={<DetailPage />} key="detail"></Route>
           <Route path="/riwayat-sewa" element={<RentalHistory />} />
           <Route path="/about" element={<About />} />
           <Route path="/payment" element={<Payment />} />
