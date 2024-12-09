@@ -3,6 +3,7 @@ const passport = require("passport");
 
 const auth_controller = require("../controllers/auth/auth_controller");
 const authenticateJWT = require("../middleware/authenticateJWT");
+const get_password = require("../controllers/auth/get_password_controller");
 
 const router = express.Router();
 
@@ -39,5 +40,10 @@ router.post("/logout", authenticateJWT, auth_controller.logoutUser);
 //   });
 // });
 //== end oauth
+
+// == reset password
+// router.post("/reset-password", auth_controller.resetPassword);
+router.post("/change-password", authenticateJWT, get_password.changePassword);
+// == end reset password
 
 module.exports = router;

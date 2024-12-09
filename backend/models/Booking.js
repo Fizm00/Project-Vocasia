@@ -12,8 +12,8 @@ const bookingSchema = new mongoose.Schema(
       ref: "Property",
       required: true,
     },
-    check_in_date: { type: Date }, // Tanggal check-in aktual
-    check_out_date: { type: Date }, // Tanggal check-out aktual
+    check_in_date: { type: Date, default: null }, // Tanggal check-in aktual
+    check_out_date: { type: Date, default: null }, // Tanggal check-out aktual
     start_date: { type: Date, required: true },
     end_date: { type: Date, required: true },
     total_price: { type: Number, required: true },
