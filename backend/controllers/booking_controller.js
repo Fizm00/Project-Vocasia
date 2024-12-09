@@ -130,6 +130,12 @@ const createBooking = async (req, res) => {
       data: {
         booking,
         payment_url: payment.redirect_url, // URL untuk pembayaran
+        payment_token: payment.token,
+        payment_type: payment.payment_type,
+        payment_status: payment.transaction_status,
+        payment_date: payment.transaction_time,
+        payment_amount: payment.gross_amount,
+        payment_method: payment.payment_type,
       },
     });
   } catch (error) {
@@ -153,6 +159,16 @@ const handleMidtransNotification = async (req, res) => {
 
     // Dapatkan body notifikasi dari Midtrans
     const notification = req.body;
+
+    // log notofikasi
+    console.log("Midtrans Notification Data:", notification);
+    if (!notification.order_id) {
+      return res.status(400).json({
+        status: "failed",
+        message: "Invalid notification: Missing order_id",
+        success: false,
+      });
+    }
 
     // Verifikasi notifikasi dari Midtrans
     const transactionStatus = notification.transaction_status;
