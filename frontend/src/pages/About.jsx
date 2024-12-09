@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Banner from "../components/Banner";
 import Footer from "../components/Footer";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const About = () => {
+  useEffect(() => {
+    AOS.init({ duration: 1000, once: true });
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -12,7 +18,10 @@ const About = () => {
         className="relative w-full min-h-screen bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/aboutImage.png')", backgroundSize: "cover" }}
       >
-        <div className="relative z-20 text-left text-white flex flex-col items-start justify-center min-h-screen pl-16">
+        <div
+          className="relative z-20 text-left text-white flex flex-col items-start justify-center min-h-screen pl-16"
+          data-aos="fade-up"
+        >
           <h1 className="text-3xl md:text-3xl font-bold mb-4 mt-16 transition-all duration-500 ease-out hover:scale-110 hover:translate-x-[-10px] hover:translate-y-2 leading-snug">
             AnakKost Hadir untuk Menyediakan Kost
             <br />
