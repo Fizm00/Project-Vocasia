@@ -2,10 +2,12 @@ const express = require("express");
 const passport = require("passport");
 
 const auth_controller = require("../controllers/auth/auth_controller");
+const authenticateJWT = require("../middleware/authenticateJWT");
+const get_password = require("../controllers/auth/get_password_controller");
 
 const router = express.Router();
 
-router.post("/login", auth_controller.loginUser);
+router.post("/login", authenticateJWT, auth_controller.loginUser);
 
 router.post("/register", auth_controller.registerUser);
 // router.post("/login", auth_controller.loginUser);
@@ -28,13 +30,13 @@ router.get(
   }
 );
 
-// Logout
-router.get("/logout", (req, res) => {
-  req.logout((err) => {
-    if (err) return next(err);
-    res.redirect("/");
-  });
-});
+router.post("/logout", authenticateJWT, auth_controller.logoutUser);
+
 //== end oauth
+
+// == reset password
+router.post("/reset-password", get_password.forgotPassword);
+router.post("/change-password", authenticateJWT, get_password.changePassword);
+// == end reset password
 
 module.exports = router;

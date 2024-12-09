@@ -1,59 +1,115 @@
-import React from 'react';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { FaUserCircle } from "react-icons/fa";
 
-const Navbar = () => {
-  const location = useLocation(); 
-  const navigate = useNavigate(); 
+const NavbarSearch = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const handleLoginClick = () => {
-    navigate('/login'); 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
-  const navItems = [
-    { path: '/', label: 'Beranda' },
-    { path: '/search', label: 'Cari' },
-    { path: '/about', label: 'Tentang' },
-    { path: '/contact', label: 'Kontak' },
-  ];
-
   return (
-    <nav className="w-full bg-[#193F3D] text-white py-2 px-6 fixed top-0 left-0 z-50 shadow-lg">
+    <header className="bg-darkGreen shadow-md p-4 sticky top-0 z-50">
       <div className="container mx-auto flex justify-between items-center">
+        {/* Logo dan Nama Web */}
         <div className="flex items-center space-x-2">
           <img
-            src="/logoAnakKost.png" 
-            alt="AnakKost Logo"
-            className="h-8 w-8 rounded-full object-cover"
+            src="./src/assets/logo-anakkost.png"
+            alt="Logo"
+            className="w-8 h-8"
           />
-          <span className="text-base font-bold">AnakKost</span>
+          <span className="text-lg md:text-2xl font-bold text-white">
+            AnakKost
+          </span>
         </div>
 
-        <div className="flex items-center space-x-6">
-          <ul className="flex space-x-10 text-xs font-semibold">
-            {navItems.map((item, index) => (
-              <li key={index}>
-                <NavLink
-                  to={item.path}
-                  className={`hover:underline ${
-                    location.pathname === item.path ? 'border-b-2 border-white' : ''
-                  }`}
-                >
-                  {item.label}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-
-          <button
-            onClick={handleLoginClick}
-            className="bg-white text-[#193F3D] px-3 py-1 rounded-full text-xs font-medium hover:bg-gray-200"
+        {/* Navbar Links dan Login/Avatar Button */}
+        <div className="hidden md:flex items-center space-x-8">
+          <Link
+            to="/"
+            className="text-md font-semibold text-white relative group"
           >
-            Masuk
-          </button>
+            Beranda
+            <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-white scale-x-0 transition-all duration-300 group-hover:scale-x-100"></span>
+          </Link>
+          <Link
+            to="/search"
+            className="text-md font-semibold text-white relative group"
+          >
+            Cari
+            <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-white scale-x-0 transition-all duration-300 group-hover:scale-x-100"></span>
+          </Link>
+          <Link
+            to="/about"
+            className="text-md font-semibold text-white relative group"
+          >
+            Tentang
+            <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-white scale-x-0 transition-all duration-300 group-hover:scale-x-100"></span>
+          </Link>
+          <Link
+            to="/contact"
+            className="text-md font-semibold text-white relative group"
+          >
+            Kontak
+            <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-white scale-x-0 transition-all duration-300 group-hover:scale-x-100"></span>
+          </Link>
+          {isLoggedIn ? (
+            <div className="flex items-center space-x-3">
+              <FaUserCircle className="text-white text-2xl" />
+            </div>
+          ) : (
+            <Link
+              to="/login"
+              className="bg-white text-darkGreen text-sm font-semibold py-2 px-6 rounded-full hover:bg-hoverGreen hover:text-white transition duration-200"
+            >
+              Masuk
+            </Link>
+          )}
         </div>
+
+        {/* Menu Hamburger untuk Tampilan Mobile */}
+        <button className="md:hidden text-white" onClick={toggleMenu}>
+          <div className="space-y-1">
+            <div className="w-6 h-1 bg-white"></div>
+            <div className="w-6 h-1 bg-white"></div>
+            <div className="w-6 h-1 bg-white"></div>
+          </div>
+        </button>
       </div>
-    </nav>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="md:hidden flex flex-col items-center bg-darkGreen p-4 space-y-2">
+          <Link to="/" className="text-md font-semibold text-white">
+            Beranda
+          </Link>
+          <Link to="/search" className="text-md font-semibold text-white">
+            Cari
+          </Link>
+          <Link to="/about" className="text-md font-semibold text-white">
+            Tentang
+          </Link>
+          <Link to="/contact" className="text-md font-semibold text-white">
+            Kontak
+          </Link>
+          {isLoggedIn ? (
+            <div className="flex items-center space-x-3 text-white">
+              <FaUserCircle className="text-2xl" />
+            </div>
+          ) : (
+            <Link
+              to="/login"
+              className="bg-white text-darkGreen text-sm font-semibold py-2 px-6 rounded-full hover:bg-hoverGreen hover:text-white transition duration-200"
+            >
+              Masuk
+            </Link>
+          )}
+        </div>
+      )}
+    </header>
   );
 };
 
-export default Navbar;
+export default NavbarSearch;

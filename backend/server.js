@@ -6,6 +6,8 @@ const dotenv = require("dotenv");
 const routes = require("./routes");
 const connectDB = require("./config/db");
 const cors = require("cors");
+const fs = require("fs");
+const path = require("path");
 
 const app = express();
 routes.use(cors());
@@ -15,7 +17,6 @@ dotenv.config();
 connectDB();
 
 app.use(cors());
-app.use(bodyParser.json());
 
 app.use(express.json());
 
@@ -29,20 +30,21 @@ app.use(
 );
 
 // Passport Middleware
+app.use(bodyParser.json());
+
 app.use(passport.initialize());
 app.use(passport.session());
-
-// Konfigurasi Passport
-require("./config/passport")(passport);
 
 // routes setup
 app.use("/api/v1", routes);
 
-// route default
-// app.use(express.json());
-// app.get("/", (req, res) => {
-//   res.send("Hello World!");
-// });
+// upload images
+const uploadDir = path.join(__dirname, "../uploads");
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
+}
+
+app.use("/uploads", express.static("uploads"));
 
 // start server
 const port = process.env.PORT;

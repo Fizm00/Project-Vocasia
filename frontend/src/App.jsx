@@ -8,6 +8,11 @@ import ForgotPassword from './pages/ForgotPassword';
 import Home from './pages/Home';
 import SearchResultPage from './pages/SearchResultPage.jsx';
 import DetailPage from './pages/DetailPage.jsx';
+import RentalHistory from './pages/RentalHistory.jsx';
+import About from './pages/About.jsx';
+import Payment from './pages/Payment.jsx';
+import Booking from './pages/Booking.jsx';
+import SuccessBook from './pages/SuccessBook.jsx'; 
 
 function App() {
   return (
@@ -20,6 +25,11 @@ function App() {
           <Route path="/search" element={<SearchResultPage />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/detail/:id" element={<DetailPage />} key="detail"></Route>
+          <Route path="/riwayat-sewa" element={<RentalHistory />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/payment" element={<Payment />} />
+          <Route path="/booking" element={<Booking />} />
+          <Route path="/success-book" element={<SuccessBook />} /> 
         </Routes>
       </Router>
     </div>
