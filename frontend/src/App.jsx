@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import SearchResultPage from './pages/SearchResultPage.jsx';
 import RentalHistory from './pages/RentalHistory.jsx';
 import About from './pages/About.jsx';
+import SuccessBook from './pages/SuccessBook.jsx'; 
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/riwayat-sewa" element={<RentalHistory />} />
           <Route path="/about" element={<About />} />
+          <Route path="/success-book" element={<SuccessBook />} /> 
         </Routes>
       </Router>
     </div>
