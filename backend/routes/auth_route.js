@@ -32,13 +32,6 @@ router.get(
 
 router.post("/logout", authenticateJWT, auth_controller.logoutUser);
 
-// Logout
-// router.get("/logout", (req, res) => {
-//   req.logout((err) => {
-//     if (err) return next(err);
-//     res.redirect("/");
-//   });
-// });
 //== end oauth
 
 // == reset password
