@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaArrowLeft } from "react-icons/fa";
+import { forgotPassword } from "../api/auth";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -11,6 +12,12 @@ const ForgotPassword = () => {
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
+    try {
+      const response = forgotPassword(email);
+      console.log(response);
+    } catch (error) {
+      setError(error.message);
+    }
     e.preventDefault();
 
     if (!/\S+@\S+\.\S+/.test(email)) {

@@ -31,6 +31,17 @@ const registerUser = async (name, phone, email, password, confirmPassword) => {
   }
 };
 
-export { loginUser, registerUser };
+const forgotPassword = async (email) => {
+  try {
+    const response = await axiosInstance.post("/forgot-password", {
+      email,
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+export { loginUser, registerUser, forgotPassword };
 
 // export default { loginUser, registerUser };
