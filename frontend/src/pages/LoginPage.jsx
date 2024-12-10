@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import bgLogin from "../assets/background-login.jpg";
 import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { loginUser } from "../api/auth";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -50,6 +51,19 @@ const LoginPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    try {
+      const userData = loginUser(formData.email, formData.password);
+      console.log("User Login:" + userData);
+
+      if (!userData) {
+        throw new Error("User not found.");
+      }
+
+      navigate("/home");
+    } catch (error) {
+      setErrors((prev) => ({ ...prev, email: error.message }));
+    }
 
     if (
       errors.email ||

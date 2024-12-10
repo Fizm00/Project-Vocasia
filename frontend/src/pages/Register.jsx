@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { registerUser } from "../api/auth";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -49,6 +50,18 @@ const Register = () => {
   };
 
   const handleSubmit = (e) => {
+    try {
+      const userData = registerUser(
+        formData.fullName,
+        formData.phone,
+        formData.email,
+        formData.password,
+        formData.confirmPassword
+      );
+      console.log("User Register:" + userData);
+    } catch (error) {
+      setErrors((prev) => ({ ...prev, email: error.message }));
+    }
     e.preventDefault();
 
     const hasErrors = Object.values(errors).some((error) => error !== "");
@@ -64,11 +77,16 @@ const Register = () => {
   };
 
   const togglePassword = () => setShowPassword(!showPassword);
-  const toggleConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
+  const toggleConfirmPassword = () =>
+    setShowConfirmPassword(!showConfirmPassword);
 
   const containerVariants = {
     hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5, staggerChildren: 0.2 } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, staggerChildren: 0.2 },
+    },
   };
 
   const itemVariants = {
@@ -106,7 +124,10 @@ const Register = () => {
             variants={itemVariants}
           >
             <div>
-              <label htmlFor="fullName" className="block mb-1 font-medium text-sm">
+              <label
+                htmlFor="fullName"
+                className="block mb-1 font-medium text-sm"
+              >
                 Nama Lengkap
               </label>
               <input
@@ -120,7 +141,9 @@ const Register = () => {
                 } text-gray-700 rounded-lg w-full p-3 text-sm`}
                 placeholder="Nama Anda"
               />
-              {errors.fullName && <p className="text-red-500 text-xs">{errors.fullName}</p>}
+              {errors.fullName && (
+                <p className="text-red-500 text-xs">{errors.fullName}</p>
+              )}
             </div>
 
             <div>
@@ -138,7 +161,9 @@ const Register = () => {
                 } text-gray-700 rounded-lg w-full p-3 text-sm`}
                 placeholder="08XXXXXXXXXX"
               />
-              {errors.phone && <p className="text-red-500 text-xs">{errors.phone}</p>}
+              {errors.phone && (
+                <p className="text-red-500 text-xs">{errors.phone}</p>
+              )}
             </div>
 
             <div>
@@ -156,11 +181,16 @@ const Register = () => {
                 } text-gray-700 rounded-lg w-full p-3 text-sm`}
                 placeholder="email@example.com"
               />
-              {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
+              {errors.email && (
+                <p className="text-red-500 text-xs">{errors.email}</p>
+              )}
             </div>
 
             <div>
-              <label htmlFor="password" className="block mb-1 font-medium text-sm">
+              <label
+                htmlFor="password"
+                className="block mb-1 font-medium text-sm"
+              >
                 Password
               </label>
               <div className="relative">
@@ -192,7 +222,10 @@ const Register = () => {
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="block mb-1 font-medium text-sm">
+              <label
+                htmlFor="confirmPassword"
+                className="block mb-1 font-medium text-sm"
+              >
                 Konfirmasi Password
               </label>
               <div className="relative">
@@ -203,7 +236,9 @@ const Register = () => {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   className={`bg-white border ${
-                    errors.confirmPassword ? "border-red-500" : "border-gray-300"
+                    errors.confirmPassword
+                      ? "border-red-500"
+                      : "border-gray-300"
                   } text-gray-700 rounded-lg w-full p-3 text-sm`}
                   placeholder="Masukkan konfirmasi password Anda"
                 />
