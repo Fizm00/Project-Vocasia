@@ -32,7 +32,6 @@ const ProfilePage = () => {
     setFormData(initialFormData); // Restore to original state if user cancels
   };
 
-  
   const handleImageUpload = (event) => {
     const file = event.target.files[0]; 
     if (file) {
@@ -44,7 +43,7 @@ const ProfilePage = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <div className="flex p-8 ml-10 mb-8">
+      <div className="flex flex-col justify-center gap-6 sm:flex-row p-8 mb-8">
         {/* Menu */}
         <Menu image={formData.image} />
 
