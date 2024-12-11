@@ -15,6 +15,7 @@ import Booking from './pages/Booking.jsx';
 import SuccessBook from './pages/SuccessBook.jsx'; 
 import ProfilePage from './pages/ProfilePage.jsx';
 import Contact from './pages/Contact.jsx';
+import Notification from './pages/Notification.jsx';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/success-book" element={<SuccessBook />} /> 
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/notification" element={<Notification />} />
         </Routes>
       </Router>
     </div>
