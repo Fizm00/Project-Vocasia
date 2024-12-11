@@ -16,6 +16,7 @@ import ProfilePage from './pages/ProfilePage.jsx';
 import Contact from './pages/Contact.jsx';
 import Notification from './pages/Notification.jsx';
 import TransactionsHistory from './pages/TransactionsHistory.jsx';
+import AddReview from "./pages/AddReviewPage.jsx";
 //Owner Page
 import RentalApproval from './components/RentalPageOwner/RentalApproval.jsx';
 import Dashboard from './pages/Dashboard.jsx';
@@ -77,6 +78,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/notification" element={<Notification />} />
           <Route path="/transactions-history" element={<TransactionsHistory />} />
+          <Route path="/add-review" element={<AddReview />} />
           {/* Route Owner Page */}
           <Route path="/rental-approval" element={<RentalApproval />} />
           <Route path="dashboard" element={<Dashboard />} />
