@@ -1,20 +1,38 @@
-import React, { useState } from 'react';
-import NavbarSearch from '../components/NavbarSearch'; 
-import ResultCard from '../components/ResultCard'; 
-import PopupFilter from '../components/PopupFilter'; 
-import MapComponent from '../components/MapComponent';
-import kostData from '../data/kostData';
+import { useState, useEffect } from "react";
+import NavbarSearch from "../components/NavbarSearch";
+import ResultCard from "../components/ResultCard";
+import PopupFilter from "../components/PopupFilter";
+import MapComponent from "../components/MapComponent";
+
+import axios from "../config/axiosInstance";
 
 const SearchResultsPage = () => {
   const [filters, setFilters] = useState({
-    tipeKost: '',
-    lokasi: '',
+    tipeKost: "",
+    lokasi: "",
     hargaMin: 0,
     hargaMax: 5000000,
-    namaKost: ''
+    namaKost: "",
   });
 
-  const [kosts, setKosts] = useState(kostData);  
+  // const [kosts, setKosts] = useState("");
+  const [properties, setProperties] = useState([]);
+
+  useEffect(() => {
+    const fetchKosts = async () => {
+      try {
+        const response = await axios.get("/properties");
+        setProperties(response.data.data);
+        // setKosts(response.data);
+        // const data = await response.json();
+        // setKosts(data);
+      } catch (error) {
+        console.error("Error fetching kosts:", error);
+      }
+    };
+
+    fetchKosts();
+  }, []);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -26,12 +44,19 @@ const SearchResultsPage = () => {
     setIsModalOpen(false);
   };
 
-  const filteredKosts = kosts.filter(kost => {
+  const filteredKosts = properties.filter((kost) => {
     return (
-      (filters.tipeKost ? kost.tipeKost.toLowerCase().includes(filters.tipeKost.toLowerCase()) : true) &&
-      (filters.lokasi ? kost.lokasi.toLowerCase().includes(filters.lokasi.toLowerCase()) : true) &&
-      (kost.harga >= filters.hargaMin && kost.harga <= filters.hargaMax) &&
-      (filters.namaKost ? kost.namaKost.toLowerCase().includes(filters.namaKost.toLowerCase()) : true) &&
+      (filters.tipeKost
+        ? kost.tipeKost.toLowerCase().includes(filters.tipeKost.toLowerCase())
+        : true) &&
+      (filters.lokasi
+        ? kost.lokasi.toLowerCase().includes(filters.lokasi.toLowerCase())
+        : true) &&
+      kost.harga >= filters.hargaMin &&
+      kost.harga <= filters.hargaMax &&
+      (filters.namaKost
+        ? kost.namaKost.toLowerCase().includes(filters.namaKost.toLowerCase())
+        : true) &&
       (filters.durasi ? kost.durasi === filters.durasi : true)
     );
   });
@@ -39,7 +64,7 @@ const SearchResultsPage = () => {
   return (
     <div>
       {/* Navbar */}
-      <NavbarSearch toggleFilterSidebar={openFilterModal} /> 
+      <NavbarSearch toggleFilterSidebar={openFilterModal} />
 
       <div className="flex">
         {/* Hasil Pencarian */}
@@ -53,8 +78,8 @@ const SearchResultsPage = () => {
 
         {/* Peta Lokasi */}
         <div className="w-1/4 p-4">
-            <MapComponent locations={filteredKosts} />
-          </div>
+          <MapComponent locations={filteredKosts} />
+        </div>
       </div>
 
       {/* Modal Filter */}

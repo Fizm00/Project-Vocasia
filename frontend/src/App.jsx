@@ -13,12 +13,14 @@ import Booking from "./pages/Booking.jsx";
 import SuccessBook from "./pages/SuccessBook.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import ProtectedRoute from "./services/ProtectedRoute.jsx";
+import MappingProperty from "./pages/MappingProperty.jsx";
 
 function App() {
   return (
     <div>
       <Router>
         <Routes>
+          <Route path="/mapping" element={<MappingProperty />} />
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/register" element={<Register />} />
