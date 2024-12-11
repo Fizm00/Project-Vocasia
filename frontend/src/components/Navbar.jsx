@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
+import logo from '../assets/logo-anakkost.png';
 
 const NavbarSearch = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -15,11 +16,7 @@ const NavbarSearch = () => {
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo dan Nama Web */}
         <div className="flex items-center space-x-2">
-          <img
-            src="./src/assets/logo-anakkost.png"
-            alt="Logo"
-            className="w-8 h-8"
-          />
+        <img src={logo} alt="Logo" className="w-8 h-8" />
           <span className="text-lg md:text-2xl font-bold text-white">
             AnakKost
           </span>
