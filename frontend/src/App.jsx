@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage.jsx";
-// import React from "react";
 import "./App.css";
 import "./index.css";
 import Register from "./pages/Register.jsx";
@@ -14,6 +13,7 @@ import About from "./pages/About.jsx";
 import Payment from "./pages/Payment.jsx";
 import Booking from "./pages/Booking.jsx";
 import SuccessBook from "./pages/SuccessBook.jsx";
+import ProtectedRoute from "./services/ProtectedRoute.jsx";
 
 function App() {
   return (
@@ -23,18 +23,50 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/about" element={<About />} />
           <Route path="/search" element={<SearchResultPage />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/success-book" element={<SuccessBook />} />
           <Route
             path="/detail/:id"
             element={<DetailPage />}
             key="detail"
           ></Route>
-          <Route path="/riwayat-sewa" element={<RentalHistory />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/payment" element={<Payment />} />
-          <Route path="/booking" element={<Booking />} />
-          <Route path="/success-book" element={<SuccessBook />} />
+
+          {/* ROUTE YANG MEMBUTUHKAN TOKEN (AUTH) */}
+          <Route
+            path="/riwayat-sewa"
+            element={
+              <ProtectedRoute>
+                <RentalHistory />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/booking"
+            element={
+              <ProtectedRoute>
+                <Booking />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/booking/:id"
+            element={
+              <ProtectedRoute>
+                <Booking />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/payment"
+            element={
+              <ProtectedRoute>
+                <Payment />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </Router>
     </div>
