@@ -3,18 +3,18 @@ import { FaEdit, FaCamera } from 'react-icons/fa';
 
 const ProfileDetail = ({ formData, isEditing, setFormData, handleSave, handleEdit, handleCancel, handleImageUpload }) => { 
   return (
-    <div className="w-2/3 ml-6 p-8 bg-white border rounded-lg shadow-lg">
+    <div className="w-full sm:w-2/3 p-8 bg-white border rounded-lg shadow-lg">
       <div className="text-2xl font-bold mb-2">Biodata Diri</div>
       <hr className="w-full border-t-1 border-gray-300 mb-6" />
 
-      <div className="flex space-x-6">
+      <div className="flex flex-col sm:flex-row space-y-6 sm:space-x-6">
         {/* Profile Picture Section */}
-        <div className="w-1/4 bg-white">
+        <div className="w-full sm:w-1/4 bg-white">
           <div className="p-2 border border-gray-300 rounded-md">
             <img
               src={formData.image || 'https://via.placeholder.com/100'}
               alt="User"
-              className="w-40 h-40 mb-4 ml-2 object-cover rounded-md"
+              className="w-40 h-40 mb-2 mt-2 ml-16 mr-12 sm:ml-2 object-cover rounded-md"
             />
             {/* File Input for Image Upload */}
             <input
@@ -91,7 +91,7 @@ const ProfileDetail = ({ formData, isEditing, setFormData, handleSave, handleEdi
           </div>
 
           {/* Save / Cancel / Edit Buttons */}
-          <div className="flex space-x-4 mt-6 font-semibold">
+          <div className="flex flex-col sm:flex-row sm:space-x-4 mt-6 font-semibold">
             {isEditing ? (
               <>
                 <button
@@ -111,8 +111,8 @@ const ProfileDetail = ({ formData, isEditing, setFormData, handleSave, handleEdi
               <button
                 onClick={handleEdit}
                 className="py-2 px-6 bg-darkGreen text-white rounded-md hover:bg-white hover:text-darkGreen border border-darkGreen"
-              >
-                <FaEdit className="inline mr-2" /> Edit Profile
+              > <FaEdit className="inline mr-2" />
+                Edit
               </button>
             )}
           </div>
