@@ -46,9 +46,9 @@ const DetailPage = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <div className="container mx-auto p-4 sm:p-6 lg:p-10 m-4">
+      <div className="container mx-auto p-4 sm:p-6 lg:p-6">
         {/* Detail Kost */}
-        <div className="p-6">
+        <div className="p-8 pt-4">
           {/* Gambar Kost */}
           <DetailImage
             images={kostDetail.images} 

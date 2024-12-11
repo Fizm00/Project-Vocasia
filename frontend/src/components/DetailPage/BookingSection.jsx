@@ -22,7 +22,7 @@ const BookingSection = ({ kostDetail }) => {
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto">
+    <div className="p-2 max-w-md mx-auto">
       {/* Harga dan Durasi */}
       <div className="flex flex-wrap justify-between space-x-1 mb-4">
         <div className="w-full md:w-2/3">
