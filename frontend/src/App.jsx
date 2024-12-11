@@ -17,6 +17,7 @@ import ProfilePage from './pages/ProfilePage.jsx';
 import Contact from './pages/Contact.jsx';
 import Notification from './pages/Notification.jsx';
 import RentalApproval from './components/RentalPageOwner/RentalApproval.jsx';
+import TransactionsHistory from './pages/TransactionsHistory.jsx';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/notification" element={<Notification />} />
           <Route path="/rental-approval" element={<RentalApproval />} />
+          <Route path="/transactions-history" element={<TransactionsHistory />} />
         </Routes>
       </Router>
     </div>
