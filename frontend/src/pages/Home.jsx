@@ -8,7 +8,6 @@ import Reasons from "../components/Homepage/Reasons";
 import Reviewer from "../components/Homepage/Reviewer";
 import Footer from "../components/Footer";
 
-
 const Home = () => {
   return (
     <div className="min-h-screen overflow-auto">
