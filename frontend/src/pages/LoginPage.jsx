@@ -1,12 +1,14 @@
 import { useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import bgLogin from "../assets/background-login.jpg";
 import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { loginUser } from "../api/auth";
 
 const LoginPage = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  // const [formData, setFormData] = useState({ email: "", password: "" });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({ email: "", password: "" });
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
@@ -28,10 +30,10 @@ const LoginPage = () => {
     }, 2000);
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prev) => ({ ...prev, [name]: value }));
+  // };
 
   const handleBlur = (e) => {
     const { name, value } = e.target;
@@ -49,12 +51,12 @@ const LoginPage = () => {
     setErrors((prev) => ({ ...prev, [name]: errorMessage }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const userData = loginUser(formData.email, formData.password);
-      console.log("User Login:" + userData);
+      const userData = await loginUser(email, password);
+      console.log("User Login Success:" + userData);
 
       if (!userData) {
         throw new Error("User not found.");
@@ -63,17 +65,18 @@ const LoginPage = () => {
       navigate("/home");
     } catch (error) {
       setErrors((prev) => ({ ...prev, email: error.message }));
+      console.error("Login failed:", error);
     }
 
-    if (
-      errors.email ||
-      errors.password ||
-      !formData.email ||
-      !formData.password
-    ) {
-      alert("Harap isi semua kolom dengan benar.");
-      return;
-    }
+    // if (
+    //   errors.email ||
+    //   errors.password ||
+    //   !formData.email ||
+    //   !formData.password
+    // ) {
+    //   alert("Harap isi semua kolom dengan benar.");
+    //   return;
+    // }
 
     alert("Login berhasil!");
     navigate("/home");
@@ -128,8 +131,9 @@ const LoginPage = () => {
                 type="email"
                 id="email"
                 name="email"
-                value={formData.email}
-                onChange={handleChange}
+                value={email}
+                // onChange={handleChange}
+                onChange={(e) => setEmail(e.target.value)}
                 onBlur={handleBlur}
                 className={`w-full p-3 border ${
                   errors.email ? "border-red-500" : "border-gray-300"
@@ -154,8 +158,9 @@ const LoginPage = () => {
                 type={passwordVisible ? "text" : "password"}
                 id="password"
                 name="password"
-                value={formData.password}
-                onChange={handleChange}
+                value={password}
+                // onChange={handleChange}
+                onChange={(e) => setPassword(e.target.value)}
                 onBlur={handleBlur}
                 className={`w-full p-3 border ${
                   errors.password ? "border-red-500" : "border-gray-300"

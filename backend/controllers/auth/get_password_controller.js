@@ -2,6 +2,7 @@ const User = require("../../models/User");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
+const generatePassword = require("generate-password");
 
 require("dotenv").config();
 
@@ -125,7 +126,12 @@ const forgotPassword = async (req, res) => {
     }
 
     // generate token
-    const tokenNewPassword = crypto.randomBytes(32).toString("hex");
+    const tokenNewPassword = generatePassword.generate({
+      length: 10,
+      numbers: true,
+      uppercase: true,
+      lowercase: true,
+    });
 
     //hash password
     const hashedPassword = await bcrypt.hash(tokenNewPassword, 12);
