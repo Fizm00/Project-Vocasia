@@ -13,6 +13,7 @@ import About from './pages/About.jsx';
 import Payment from './pages/Payment.jsx';
 import Booking from './pages/Booking.jsx';
 import SuccessBook from './pages/SuccessBook.jsx'; 
+import ProfilePage from './pages/ProfilePage.jsx';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/payment" element={<Payment />} />
           <Route path="/booking" element={<Booking />} />
           <Route path="/success-book" element={<SuccessBook />} /> 
+          <Route path="/profile" element={<ProfilePage />} />
         </Routes>
       </Router>
     </div>
