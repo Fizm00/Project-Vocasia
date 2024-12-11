@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import React from "react";
 import "./App.css";
 import "./index.css";
 import Register from "./pages/Register.jsx";
@@ -13,7 +12,7 @@ import Payment from "./pages/Payment.jsx";
 import Booking from "./pages/Booking.jsx";
 import SuccessBook from "./pages/SuccessBook.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
-import ProtectedRoute from "./ProtectedRoute";
+import ProtectedRoute from "./services/ProtectedRoute.jsx";
 
 function App() {
   return (
