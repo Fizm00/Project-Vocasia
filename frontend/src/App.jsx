@@ -17,6 +17,7 @@ import Contact from './pages/Contact.jsx';
 import Notification from './pages/Notification.jsx';
 import RentalApproval from './components/RentalPageOwner/RentalApproval.jsx';
 import Dashboard from './pages/Dashboard.jsx';
+import Properties from './pages/Properties.jsx';
 import TransactionsHistory from './pages/TransactionsHistory.jsx';
 import ProtectedRoute from "./services/ProtectedRoute.jsx";
 
@@ -74,6 +75,7 @@ function App() {
           <Route path="/notification" element={<Notification />} />
           <Route path="/rental-approval" element={<RentalApproval />} />
           <Route path="dashboard" element={<Dashboard />} />
+          <Route path="/properties" element={<Properties />} />
           <Route path="/transactions-history" element={<TransactionsHistory />} />
         </Routes>
       </Router>
