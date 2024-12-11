@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import React from "react";
 import "./App.css";
 import "./index.css";
 import Register from "./pages/Register.jsx";
@@ -18,6 +17,7 @@ import Contact from './pages/Contact.jsx';
 import Notification from './pages/Notification.jsx';
 import RentalApproval from './components/RentalPageOwner/RentalApproval.jsx';
 import TransactionsHistory from './pages/TransactionsHistory.jsx';
+import ProtectedRoute from "./services/ProtectedRoute.jsx";
 
 function App() {
   return (
@@ -25,20 +25,47 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/about" element={<About />} />
           <Route path="/search" element={<SearchResultPage />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/success" element={<SuccessBook />} />
+          <Route path="/detail/:id" element={<DetailPage />} key="detail"></Route>
           <Route
-            path="/detail/:id"
-            element={<DetailPage />}
-            key="detail"
-          ></Route>
-          <Route path="/riwayat-sewa" element={<RentalHistory />} />
+            path="/riwayat-sewa"
+            element={
+              <ProtectedRoute>
+                <RentalHistory />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/about" element={<About />} />
-          <Route path="/payment" element={<Payment />} />
-          <Route path="/booking" element={<Booking />} />
+          <Route
+            path="/payment"
+            element={
+              <ProtectedRoute>
+                <Payment />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/booking"
+            element={
+              <ProtectedRoute>
+                <Booking />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/booking/:id"
+            element={
+              <ProtectedRoute>
+                <Booking />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/success-book" element={<SuccessBook />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/contact" element={<Contact />} />
