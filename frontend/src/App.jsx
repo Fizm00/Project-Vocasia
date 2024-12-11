@@ -1,9 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import React from "react";
+// import React from "react";
 import "./App.css";
 import "./index.css";
 import Register from "./pages/Register.jsx";
-import LoginPage from "./pages/LoginPage.jsx";
 import ForgotPassword from "./pages/ForgotPassword";
 import Home from "./pages/Home";
 import SearchResultPage from "./pages/SearchResultPage.jsx";
@@ -13,6 +12,8 @@ import About from "./pages/About.jsx";
 import Payment from "./pages/Payment.jsx";
 import Booking from "./pages/Booking.jsx";
 import SuccessBook from "./pages/SuccessBook.jsx";
+import LoginPage from "./pages/LoginPage.jsx";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   return (
@@ -26,16 +27,85 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/search" element={<SearchResultPage />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/success" element={<SuccessBook />} />
           <Route
             path="/detail/:id"
             element={<DetailPage />}
             key="detail"
           ></Route>
-          <Route path="/riwayat-sewa" element={<RentalHistory />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/payment" element={<Payment />} />
-          <Route path="/booking" element={<Booking />} />
-          <Route path="/success-book" element={<SuccessBook />} />
+
+          {/* ROUTE YANG MEMBUTUHKAN TOKEN (AUTH) */}
+          <Route
+            path="/riwayat-sewa"
+            element={
+              <ProtectedRoute>
+                <RentalHistory />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/booking"
+            element={
+              <ProtectedRoute>
+                <Booking />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/booking/:id"
+            element={
+              <ProtectedRoute>
+                <Booking />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/payment"
+            element={
+              <ProtectedRoute>
+                <Payment />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* end routes */}
+          {/* ROUTE YANG MEMBUTUHKAN TOKEN (AUTH) */}
+          <Route
+            path="/riwayat-sewa"
+            element={
+              <ProtectedRoute>
+                <RentalHistory />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/booking"
+            element={
+              <ProtectedRoute>
+                <Booking />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/booking/:id"
+            element={
+              <ProtectedRoute>
+                <Booking />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/payment"
+            element={
+              <ProtectedRoute>
+                <Payment />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* end routes */}
         </Routes>
       </Router>
     </div>
