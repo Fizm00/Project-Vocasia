@@ -1,6 +1,6 @@
 import React from 'react';
-import { FaBed, FaBath, FaCar, FaWifi, FaStar } from 'react-icons/fa'; // Import ikon yang diperlukan
-import { useNavigate } from 'react-router-dom'; // Import useNavigate untuk navigasi
+import { FaBed, FaBath, FaCar, FaWifi, FaStar } from 'react-icons/fa'; 
+import { useNavigate } from 'react-router-dom';
 
 const ResultCard = ({ kost }) => {
   const navigate = useNavigate(); // Hook untuk navigasi
@@ -19,13 +19,13 @@ const ResultCard = ({ kost }) => {
 
   return (
     <div 
-      className="flex flex-col sm:flex-row w-full sm:w-3/4 items-start border rounded-lg shadow-lg overflow-hidden bg-white transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl cursor-pointer"
+      className="flex flex-col sm:flex-row sm:w-full items-start border rounded-lg shadow-lg overflow-hidden bg-white transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl cursor-pointer"
       onClick={handleCardClick}
     >
       {/* Gambar */}
       <div className="w-full sm:w-1/3 h-40 sm:h-48">
         <img 
-          src={kost.image} 
+          src={kost.images[0]} 
           alt={kost.namaKost || 'Gambar Kost'} 
           className="w-full h-full object-cover"
         />
@@ -46,34 +46,34 @@ const ResultCard = ({ kost }) => {
         {/* Fasilitas */}
         <div className="flex items-center space-x-4 text-sm mt-3">
           {/* Tempat Tidur */}
-          {kost.fasilitas?.tempatTidur && kost.fasilitas.tempatTidur !== 0 && (
+          {kost.spesifikasi?.jumlahKamar && kost.spesifikasi.jumlahKamar !== 0 && (
             <div className="flex items-center space-x-1">
               <FaBed />
-              <span>{kost.fasilitas.tempatTidur}</span>
+              <span>{kost.spesifikasi.jumlahKamar}</span>
             </div>
           )}
 
           {/* Kamar Mandi */}
-          {kost.fasilitas?.kamarMandi && kost.fasilitas.kamarMandi !== 0 && (
+          {kost.spesifikasi?.jumlahKamarMandi && kost.spesifikasi.jumlahKamarMandi !== 0 && (
             <div className="flex items-center space-x-1">
               <FaBath />
-              <span>{kost.fasilitas.kamarMandi}</span>
+              <span>{kost.spesifikasi.jumlahKamarMandi}</span>
             </div>
           )}
 
-          {/* Parkir */}
-          {kost.fasilitas?.parkir && kost.fasilitas.parkir !== 0 && (
+          {/* Parkir Motor*/}
+          {kost.spesifikasi?.jumlahParkir && kost.spesifikasi.jumlahParkir !== 0 && (
             <div className="flex items-center space-x-1">
               <FaCar />
-              <span>{kost.fasilitas.parkir}</span>
+              <span>{kost.spesifikasi.jumlahParkir}</span>
             </div>
           )}
 
           {/* Wifi */}
-          {kost.fasilitas?.wifi && kost.fasilitas.wifi !== 0 && (
+          {kost.spesifikasi?.termasukWifi && kost.spesifikasi.termasukWifi !== false && (
             <div className="flex items-center space-x-1">
               <FaWifi />
-              <span>{kost.fasilitas.wifi}</span>
+              <span>{kost.spesifikasi.termasukWifi}</span>
             </div>
           )}
         </div>
@@ -82,11 +82,11 @@ const ResultCard = ({ kost }) => {
         <div className="flex justify-between items-center mt-4">
           <div className="flex items-center text-yellow-500 space-x-1">
             <FaStar />
-            <span className="text-md font-bold text-black">{kost.rating}</span>
+            <span className="text-md font-bold text-black">{kost.averageRating}</span>
           </div>
           <div className="text-right">
-            <p className="text-lg font-bold">
-              {formatHarga(kost.harga)}/{kost.durasi}
+            <p className="text-xl font-bold">
+              {formatHarga(kost.harga)}<span className="text-gray-500 text-lg font-semibold">/{kost.durasi}</span>
             </p>
           </div>
         </div>

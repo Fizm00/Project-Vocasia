@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import NavbarSearch from '../components/NavbarSearch'; 
-import ResultCard from '../components/ResultCard'; 
-import PopupFilter from '../components/PopupFilter'; 
-import MapComponent from '../components/MapComponent';
+import NavbarSearch from '../components/SearchPage/NavbarSearch'; 
+import ResultCard from '../components/SearchPage/ResultCard'; 
+import PopupFilter from '../components/SearchPage/PopupFilter'; 
 import kostData from '../data/kostData';
 
 const SearchResultsPage = () => {
@@ -41,20 +40,23 @@ const SearchResultsPage = () => {
       {/* Navbar */}
       <NavbarSearch toggleFilterSidebar={openFilterModal} /> 
 
-      <div className="flex">
-        {/* Hasil Pencarian */}
-        <div className="w-3/4 p-4">
+      <div className="flex flex-wrap gap-2">
+        {/* Hasil Pencarian - Dua Kolom dengan sedikit gap */}
+        <div className="w-full md:w-[48%] p-4">
           <div className="space-y-4">
-            {filteredKosts.map((kost, index) => (
+            {filteredKosts.slice(0, Math.ceil(filteredKosts.length / 2)).map((kost, index) => (
               <ResultCard key={index} kost={kost} />
             ))}
           </div>
         </div>
 
-        {/* Peta Lokasi */}
-        <div className="w-1/4 p-4">
-            <MapComponent locations={filteredKosts} />
+        <div className="w-full md:w-[48%] p-4">
+          <div className="space-y-4">
+            {filteredKosts.slice(Math.ceil(filteredKosts.length / 2)).map((kost, index) => (
+              <ResultCard key={index} kost={kost} />
+            ))}
           </div>
+        </div>
       </div>
 
       {/* Modal Filter */}

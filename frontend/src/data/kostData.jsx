@@ -9,8 +9,7 @@ const kostData = [
     "spesifikasi": {
       "jumlahKamar": 1,
       "jumlahKamarMandi": 1,
-      "jumlahParkirMotor": 1,
-      "jumlahParkirMobil": 1,
+      "jumlahParkir": 1,
       "termasukListrik": true,
       "termasukWifi": true
     },
@@ -126,8 +125,7 @@ const kostData = [
       "spesifikasi": {
         "jumlahKamar": 1,
         "jumlahKamarMandi": 1,
-        "jumlahParkirMotor": 1,
-        "jumlahParkirMobil": 1,
+        "jumlahParkir": 1,
         "termasukListrik": true,
         "termasukWifi": true
       },
@@ -243,8 +241,7 @@ const kostData = [
       spesifikasi: {
         jumlahKamar: 1,
         jumlahKamarMandi: 1,
-        jumlahParkirMotor: 1,
-        jumlahParkirMobil: 1,
+        jumlahParkir: 1,
         termasukListrik: true,
         termasukAir: true,
       },
@@ -486,8 +483,7 @@ const kostData = [
       "spesifikasi": {
         "jumlahKamar": 1,
         "jumlahKamarMandi": 1,
-        "jumlahParkirMotor": 1,
-        "jumlahParkirMobil": 1,
+        "jumlahParkir": 1,
         "termasukListrik": true,
         "termasukWifi": true
       },
@@ -602,8 +598,7 @@ const kostData = [
       "spesifikasi": {
         "jumlahKamar": 1,
         "jumlahKamarMandi": 1,
-        "jumlahParkirMotor": 1,
-        "jumlahParkirMobil": 1,
+        "jumlahParkir": 1,
         "termasukListrik": true,
         "termasukWifi": true
       },
