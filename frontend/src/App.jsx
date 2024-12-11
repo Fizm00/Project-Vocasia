@@ -16,6 +16,7 @@ import SuccessBook from './pages/SuccessBook.jsx';
 import ProfilePage from './pages/ProfilePage.jsx';
 import Contact from './pages/Contact.jsx';
 import Notification from './pages/Notification.jsx';
+import RentalApproval from './components/RentalPageOwner/RentalApproval.jsx';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/notification" element={<Notification />} />
+          <Route path="/rental-approval" element={<RentalApproval />} />
         </Routes>
       </Router>
     </div>
