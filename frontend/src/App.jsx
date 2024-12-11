@@ -3,7 +3,6 @@ import LoginPage from "./pages/LoginPage.jsx";
 import "./App.css";
 import "./index.css";
 import Register from "./pages/Register.jsx";
-
 import ForgotPassword from "./pages/ForgotPassword";
 import Home from "./pages/Home";
 import SearchResultPage from "./pages/SearchResultPage.jsx";
@@ -68,6 +67,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          {/* end routes */}
         </Routes>
       </Router>
     </div>
