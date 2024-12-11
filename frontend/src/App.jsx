@@ -15,10 +15,13 @@ import SuccessBook from "./pages/SuccessBook.jsx";
 import ProfilePage from './pages/ProfilePage.jsx';
 import Contact from './pages/Contact.jsx';
 import Notification from './pages/Notification.jsx';
+import TransactionsHistory from './pages/TransactionsHistory.jsx';
+//Owner Page
 import RentalApproval from './components/RentalPageOwner/RentalApproval.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import Properties from './pages/Properties.jsx';
-import TransactionsHistory from './pages/TransactionsHistory.jsx';
+import Review from "./pages/Review.jsx";
+// Backend
 import ProtectedRoute from "./services/ProtectedRoute.jsx";
 
 
@@ -73,10 +76,12 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/notification" element={<Notification />} />
+          <Route path="/transactions-history" element={<TransactionsHistory />} />
+          {/* Route Owner Page */}
           <Route path="/rental-approval" element={<RentalApproval />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="/properties" element={<Properties />} />
-          <Route path="/transactions-history" element={<TransactionsHistory />} />
+          <Route path="/reviews" element={<Review />}/>
         </Routes>
       </Router>
     </div>
