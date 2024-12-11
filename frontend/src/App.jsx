@@ -33,43 +33,6 @@ function App() {
             element={<DetailPage />}
             key="detail"
           ></Route>
-
-          {/* ROUTE YANG MEMBUTUHKAN TOKEN (AUTH) */}
-          <Route
-            path="/riwayat-sewa"
-            element={
-              <ProtectedRoute>
-                <RentalHistory />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/booking"
-            element={
-              <ProtectedRoute>
-                <Booking />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/booking/:id"
-            element={
-              <ProtectedRoute>
-                <Booking />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="/payment"
-            element={
-              <ProtectedRoute>
-                <Payment />
-              </ProtectedRoute>
-            }
-          />
-
-          {/* end routes */}
           {/* ROUTE YANG MEMBUTUHKAN TOKEN (AUTH) */}
           <Route
             path="/riwayat-sewa"
