@@ -22,6 +22,7 @@ import RentalApproval from './components/RentalPageOwner/RentalApproval.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import Properties from './pages/Properties.jsx';
 import Review from "./pages/Review.jsx";
+import Verification from "./pages/Verification.jsx";
 // Backend
 import ProtectedRoute from "./services/ProtectedRoute.jsx";
 
@@ -84,6 +85,7 @@ function App() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="/properties" element={<Properties />} />
           <Route path="/reviews" element={<Review />}/>
+          <Route path="/verification" element={<Verification />} />
         </Routes>
       </Router>
     </div>
