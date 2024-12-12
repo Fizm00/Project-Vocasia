@@ -51,16 +51,14 @@ const SuccessBook = () => {
 
   if (!kost || !payment || kost.status !== "Disetujui" || payment.payment_status !== "Disetujui") {
     return (
-      <div className="min-h-screen flex flex-col bg-gray-100">
+      <div className="min-h-screen flex flex-col bg-gray-100 mb-9">
         <Navbar />
-        <main className="container mx-auto flex-grow px-4 lg:px-8 py-8 bg-white rounded-lg shadow-lg mt-12">
+        <main className="container mx-auto flex-grow px-4 lg:px-8 py-4 bg-white rounded-lg shadow-lg mt-4">
           <h2 className="text-lg font-semibold text-red-600 mb-6 flex items-center">
             Pengajuan Sewa Gagal! <span className="ml-2 text-red-700 text-xl">✖</span>
           </h2>
           <div className="flex justify-center">
-            <p className="text-gray-800 text-lg">
-              Status pembayaran atau status booking belum disetujui.
-            </p>
+            <p className="text-gray-800 text-lg">Status pembayaran atau status booking belum disetujui.</p>
           </div>
         </main>
         <Footer />
@@ -74,16 +72,16 @@ const SuccessBook = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <div className="flex-grow container mx-auto px-4 lg:px-8 py-8 mb-16">
-        <main className="p-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="md:col-span-2">
-              <h2 className="text-2xl font-extrabold text-gray-800 mt-4 flex items-center">
+      <div className="flex-grow container mx-auto px-4 lg:px-8 py-4 mt-0">
+        <main className="p-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            <div className="md:col-span-2 flex flex-col justify-start">
+              <h2 className="text-2xl font-extrabold text-gray-800 flex items-center">
                 Pengajuan Sewa Berhasil!{" "}
                 <BsCheckCircle className="ml-2 text-green-700 text-2xl" />
               </h2>
-              <div className="space-y-8">
-                <h3 className="text-md font-bold text-gray-800 mt-8">Detail Pengajuan</h3>
+              <div className="space-y-6 mt-2">
+                <h3 className="text-md font-bold text-gray-800 mt-4">Detail Pengajuan</h3>
                 <div className="space-y-6 text-gray-900 text-sm">
                   <div className="flex justify-between">
                     <span className="font-medium text-gray-600">No. Invoice</span>
@@ -105,10 +103,10 @@ const SuccessBook = () => {
                     <span className="font-medium text-gray-600">Status Transaksi</span>
                     <span className="text-gray-800">{payment.payment_status}</span>
                   </div>
-                  <div className="flex justify-start">
+                  <div className="flex justify-start mt-8">
                     <Link
                       to="/"
-                      className="bg-[#193F3D] text-white px-7 py-2 rounded-md hover:bg-green-700 text-sm shadow-md transition-all mt-10"
+                      className="bg-[#193F3D] text-white px-7 py-2 rounded-md hover:bg-green-900 text-sm shadow-md transition-all"
                     >
                       Beranda
                     </Link>
@@ -116,7 +114,7 @@ const SuccessBook = () => {
                 </div>
               </div>
             </div>
-            <div className="bg-white rounded-lg shadow-lg hover:shadow-2xl transform transition-all duration-300 p-4 w-full max-w-[1200px] ml-4 mt-8 hover:scale-105 hover:translate-y-2">
+            <div className="bg-white rounded-lg shadow-lg hover:shadow-2xl transform transition-all duration-300 p-4 mx-auto w-full max-w-lg sm:max-w-xl md:max-w-2xl hover:scale-105 hover:translate-y-2">
               <div className="flex items-center space-x-4 mb-4">
                 <img
                   src={kost.image}
