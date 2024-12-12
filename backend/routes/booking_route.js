@@ -9,7 +9,6 @@ router.get("/booking/:id", booking_controller.getBookingById);
 router.post("/booking", authenticateJWT, booking_controller.createBooking);
 router.post(
   "/midtrans-notification",
-  authenticateJWT,
   booking_controller.handleMidtransNotification
 );
 // router.put("/booking/:id", booking_controller.updateBookingById);

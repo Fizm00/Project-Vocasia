@@ -122,6 +122,9 @@ const createBooking = async (req, res) => {
     };
     await booking.save();
 
+    console.log("Notification Headers:", req.headers);
+    console.log("Notification Body:", req.body);
+
     // Response ke client
     res.status(201).json({
       status: "success | Created",
@@ -192,6 +195,7 @@ const handleMidtransNotification = async (req, res) => {
       booking.payment.payment_method = notification.payment_type; // Metode pembayaran
       booking.payment.payment_date = new Date(); // Waktu pembayaran
       booking.status = "confirmed"; // Ubah status booking
+      booking.status.payment = "confirmed";
     } else if (transactionStatus === "expire") {
       booking.payment.status = "failed";
       booking.status = "cancelled";
@@ -203,10 +207,14 @@ const handleMidtransNotification = async (req, res) => {
     // Simpan perubahan di database
     await booking.save();
 
+    console.log("Notification Headers:", req.headers);
+    console.log("Notification Body:", req.body);
+
     res.status(200).json({
       status: "success | OK",
       message: "Notification Handled Successfully",
       success: true,
+      data: booking,
     });
   } catch (error) {
     res.status(500).json({
