@@ -4,7 +4,7 @@ import { FaHistory, FaCreditCard, FaUserPlus } from 'react-icons/fa';
 
 const Menu = ({image}) => {
     return (
-        <div className="w-1/4 pl-8">
+        <div className="w-full sm:w-1/4 mb-8 sm:mb-0">
             <div className="p-6 pl-8 bg-white rounded-lg shadow-lg border">
                 <div className="flex items-center mb-4">
                     <img
@@ -36,7 +36,7 @@ const Menu = ({image}) => {
                 </Link>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Menu
+export default Menu;

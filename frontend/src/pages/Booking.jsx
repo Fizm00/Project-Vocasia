@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Booking/Header";
-import JumlahPenyewa from "../components/Booking/JumlahPenyewa";
 import DurasiNgekos from "../components/Booking/DurasiNgekos";
 import TanggalMulai from "../components/Booking/TanggalMulai";
 import InformasiPenyewa from "../components/Booking/InformasiPenyewa";
@@ -12,7 +11,7 @@ import { motion } from "framer-motion";
 const Booking = () => {
   const [jumlahPenyewa, setJumlahPenyewa] = useState(1);
   const [durasi, setDurasi] = useState(1);
-  const [tanggalMulai, setTanggalMulai] = useState(""); // Tanggal mulai dipilih pengguna
+  const [tanggalMulai, setTanggalMulai] = useState("");
   const [catatan, setCatatan] = useState("");
   const [totalBiaya, setTotalBiaya] = useState(1600000);
 
@@ -42,26 +41,6 @@ const Booking = () => {
               transition={{ ...fadeUp.transition, delay: 0.1 }}
             >
               <InformasiPenyewa />
-            </motion.div>
-
-            <motion.div
-              className="mt-4 w-full lg:w-[70%] lg:ml-[2.5rem]"
-              initial={fadeUp.initial}
-              animate={fadeUp.animate}
-              transition={{ ...fadeUp.transition, delay: 0.2 }}
-            >
-              <hr className="border-gray-300" />
-            </motion.div>
-
-            <motion.div
-              initial={fadeUp.initial}
-              animate={fadeUp.animate}
-              transition={{ ...fadeUp.transition, delay: 0.3 }}
-            >
-              <JumlahPenyewa
-                jumlahPenyewa={jumlahPenyewa}
-                setJumlahPenyewa={setJumlahPenyewa}
-              />
             </motion.div>
 
             <motion.div
