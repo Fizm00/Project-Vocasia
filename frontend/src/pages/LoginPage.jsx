@@ -1,12 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import bgLogin from "../assets/background-login.jpg";
 import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { loginUser } from "../api/auth";
+import bgLogin from "../assets/background-login.jpg";
 
 const LoginPage = () => {
-  // const [formData, setFormData] = useState({ email: "", password: "" });
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({ email: "", password: "" });
@@ -30,11 +29,6 @@ const LoginPage = () => {
     }, 2000);
   };
 
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData((prev) => ({ ...prev, [name]: value }));
-  // };
-
   const handleBlur = (e) => {
     const { name, value } = e.target;
     let errorMessage = "";
@@ -42,7 +36,7 @@ const LoginPage = () => {
     if (name === "email" && !/\S+@\S+\.\S+/.test(value)) {
       errorMessage = "Email tidak valid.";
     }
-    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const passwordRegex = /^(?=.[A-Z])(?=.\d)[A-Za-z\d]{8,}$/;
     if (name === "password" && !passwordRegex.test(value)) {
       errorMessage =
         "Password harus minimal 8 karakter, mengandung satu huruf besar, dan satu angka.";
@@ -55,31 +49,18 @@ const LoginPage = () => {
     event.preventDefault();
 
     try {
-      const userData = await loginUser(email, password);
-      console.log("User Login Success:" + userData);
-
-      if (!userData) {
-        throw new Error("User not found.");
+      if (email === "user@example.com" && password === "password123") {
+        const userData = { name: "John Doe", email };
+        localStorage.setItem("user", JSON.stringify(userData));
+        alert("Login berhasil!");
+        navigate("/home");
+      } else {
+        throw new Error("Email atau password salah.");
       }
-
-      navigate("/home");
     } catch (error) {
       setErrors((prev) => ({ ...prev, email: error.message }));
       console.error("Login failed:", error);
     }
-
-    // if (
-    //   errors.email ||
-    //   errors.password ||
-    //   !formData.email ||
-    //   !formData.password
-    // ) {
-    //   alert("Harap isi semua kolom dengan benar.");
-    //   return;
-    // }
-
-    alert("Login berhasil!");
-    navigate("/home");
   };
 
   const handleRegister = () => {
@@ -132,7 +113,6 @@ const LoginPage = () => {
                 id="email"
                 name="email"
                 value={email}
-                // onChange={handleChange}
                 onChange={(e) => setEmail(e.target.value)}
                 onBlur={handleBlur}
                 className={`w-full p-3 border ${
@@ -159,7 +139,6 @@ const LoginPage = () => {
                 id="password"
                 name="password"
                 value={password}
-                // onChange={handleChange}
                 onChange={(e) => setPassword(e.target.value)}
                 onBlur={handleBlur}
                 className={`w-full p-3 border ${
