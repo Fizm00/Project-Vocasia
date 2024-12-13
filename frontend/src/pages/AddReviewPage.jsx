@@ -59,7 +59,7 @@ const AddReview = () => {
               <img src={rentalDetails.image} alt="Kost" className="w-full h-48 object-cover rounded-lg" />
             </div>
             <div className='w-full md:w-2/3 md:pl-6'>
-              <p className="mt-2 text-center text-sm py-1 px-1 border border-gray-300 border-2 font-semibold rounded-lg w-full md:w-2/3">
+              <p className="mt-2 text-center text-sm py-1 px-1 border border-gray-300 font-semibold rounded-lg w-full md:w-2/3">
                 {formatDate(rentalDetails.startDate)} - {formatDate(rentalDetails.endDate)}
               </p>
               <p className="mt-3 text-xl font-bold">{rentalDetails.name}</p>
