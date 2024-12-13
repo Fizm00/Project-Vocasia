@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import logo from '../assets/logo-anakkost.png';
 
-const NavbarSearch = () => {
+const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -109,4 +109,4 @@ const NavbarSearch = () => {
   );
 };
 
-export default NavbarSearch;
+export default Navbar;

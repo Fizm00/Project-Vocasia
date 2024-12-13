@@ -46,9 +46,9 @@ const DetailPage = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <div className="container mx-auto p-4 sm:p-6 lg:p-10 m-4">
+      <div className="container mx-auto p-4 sm:p-6 lg:p-6">
         {/* Detail Kost */}
-        <div className="p-6">
+        <div className="p-8 pt-4">
           {/* Gambar Kost */}
           <DetailImage
             images={kostDetail.images} 
@@ -76,13 +76,13 @@ const DetailPage = () => {
 
 
           {/* Section Detail */}
-          <div className="flex flex-col sm:flex-row justify-between space-y-4 sm:space-y-0 sm:space-x-1 mt-12">
+          <div className="flex flex-col sm:flex-row justify-start space-y-4 sm:space-y-0 sm:space-x-1 mt-12">
             {/* Deskripsi Kost */}
             <div className="h-full sm:w-2/3 p-1">
               <Description kostDetail={kostDetail} />
             </div>
             {/* Booking Kost */}
-            <div className="h-full sm:w-1/3 p-6 bg-white border rounded-lg shadow-lg">
+            <div className="h-full sm:w-1/4 p-6 bg-white border rounded-lg shadow-lg">
               <BookingSection kostDetail={kostDetail} />
             </div>  
           </div>

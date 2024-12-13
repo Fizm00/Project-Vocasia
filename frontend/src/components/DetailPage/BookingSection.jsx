@@ -22,7 +22,7 @@ const BookingSection = ({ kostDetail }) => {
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto">
+    <div className="p-2 max-w-md mx-auto">
       {/* Harga dan Durasi */}
       <div className="flex flex-wrap justify-between space-x-1 mb-4">
         <div className="w-full md:w-2/3">
@@ -34,38 +34,13 @@ const BookingSection = ({ kostDetail }) => {
             <span className="text-gray-500 text-sm md:text-md font-semibold">/{kostDetail.durasi}</span>
           </p>
         </div>
-        <div className="w-full md:w-1/4 border text-center py-1 px-4 border border-2 rounded-md mt-2 md:mt-0 md:px-1">
+        <div className="w-full mt-2 border border-darkGreen text-center py-1 px-4 rounded-md md:mt-4 md:px-1">
           <p className="text-sm md:text-md text-darkGreen font-bold">{kostDetail.tipeKost}</p>
         </div>
       </div>
 
       <hr className="my-4 border-t-1 border-gray-300" />
 
-      {/* Kalender dan Input Durasi */}
-      <div className="flex flex-between space-x-2 md:space-x-2">
-        <div className="w-1/2 md:w-1/2">
-          <label className="block text-sm font-semibold">Mulai Kost:</label>
-          <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-            className="w-full p-2 border border-gray-300 rounded-lg"
-            dateFormat="dd/MM/yyyy"
-          />
-        </div>
-        <div className="w-1/2 md:w-1/2">
-          <label className="block text-sm font-semibold">Durasi:</label>
-          <div className="flex items-center mb-2">
-            <input
-              type="number"
-              value={jumlahDurasi}
-              onChange={(e) => setjumlahDurasi(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-lg"
-              min="1"
-            />
-            <span className="ml-2 text-sm md:text-lg font-semibold">{kostDetail.durasi}</span>
-          </div>
-        </div>
-      </div>
 
       {/* Tombol Pemesanan */}
       <div className="space-y-4 mt-4">

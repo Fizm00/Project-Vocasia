@@ -1,6 +1,14 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
 
 const CatatanTambahan = ({ catatan, setCatatan }) => {
+  const navigate = useNavigate();
+
+  const handleAjukanSewa = () => {
+    navigate("/Riwayat-sewa");
+  }
+
   return (
     <section className="mt-4 mb-16 lg:ml-[2.5rem] space-y-4">
       <h2 className="text-lg font-bold text-gray-800">Catatan Tambahan</h2>
@@ -13,7 +21,10 @@ const CatatanTambahan = ({ catatan, setCatatan }) => {
         aria-label="Isi catatan tambahan"
       />
       <div className="mt-4">
-        <button className="bg-darkGreen text-white rounded-lg px-6 py-2 hover:bg-green-700 transition-transform transform hover:scale-105">
+        <button 
+          onClick={handleAjukanSewa}
+          className="bg-darkGreen text-white rounded-lg px-6 py-2 hover:bg-green-700 transition-transform transform hover:scale-105"
+        >
           Ajukan Sewa
         </button>
       </div>
