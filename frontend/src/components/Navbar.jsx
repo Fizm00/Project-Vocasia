@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import logo from "../assets/logo-anakkost.png";
 import { logoutUser } from "../api/auth";
@@ -7,10 +7,21 @@ import { logoutUser } from "../api/auth";
 const NavbarSearch = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [username, setUsername] = useState("");
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleLogout = () => {
+    logoutUser();
+    navigate("/login");
   };
 
   useEffect(() => {
@@ -64,14 +75,32 @@ const NavbarSearch = () => {
             <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-white scale-x-0 transition-all duration-300 group-hover:scale-x-100"></span>
           </Link>
           {isLoggedIn ? (
-            <div className="flex items-center space-x-3">
-              <FaUserCircle className="text-white text-2xl " />
-              <button>{logoutUser}a</button>
-              <Link to="/profile" className="hover:bg-hoverGreen">
+            <div className="relative">
+              <div
+                className="flex items-center space-x-3 cursor-pointer"
+                onClick={toggleDropdown}
+              >
+                <FaUserCircle className="text-white text-2xl" />
                 <span className="text-white text-md font-semibold">
                   Hi, {username}
                 </span>
-              </Link>
+              </div>
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg overflow-hidden">
+                  <Link
+                    to="/profile"
+                    className="block px-4 py-2 text-sm text-darkGreen hover:bg-gray-100"
+                  >
+                    Profile
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="block w-full text-left px-4 py-2 text-sm text-darkGreen hover:bg-gray-100"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
             </div>
           ) : (
             <Link
@@ -108,17 +137,18 @@ const NavbarSearch = () => {
           <Link to="/contact" className="text-md font-semibold text-white">
             Kontak
           </Link>
-          {isLoggedIn ? (
-            <div className="flex items-center space-x-3 text-white">
-              <FaUserCircle className="text-2xl" />
+          {isLoggedIn && (
+            <div className="flex flex-col items-start space-y-2">
+              <Link to="/profile" className="text-md font-semibold text-white">
+                Profile
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="text-md font-semibold text-white"
+              >
+                Logout
+              </button>
             </div>
-          ) : (
-            <Link
-              to="/login"
-              className="bg-white text-darkGreen text-sm font-semibold py-2 px-6 rounded-full hover:bg-hoverGreen hover:text-white transition duration-200"
-            >
-              Masuk
-            </Link>
           )}
         </div>
       )}

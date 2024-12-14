@@ -64,10 +64,17 @@ const logoutUser = () => {
 
 const forgotPassword = async (email) => {
   try {
-    const response = await axiosInstance.post("/forgot-password", { email });
+    const response = await axiosInstance.post(
+      "/forgot-password",
+      { email },
+      {
+        headers: { Authorization: null },
+      }
+    );
+    console.log("auth -> forgotPassword -> response:" + response.data);
     return response.data;
   } catch (error) {
-    throw error.response.data;
+    throw error.response.data || "An error occurred";
   }
 };
 
