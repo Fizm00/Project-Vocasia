@@ -8,30 +8,9 @@ const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     console.log("Request Body:", req.body);
     console.log("File Info:", file);
-    cb(null, "./uploads"); // Folder penyimpanan
-
-    const userId = req.body.user_id;
-    if (!userId) {
-      return cb(new Error("User ID is required"), null);
-    }
-    //     cb(null, "../storages/uploads/images/" + User._id);
-    // const uploadPath = path.join(__dirname, "storages", "uploads", "images");
-
-    const uploadPath = path.join(__dirname, "..", "uploads", "images", userId);
-    // Buat folder jika belum ada
-    if (!fs.existsSync(uploadPath)) {
-      fs.mkdirSync(uploadPath, { recursive: true });
-    }
-
-    //   cb(null, uploadPath);
-    // }
-    cb(null, uploadPath); // Folder tempat menyimpan file
+    cb(null, "public/uploads"); // Folder penyimpanan
   },
   filename: function (req, file, cb) {
-    // cb(
-    //   null,
-    //   Date.now() + "-" + file.originalname + path.extname(file.originalname)
-    // );
     cb(null, `${Date.now()}-${file.originalname}`);
   },
 });

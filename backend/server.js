@@ -39,13 +39,13 @@ app.use(passport.session());
 app.use("/api/v1", routes);
 
 // upload images
-const uploadDir = path.join(__dirname, "../uploads");
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
-}
+// const uploadDir = path.join(__dirname, "../uploads");
+// if (!fs.existsSync(uploadDir)) {
+//   fs.mkdirSync(uploadDir);
+// }
 
 // app.use("/uploads", express.static("uploads"));
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
 
 // start server
 const port = process.env.PORT;
@@ -55,4 +55,8 @@ app.listen(port, () => {
 
   console.log(`Example app listening on port ${port}`);
   console.log("MONGODB_URI:", process.env.MONGO_URI);
+  console.log(
+    "Serving static files from:",
+    path.join(__dirname, "public/uploads")
+  );
 });

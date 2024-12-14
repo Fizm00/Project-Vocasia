@@ -47,7 +47,7 @@ const createProperty = async (req, res) => {
   try {
     // File gambar yang diunggah
     // const images = req.files.map((file) => file.path); // Simpan path file
-    const images = req.files.map((file) => "/uploads" + file.filename); // Simpan path file
+    const images = req.files.map((file) => "/uploads/" + file.filename); // Simpan path file
 
     // Data lain dari request
     const {
@@ -86,6 +86,7 @@ const createProperty = async (req, res) => {
       message: "Property berhasil dibuat",
       property,
       savedProperty: savedProperty._id + savedProperty,
+      filePath: images,
     });
   } catch (error) {
     res
@@ -124,8 +125,6 @@ const deletePropertyById = async (req, res) => {
     //   success: true,
     //   data: property,
     // });
-
-    const userId = req.body.user_id;
 
     const propertyId = req.params.id;
     const property = await Property.findById(propertyId);
