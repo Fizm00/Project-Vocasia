@@ -46,7 +46,8 @@ const getPropertyById = async (req, res) => {
 const createProperty = async (req, res) => {
   try {
     // File gambar yang diunggah
-    const images = req.files.map((file) => file.path); // Simpan path file
+    // const images = req.files.map((file) => file.path); // Simpan path file
+    const images = req.files.map((file) => "/uploads" + file.filename); // Simpan path file
 
     // Data lain dari request
     const {

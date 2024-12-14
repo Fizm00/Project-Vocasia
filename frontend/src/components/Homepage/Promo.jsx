@@ -23,9 +23,11 @@ const Promo = () => {
       } catch (error) {
         setError(error.message);
         setLoading(false);
+      } finally {
+        setLoading(false);
       }
     };
-    setKosts(fetchedProperty);
+    fetchedProperty();
   }, []);
 
   // useEffect(() => {
@@ -141,7 +143,7 @@ const Promo = () => {
               onClick={() => handleCardClick(kost._id)}
             >
               <img
-                src={kost.image}
+                src={apiUrl + kost.images[0]}
                 alt={kost.name}
                 className="h-40 w-full object-cover rounded-lg mb-4 transition-transform duration-500 group-hover:scale-110"
               />
