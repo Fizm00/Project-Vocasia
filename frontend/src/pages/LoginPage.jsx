@@ -166,7 +166,10 @@ const LoginPage = () => {
             </div>
             <motion.div className="mt-4 text-right" variants={itemVariants}>
               <button
-                onClick={() => navigate("/forgot-password")}
+                onClick={(event) => {
+                  event.preventDefault();
+                  navigate("/forgot-password");
+                }}
                 className="text-darkGreen text-sm hover:text-hoverGreen hover:underline"
               >
                 Lupa Password?

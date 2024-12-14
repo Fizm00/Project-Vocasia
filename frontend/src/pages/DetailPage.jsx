@@ -1,28 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import kost from '../data/kostData';
-import DetailImage from '../components/DetailPage/DetailImage'; 
-import Description from '../components/DetailPage/Description'; 
-import MapSection from '../components/DetailPage/MapSection';
-import RatingDetail from '../components/DetailPage/RatingDetail';
-import BookingSection from '../components/DetailPage/BookingSection'
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import kost from "../data/kostData";
+import DetailImage from "../components/DetailPage/DetailImage";
+import Description from "../components/DetailPage/Description";
+import MapSection from "../components/DetailPage/MapSection";
+import RatingDetail from "../components/DetailPage/RatingDetail";
+import BookingSection from "../components/DetailPage/BookingSection";
 
 const DetailPage = () => {
-  const { id } = useParams();  
-  const [kostDetail, setKostDetail] = useState(null); 
-  const [selectedImage, setSelectedImage] = useState(null); 
+  const { id } = useParams();
+  const [kostDetail, setKostDetail] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const foundKost = kost.find((kost) => kost.id === parseInt(id));
+    const foundKost = kost.find((kost) => kost.id);
     if (foundKost) {
       setKostDetail(foundKost);
-      setSelectedImage(foundKost.images[0]); 
+      setSelectedImage(foundKost.images[0]);
+      navigate("/property/" + id);
     } else {
-      navigate('/');
+      navigate("/");
     }
   }, [id, navigate]);
 
@@ -50,10 +51,7 @@ const DetailPage = () => {
         {/* Detail Kost */}
         <div className="p-8 pt-4">
           {/* Gambar Kost */}
-          <DetailImage
-            images={kostDetail.images} 
-            openModal={openModal} 
-          />
+          <DetailImage images={kostDetail.images} openModal={openModal} />
 
           {/* Modal Gambar */}
           {isModalOpen && (
@@ -74,7 +72,6 @@ const DetailPage = () => {
             </div>
           )}
 
-
           {/* Section Detail */}
           <div className="flex flex-col sm:flex-row justify-start space-y-4 sm:space-y-0 sm:space-x-1 mt-12">
             {/* Deskripsi Kost */}
@@ -84,7 +81,7 @@ const DetailPage = () => {
             {/* Booking Kost */}
             <div className="h-full sm:w-1/4 p-6 bg-white border rounded-lg shadow-lg">
               <BookingSection kostDetail={kostDetail} />
-            </div>  
+            </div>
           </div>
 
           {/* Maps Section */}
@@ -96,7 +93,6 @@ const DetailPage = () => {
           <div className="mt-10">
             <RatingDetail kostDetail={kostDetail} />
           </div>
-
         </div>
       </div>
       <Footer />
