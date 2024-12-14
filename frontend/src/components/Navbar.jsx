@@ -3,26 +3,22 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import logo from "../assets/logo-anakkost.png";
 import { logoutUser } from "../api/auth";
+import { useAuthStore } from "../store/useAuthStore";
 
 const Navbar = () => {
+  const {token, name, id, email} = useAuthStore();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [username, setUsername] = useState("");
   const navigate = useNavigate();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      const userData = JSON.parse(storedUser);
-      setUser(userData);
-      setIsLoggedIn(true);
-      setProfileImage(userData.profileImage);
-    }
-  }, []);
+      console.log(token);
+      setIsLoggedIn(!!token);
+  }, [token]);
 
   // const handleLogout = () => {
   //   localStorage.removeItem("user");
@@ -41,15 +37,6 @@ const Navbar = () => {
     logoutUser();
     navigate("/login");
   };
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const name = localStorage.getItem("name");
-    setIsLoggedIn(!!token);
-    if (name) {
-      setUsername(JSON.parse(name));
-    }
-  }, []);
 
   return (
     <header className="bg-darkGreen shadow-md p-4 sticky top-0 z-50">
@@ -91,7 +78,7 @@ const Navbar = () => {
               >
                 <FaUserCircle className="text-white text-2xl" />
                 <span className="text-white text-md font-semibold">
-                  Hi, {username}
+                  Hi, {name}
                 </span>
               </div>
               {isDropdownOpen && (

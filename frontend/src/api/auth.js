@@ -5,10 +5,6 @@ const loginUser = async (email, password) => {
   try {
     const response = await axiosInstance.post("/login", { email, password });
 
-    // Save to localStorage
-    localStorage.setItem("token", response.data.data.token);
-    localStorage.setItem("email", JSON.stringify(response.data.data.email));
-    localStorage.setItem("name", JSON.stringify(response.data.data.name));
     console.log(response.data.data);
 
     return response.data.data; // Return the response data

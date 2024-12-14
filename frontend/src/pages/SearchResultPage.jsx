@@ -5,6 +5,8 @@ import PopupFilter from "../components/SearchPage/PopupFilter";
 // import kostData from "../data/kostData";
 import axios from "axios";
 import { logoutUser } from "../api/auth";
+import { getProperty } from "../api/property";
+import { env } from "../config/env";
 
 const SearchResultsPage = () => {
   const [filters, setFilters] = useState({
@@ -15,6 +17,8 @@ const SearchResultsPage = () => {
     name: "",
   });
 
+  const response = {id:1}
+
   const [kosts, setKosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -23,18 +27,19 @@ const SearchResultsPage = () => {
 
   const apiUrl = "http://localhost:3000/api/v1";
   useEffect(() => {
-    const fetchedProperty = async () => {
+    const fetch = async () => {
       try {
-        const response = await axios.get(apiUrl + "/properties");
-        console.log("fetched property" + response.data.data);
-        setKosts(response.data.data);
-        setLoading(false);
+        const response = await getProperty()
+        setKosts(response.data);
+        setLoading(false);  
       } catch (error) {
-        setError(error.message);
+        console.error(error)
+        setLoading(false);
+      } finally {
         setLoading(false);
       }
-    };
-    fetchedProperty();
+    }
+    fetch();
   }, []);
 
   useEffect(() => {
@@ -88,6 +93,7 @@ const SearchResultsPage = () => {
       <NavbarSearch toggleFilterSidebar={openFilterModal} />
 
       <div className="flex flex-wrap gap-2">
+        <h1>{response?.email?? env.API_URL ?? process.env.REACT_APP_BE_BASE_URL}</h1>
         {/* Hasil Pencarian - Dua Kolom dengan sedikit gap */}
         <div className="w-full md:w-[48%] p-4">
           <div className="space-y-4">

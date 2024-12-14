@@ -16,7 +16,6 @@ const loginUser = async (req, res) => {
 
     if (email && password) {
       // == original code ==
-
       const user = await User.findOne({ email });
       if (!user) {
         return res.status(404).json({ message: "User Not Found" });

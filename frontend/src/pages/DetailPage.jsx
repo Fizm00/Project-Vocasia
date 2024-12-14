@@ -17,7 +17,7 @@ const DetailPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const foundKost = kost.find((kost) => kost.id);
+    const foundKost = kost.find((kost) => kost.id); // data fetch
     if (foundKost) {
       setKostDetail(foundKost);
       setSelectedImage(foundKost.images[0]);

@@ -3,20 +3,18 @@ import { Link } from "react-router-dom";
 import { IoFilter } from "react-icons/io5";
 import { FaSearch, FaUserCircle } from "react-icons/fa";
 import { use } from "react";
+import { useAuthStore } from "../../store/useAuthStore";
 
 const NavbarSearch = ({ toggleFilterSidebar }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [username, setUsername] = useState("");
+  const { token, id, name, email} = useAuthStore();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const name = localStorage.getItem("name");
     setIsLoggedIn(!!token);
-    if (name) {
-      setUsername(JSON.parse(name));
-    }
+    
+    
   }, []);
 
   const handleSearchChange = (e) => {
@@ -123,7 +121,7 @@ const NavbarSearch = ({ toggleFilterSidebar }) => {
               <FaUserCircle className="text-white text-2xl" />
               <Link to="/profile" className="hover:bg-hoverGreen">
                 <span className="text-white text-md font-semibold">
-                  Hi, {username}
+                  Hi, {name}
                 </span>
               </Link>
             </div>
