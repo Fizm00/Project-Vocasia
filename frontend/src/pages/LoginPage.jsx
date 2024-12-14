@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { loginUser } from "../api/auth";
+// import { loginUser } from "../api/auth";
 import bgLogin from "../assets/background-login.jpg";
 
 const LoginPage = () => {
