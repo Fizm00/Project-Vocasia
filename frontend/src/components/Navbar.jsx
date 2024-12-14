@@ -1,24 +1,35 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, Navigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
-import logo from '../assets/logo-anakkost.png';
+import logo from "../assets/logo-anakkost.png";
+import { logoutUser } from "../api/auth";
 
 const NavbarSearch = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [username, setUsername] = useState("");
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const name = localStorage.getItem("name");
+    setIsLoggedIn(!!token);
+    if (name) {
+      setUsername(JSON.parse(name));
+    }
+  }, []);
 
   return (
     <header className="bg-darkGreen shadow-md p-4 sticky top-0 z-50">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo dan Nama Web */}
         <div className="flex items-center space-x-2">
-        <img src={logo} alt="Logo" className="w-8 h-8" />
+          <img src={logo} alt="Logo" className="w-8 h-8" />
           <span className="text-lg md:text-2xl font-bold text-white">
-            AnakKost
+            <Link to="/"> AnakKost </Link>
           </span>
         </div>
 
@@ -54,7 +65,13 @@ const NavbarSearch = () => {
           </Link>
           {isLoggedIn ? (
             <div className="flex items-center space-x-3">
-              <FaUserCircle className="text-white text-2xl" />
+              <FaUserCircle className="text-white text-2xl " />
+              <button>{logoutUser}a</button>
+              <Link to="/profile" className="hover:bg-hoverGreen">
+                <span className="text-white text-md font-semibold">
+                  Hi, {username}
+                </span>
+              </Link>
             </div>
           ) : (
             <Link
