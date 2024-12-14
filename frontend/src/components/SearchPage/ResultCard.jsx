@@ -25,6 +25,8 @@ const ResultCard = ({ kost }) => {
     // navigate(`/property/${kost?._id}`);
   };
 
+  const url_domain = "http://localhost:3000";
+
   return (
     <div
       className="flex flex-col sm:flex-row sm:w-full items-start border rounded-lg shadow-lg overflow-hidden bg-white transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl cursor-pointer"
@@ -44,7 +46,7 @@ const ResultCard = ({ kost }) => {
           className="flex flex-col sm:flex-row w-full h-full"
         >
           <img
-            src={kost.images[0]}
+            src={url_domain + kost.images[0]}
             alt={kost.name || "Name Kost"}
             className="w-full h-full object-cover"
           />
