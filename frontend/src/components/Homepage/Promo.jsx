@@ -143,8 +143,12 @@ const Promo = () => {
               onClick={() => handleCardClick(kost._id)}
             >
               <img
-                src={apiUrl + kost.images[0]}
-                alt={kost.name}
+                // src={`http://localhost:3000${kost.images[0]}`}
+                src={
+                  "http://localhost:3000" + kost.images[0] ||
+                  "https://via.placeholder.com/150"
+                }
+                alt={kost.images[0]}
                 className="h-40 w-full object-cover rounded-lg mb-4 transition-transform duration-500 group-hover:scale-110"
               />
               <div className="flex items-center justify-between mb-2">

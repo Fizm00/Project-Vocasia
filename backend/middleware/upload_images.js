@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     console.log("Request Body:", req.body);
     console.log("File Info:", file);
-    cb(null, "./uploads"); // Folder penyimpanan
+    cb(null, "./uploads/"); // Folder penyimpanan
 
     const userId = req.body.user_id;
     if (!userId) {

@@ -39,10 +39,14 @@ app.use(passport.session());
 app.use("/api/v1", routes);
 
 // upload images
-const uploadDir = path.join(__dirname, "../uploads");
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
-}
+// const uploadDir = path.join(__dirname, "../uploads");
+// if (!fs.existsSync(uploadDir)) {
+//   fs.mkdirSync(uploadDir);
+// }
+app.get("/uploads/*", (req, res) => {
+  console.log("Requested file:", req.url);
+  res.status(404).send("File not found");
+});
 
 // app.use("/uploads", express.static("uploads"));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
