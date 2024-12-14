@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
 import { motion } from "framer-motion";
-// import { loginUser } from "../api/auth";
+import { loginUser } from "../api/auth";
 import bgLogin from "../assets/background-login.jpg";
 
 const LoginPage = () => {
@@ -49,14 +49,14 @@ const LoginPage = () => {
     event.preventDefault();
 
     try {
-      if (email === "user@example.com" && password === "password123") {
-        const userData = { name: "John Doe", email };
-        localStorage.setItem("user", JSON.stringify(userData));
-        alert("Login berhasil!");
-        navigate("/home");
-      } else {
-        throw new Error("Email atau password salah.");
+      const userData = await loginUser(email, password);
+      console.log("User Login Success:" + userData);
+
+      if (!userData) {
+        throw new Error("User not found.");
       }
+
+      navigate("/home");
     } catch (error) {
       setErrors((prev) => ({ ...prev, email: error.message }));
       console.error("Login failed:", error);
