@@ -52,7 +52,7 @@ const loginUser = async (req, res) => {
 };
 
 const registerUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, phone } = req.body;
 
   try {
     // Cek apakah email sudah terdaftar
@@ -73,6 +73,7 @@ const registerUser = async (req, res) => {
       email,
       password: hashedPassword,
       otp,
+      phone,
     });
 
     // Kirim OTP melalui email

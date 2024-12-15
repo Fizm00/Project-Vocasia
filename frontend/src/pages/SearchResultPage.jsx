@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import NavbarSearch from "../components/SearchPage/NavbarSearch";
 import ResultCard from "../components/SearchPage/ResultCard";
 import PopupFilter from "../components/SearchPage/PopupFilter";
-// import kostData from "../data/kostData";
-import axios from "axios";
-import { logoutUser } from "../api/auth";
+
+// import usePropertyStore from "../store/usePropertyStore";
+import axiosInstance from "../config/axiosInstance";
 
 const SearchResultsPage = () => {
+  // const { getProperty } = usePropertyStore();
   const [filters, setFilters] = useState({
     property_type: "",
     city: "",
@@ -21,31 +22,31 @@ const SearchResultsPage = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const apiUrl = "http://localhost:3000/api/v1";
+  // const apiUrl = "http://localhost:3000/api/v1";
   useEffect(() => {
     const fetchedProperty = async () => {
       try {
-        const response = await axios.get(apiUrl + "/properties");
+        const response = await axiosInstance.get("/properties");
         console.log("fetched property" + response.data.data);
         setKosts(response.data.data);
         setLoading(false);
       } catch (error) {
-        setError(error.message);
+        setError("FetchedProperty | setError:" + error.message);
         setLoading(false);
       }
     };
     fetchedProperty();
   }, []);
 
-  useEffect(() => {
-    if (!loading) {
-      console.log("Kosts after fetch:", kosts);
-    }
-  }, [loading, kosts]);
+  // useEffect(() => {
+  //   if (!loading) {
+  //     console.log("Kosts after fetch:", kosts);
+  //   }
+  // }, [loading, kosts]);
 
-  useEffect(() => {
-    console.log("Initial kosts state:", kosts);
-  }, [kosts]);
+  // useEffect(() => {
+  //   console.log("Initial kosts state:", kosts);
+  // }, [kosts]);
 
   const openFilterModal = () => {
     setIsModalOpen(true);
