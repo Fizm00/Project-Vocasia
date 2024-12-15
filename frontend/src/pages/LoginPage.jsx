@@ -49,14 +49,14 @@ const LoginPage = () => {
     event.preventDefault();
 
     try {
-      if (email === "user@example.com" && password === "password123") {
-        const userData = { name: "John Doe", email };
-        localStorage.setItem("user", JSON.stringify(userData));
-        alert("Login berhasil!");
-        navigate("/home");
-      } else {
-        throw new Error("Email atau password salah.");
+      const userData = await loginUser(email, password);
+      console.log("User Login Success:" + userData);
+
+      if (!userData) {
+        throw new Error("User not found.");
       }
+
+      navigate("/home");
     } catch (error) {
       setErrors((prev) => ({ ...prev, email: error.message }));
       console.error("Login failed:", error);
@@ -166,7 +166,10 @@ const LoginPage = () => {
             </div>
             <motion.div className="mt-4 text-right" variants={itemVariants}>
               <button
-                onClick={() => navigate("/forgot-password")}
+                onClick={(event) => {
+                  event.preventDefault();
+                  navigate("/forgot-password");
+                }}
                 className="text-darkGreen text-sm hover:text-hoverGreen hover:underline"
               >
                 Lupa Password?

@@ -37,17 +37,44 @@ const registerUser = async (name, phone, email, password, confirmPassword) => {
 };
 
 const logoutUser = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("email");
-  localStorage.removeItem("name");
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.warn("Token not found | warn");
+      // throw new Error("Token not found | throw");
+      return;
+    }
+
+    const response = axiosInstance.post("/logout", { token });
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("email");
+    localStorage.removeItem("name");
+
+    console.log("Logout Success:" + response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Logout failed:", error);
+  } finally {
+    localStorage.removeItem("token");
+    localStorage.removeItem("email");
+    localStorage.removeItem("name");
+  }
 };
 
 const forgotPassword = async (email) => {
   try {
-    const response = await axiosInstance.post("/forgot-password", { email });
+    const response = await axiosInstance.post(
+      "/forgot-password",
+      { email },
+      {
+        headers: { Authorization: null },
+      }
+    );
+    console.log("auth -> forgotPassword -> response:" + response.data);
     return response.data;
   } catch (error) {
-    throw error.response.data;
+    throw error.response.data || "An error occurred";
   }
 };
 

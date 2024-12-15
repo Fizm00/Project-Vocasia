@@ -13,17 +13,23 @@ const Hero = () => {
       className="relative w-full min-h-screen bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: "url('/homeImage.png')", backgroundSize: "cover" }}
     >
-      {/* Overlay Background */}
       <div className="absolute inset-0 bg-black bg-opacity-40 z-10"></div>
 
-      {/* Konten Hero */}
-      <div className="relative z-20 text-center text-white flex flex-col items-center justify-center min-h-screen">
+      <div className="relative z-20 text-center text-white flex flex-col items-center justify-center min-h-screen transition-all duration-500 hover:scale-105">
         <h1
-          className="text-3xl md:text-5xl font-bold mb-8"
+          className="text-3xl md:text-6xl font-bold mb-6"
           data-aos="fade-up"
         >
           Temukan Kost Impianmu <br /> dengan Mudah dan Cepat!
         </h1>
+
+        <p
+          className="text-xl font-semibold mb-10 transition-all duration-500 hover:scale-105"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+         Tinggal di kost impian kini lebih mudah dengan AnakKost! Temukan lokasi favoritmu tanpa repot.
+        </p>
 
         <div
           className="w-full max-w-5xl mx-auto"

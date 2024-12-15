@@ -14,6 +14,7 @@ router.post(
   upload.array("images", 10),
   property_controller.createProperty
 );
+
 router.put("/property/:id", property_controller.updatePropertyById);
 router.delete(
   "/property/:id",

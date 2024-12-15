@@ -13,11 +13,8 @@ const app = express();
 routes.use(cors());
 
 dotenv.config();
-
 connectDB();
-
 app.use(cors());
-
 app.use(express.json());
 
 // Konfigurasi Session
@@ -38,13 +35,8 @@ app.use(passport.session());
 // routes setup
 app.use("/api/v1", routes);
 
-// upload images
-const uploadDir = path.join(__dirname, "../uploads");
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
-}
-
-app.use("/uploads", express.static("uploads"));
+// Serve static files
+app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
 
 // start server
 const port = process.env.PORT;
@@ -54,4 +46,8 @@ app.listen(port, () => {
 
   console.log(`Example app listening on port ${port}`);
   console.log("MONGODB_URI:", process.env.MONGO_URI);
+  console.log(
+    "Serving static files from:",
+    path.join(__dirname, "public/uploads")
+  );
 });

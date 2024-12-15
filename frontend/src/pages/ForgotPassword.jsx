@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import { FaArrowLeft } from "react-icons/fa";
+import { set } from "date-fns";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -12,22 +13,22 @@ const ForgotPassword = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    try {
-      const response = forgotPassword(email);
-      console.log(response);
-    } catch (error) {
-      setError(error.message);
-    }
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!/\S+@\S+\.\S+/.test(email)) {
       setError("Email tidak valid. Masukkan email yang benar.");
       return;
     }
-
     setError("");
     setIsSubmitting(true);
+    try {
+      const response = await forgotPassword(email);
+      console.log("forgotPassword -> handleSubmit -> response:" + response);
+    } catch (error) {
+      setError(error.message || "Terjadi kesalahan.");
+    } finally {
+      setIsSubmitting(false);
+    }
 
     setTimeout(() => {
       setIsSubmitting(false);
