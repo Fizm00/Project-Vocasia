@@ -23,7 +23,7 @@ const SearchBar = () => {
         onChange={(e) => setQuery(e.target.value)}
         onKeyDown={handleKeyPress}
         placeholder="Cari Nama Kos, Lokasi, Alamat, Harga, atau Tipe"
-        className="flex-1 p-2 border border-gray-300 text-center rounded-full focus:outline-none focus:ring-2 focus:ring-[#193F3D] sm:text-sm md:text-base"
+        className="flex-1 p-2 border border-gray-300 text-black text-center rounded-full focus:outline-none focus:ring-2 focus:ring-[#193F3D] sm:text-sm md:text-base"
       />
       <button
         onClick={handleSearch}
