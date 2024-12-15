@@ -16,24 +16,22 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="flex items-center justify-between w-full bg-white px-4 py-2 rounded-full shadow-md mt-6 max-w-lg mx-auto">
-      <div className="flex flex-col w-full">
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={handleKeyPress}
-          placeholder="Cari Nama Kos, Lokasi, Alamat, Harga, atau Tipe"
-          className="p-1.5 border border-gray-300 rounded-full text-xs text-center text-black w-full"
-        />
-      </div>
+    <div className="flex items-center justify-between w-full max-w-3xl bg-white px-4 py-2 rounded-full shadow-md mt-6 mx-auto sm:px-6 md:px-8">
+      <input
+        type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        onKeyDown={handleKeyPress}
+        placeholder="Cari Nama Kos, Lokasi, Alamat, Harga, atau Tipe"
+        className="flex-1 p-2 border border-gray-300 text-center rounded-full focus:outline-none focus:ring-2 focus:ring-[#193F3D] sm:text-sm md:text-base"
+      />
       <button
         onClick={handleSearch}
-        className="bg-[#193F3D] text-white px-3 py-1.5 rounded-full hover:bg-[#145B54] ml-3"
+        className="ml-3 bg-[#193F3D] text-white p-2 rounded-full hover:bg-[#145B54] focus:outline-none focus:ring-2 focus:ring-[#145B54]"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4"
+          className="h-5 w-5"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
