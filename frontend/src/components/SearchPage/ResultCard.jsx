@@ -14,15 +14,12 @@ const ResultCard = ({ kost }) => {
 
   const handleTabLink = (event) => {
     event.preventDefault();
-    window.oper("/property/" + kost._id, "blank", "noopener,noreferrer");
-    // navigate(`/property/${kost._id}`, { state: { tab } });
+    window.open("/property/" + kost._id, "blank", "noopener,noreferrer");
   };
 
-  const handleCardClick = () => {
-    // Navigasi ke halaman detail kost
-    // <Link to={`/property/${kost._id}`}>tes</Link>;
-    <a href={`/property/${kost._id}`}></a>;
-    // navigate(`/property/${kost?._id}`);
+  const handleCardClick = (event) => {
+    event.preventDefault();
+    window.open("/property/" + kost._id, "blank", "noopener,noreferrer");
   };
 
   const url_domain = "http://localhost:3000";

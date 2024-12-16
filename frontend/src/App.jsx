@@ -13,6 +13,7 @@ import Payment from "./pages/Payment.jsx";
 import Booking from "./pages/Booking.jsx";
 import SuccessBook from "./pages/SuccessBook.jsx";
 import ProfilePage from './pages/ProfilePage.jsx';
+import Otp from "./pages/Otp";
 import Contact from './pages/Contact.jsx';
 import Notification from './pages/Notification.jsx';
 import TransactionsHistory from './pages/TransactionsHistory.jsx';
@@ -41,6 +42,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="otp" element={<Otp />} />
           <Route path="/logout" />
           <Route path="/success" element={<SuccessBook />} />
           <Route
