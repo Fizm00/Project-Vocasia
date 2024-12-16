@@ -27,7 +27,7 @@ const DetailPage = () => {
         setProperty(response.data);
         setLoading(false);
         console.log("Detail Page|response.data:", response.data);
-        console.log("DataPhone:", response.data.data.user_id.phone);
+        // console.log("DataPhone:", response.data.data.user_id.phone);
       } catch (error) {
         console.error("Error fetching property:", error);
         navigate("/");
