@@ -5,9 +5,9 @@ require("dotenv").config();
 // const unsplash = createApi({
 //   accessKey: process.env.UNSPLASH_ACCESS_KEY,
 // });
-const unsplash = createApi({
-  accessKey: process.env.UNSPLASH_ACCESS_KEY,
-});
+// const unsplash = createApi({
+//   accessKey: process.env.UNSPLASH_ACCESS_KEY,
+// });
 
 const getRandomPropertyImage = async () => {
   try {
