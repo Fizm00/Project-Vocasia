@@ -5,7 +5,6 @@ require("dotenv").config();
 
 const userSeeder = async () => {
   try {
-    // Koneksi ke MongoDB
     const response = await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -19,10 +18,8 @@ const userSeeder = async () => {
     await User.deleteMany();
     console.log("User Seeder|Old users removed!");
 
-    // Hash password di luar loop untuk efisiensi
     const hashedPassword = await bcrypt.hash("Password123", 10);
 
-    // Data pengguna
     const users = [
       {
         name: "Admin",
@@ -59,7 +56,6 @@ const userSeeder = async () => {
       },
     ];
 
-    // Insert data ke database
     const result = await User.insertMany(users);
     console.log(
       `User Seeder|Users seeded successfully! Inserted: ${result.length} records`
@@ -67,7 +63,6 @@ const userSeeder = async () => {
   } catch (error) {
     console.error(`User Seeder|Error: ${error.message}`);
   } finally {
-    // Tutup koneksi database
     await mongoose.connection.close();
     console.log("User Seeder|Database connection closed!");
   }
