@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import "./App.css";
 import "./index.css";
 import Register from "./pages/Register.jsx";
@@ -12,10 +17,10 @@ import About from "./pages/About.jsx";
 import Payment from "./pages/Payment.jsx";
 import Booking from "./pages/Booking.jsx";
 import SuccessBook from "./pages/SuccessBook.jsx";
-import ProfilePage from './pages/ProfilePage.jsx';
-import Contact from './pages/Contact.jsx';
-import Notification from './pages/Notification.jsx';
-import TransactionsHistory from './pages/TransactionsHistory.jsx';
+import ProfilePage from "./pages/ProfilePage.jsx";
+import Contact from "./pages/Contact.jsx";
+import Notification from "./pages/Notification.jsx";
+import TransactionsHistory from "./pages/TransactionsHistory.jsx";
 import AddReview from "./pages/AddReviewPage.jsx";
 //Owner Page
 import RentalApproval from "./components/RentalPageOwner/RentalApproval.jsx";
@@ -33,7 +38,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/home" element={<Navigate to="/" />} />
           <Route path="/about" element={<About />} />
           <Route path="/search" element={<SearchResultPage />} />
 
@@ -85,13 +90,16 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/notification" element={<Notification />} />
-          <Route path="/transactions-history" element={<TransactionsHistory />} />
+          <Route
+            path="/transactions-history"
+            element={<TransactionsHistory />}
+          />
           <Route path="/add-review" element={<AddReview />} />
           {/* Route Owner Page */}
           <Route path="/rental-approval" element={<RentalApproval />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="/properties" element={<Properties />} />
-          <Route path="/reviews" element={<Review />}/>
+          <Route path="/reviews" element={<Review />} />
           <Route path="/add-kost" element={<AddKost />} />
           <Route path="/verification" element={<Verification />} />
           <Route
