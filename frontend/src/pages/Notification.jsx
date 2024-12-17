@@ -16,7 +16,7 @@ const Notification = () => {
     const fetchNotifications = async () => {
       try {
         const response = await axiosInstance.get(
-          `/notifications/${userId}`
+          `/notifications/${JSON.parse(localStorage.getItem("id"))}`
         );
         setNotifications(response.data.data); // Simpan data notifikasi ke state
       } catch (err) {
