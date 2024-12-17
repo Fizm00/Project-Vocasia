@@ -23,6 +23,8 @@ const CatatanTambahan = ({ setTanggalMulai, setTanggalAkhir }) => {
 
       alert("Booking Berhasil! Mengalihkan ke halaman pembayaran...");
       localStorage.setItem("booking_id", response.data.data.booking._id);
+      localStorage.setItem("payment_url", response.data.data.payment_url);
+      // console.log("URL Payment:", response.data.data.payment_url);
       // const getBookingId = localStorage.getItem("booking_id");
       navigate(`/payment/${response.data.data.booking._id}`);
     } catch (error) {
