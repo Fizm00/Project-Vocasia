@@ -1,20 +1,25 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaPhoneAlt } from "react-icons/fa";
-import { use } from "react";
 
 const BookingSection = ({ kostDetail }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [jumlahDurasi, setjumlahDurasi] = useState(1);
   const navigate = useNavigate();
 
-  const handleBooking = () => {
+  //new
+
+  const handleBooking = async () => {
     navigate("/booking", {
       state: { kostDetail, startDate, jumlahDurasi },
     });
   };
+
+  useEffect(() => {
+    console.log("Booking Section|Kost Detail:" + kostDetail.data.user_id);
+  });
 
   const handleContactOwner = () => {
     try {

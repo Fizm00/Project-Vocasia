@@ -11,7 +11,9 @@ const TanggalMulai = ({ tanggalMulai, setTanggalMulai, durasi }) => {
 
   // Hitung tanggal akhir hanya jika tanggalMulai tersedia
   const formattedEndDate = tanggalMulai
-    ? format(addMonths(new Date(tanggalMulai), durasi), "EEEE, d MMMM yyyy", { locale: idLocale })
+    ? format(addMonths(new Date(tanggalMulai), durasi), "EEEE, d MMMM yyyy", {
+        locale: idLocale,
+      })
     : null;
 
   return (
@@ -25,12 +27,14 @@ const TanggalMulai = ({ tanggalMulai, setTanggalMulai, durasi }) => {
         aria-label="Pilih tanggal mulai ngekos"
       />
       <p className="text-sm font-medium text-gray-500 mt-2">
-        {tanggalMulai ? `Tanggal Dipilih: ${formatTanggal(tanggalMulai)}` : "Pilih Tanggal Mulai"}
+        {tanggalMulai ? `Tanggal Dipilih: ${formatTanggal(tanggalMulai)}` : ""}
       </p>
       {formattedEndDate && (
         <p className="text-sm text-gray-600 mt-4">
           Periode ngekos akan berakhir pada:{" "}
-          <span className="font-semibold text-gray-800">{formattedEndDate}</span>
+          <span className="font-semibold text-gray-800">
+            {formattedEndDate}
+          </span>
         </p>
       )}
     </section>

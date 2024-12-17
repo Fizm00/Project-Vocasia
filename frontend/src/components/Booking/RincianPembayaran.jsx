@@ -1,7 +1,14 @@
 import React from "react";
 
-const RincianPembayaran = ({ totalBiaya }) => {
-  const totalPembayaran = totalBiaya;
+const RincianPembayaran = ({ totalBiaya, property, durasi }) => {
+  // const totalPembayaran = totalBiaya;
+  const URI_DOMAIN = "http://localhost:3000";
+  const formatHarga = (harga) => {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+    }).format(harga);
+  };
   return (
     <aside
       className="bg-white border border-gray-200 rounded-lg shadow-md p-4 w-full md:w-auto space-y-4"
@@ -14,8 +21,8 @@ const RincianPembayaran = ({ totalBiaya }) => {
       {/* Bagian Informasi Kost */}
       <div className="flex flex-col md:flex-row items-center md:items-start md:space-x-3">
         <img
-          src="../public/kamarimage.jpg"
-          alt="Kost Singgahsini"
+          src={URI_DOMAIN + property?.data.images[0] || "Data tidak tersedia"}
+          alt={property?.data.images[0] || "Data tidak tersedia"}
           className="w-20 h-20 rounded-md object-cover"
         />
         <div
@@ -26,13 +33,15 @@ const RincianPembayaran = ({ totalBiaya }) => {
           }}
         >
           <span className="text-xs font-bold bg-gray-100 text-gray-800 px-1 py-0.5 rounded-md inline-block">
-            Kos Campur
+            {property?.data.property_type || "Data tidak tersedia"}{" "}
+            {property?.data.gender_type || "Data tidak tersedia"}
           </span>
           <h4 className="text-sm font-semibold mt-1">
-            Kost Singgahsini Pramesthi UPN
+            {property?.data.name || "Data tidak tersedia"}
           </h4>
           <p className="text-xs text-gray-500">
-            Depok, D.I. Yogyakarta
+            {property?.data.city || "Data tidak tersedia"},{" "}
+            {property?.data.address || "Data tidak tersedia"}
           </p>
         </div>
       </div>
@@ -47,14 +56,21 @@ const RincianPembayaran = ({ totalBiaya }) => {
           Dibayar setelah pemilik kos menyetujui pengajuan sewa
         </p>
         <div className="flex justify-between items-center text-xs">
-          <span>Biaya Sewa Kos</span>
-          <span className="font-medium">Rp {totalBiaya.toLocaleString()}</span>
+          <span>Harga Sewa 1 Bulan</span>
+          <span className="font-medium">
+            {formatHarga(property?.data.price) || "Data tidak tersedia"}
+            {/* {formatHarga(kost.price)} */}
+          </span>
+        </div>
+        <div className="flex justify-between items-center text-xs">
+          <span>Durasi</span>
+          <span>{durasi} Bulan</span>
         </div>
         {/* Biaya layanan dihapus */}
         <hr className="border-gray-300" />
         <div className="flex justify-between items-center text-sm font-bold">
           <span>Total Pembayaran</span>
-          <span>Rp {totalPembayaran.toLocaleString()}</span>
+          <span>{formatHarga(totalBiaya)}</span>
         </div>
       </div>
     </aside>

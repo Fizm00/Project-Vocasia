@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Booking/Header";
 import DurasiNgekos from "../components/Booking/DurasiNgekos";
@@ -6,20 +6,75 @@ import TanggalMulai from "../components/Booking/TanggalMulai";
 import InformasiPenyewa from "../components/Booking/InformasiPenyewa";
 import CatatanTambahan from "../components/Booking/CatatanTambahan";
 import RincianPembayaran from "../components/Booking/RincianPembayaran";
+// import { getBookings, createBooking } from "../api/booking";
 import { motion } from "framer-motion";
 
+import axiosInstance from "../config/axiosInstance";
+
 const Booking = () => {
-  const [jumlahPenyewa, setJumlahPenyewa] = useState(1);
   const [durasi, setDurasi] = useState(1);
   const [tanggalMulai, setTanggalMulai] = useState("");
   const [catatan, setCatatan] = useState("");
-  const [totalBiaya, setTotalBiaya] = useState(1600000);
+  const [totalBiaya, setTotalBiaya] = useState("");
+  //new
+  // const { id } = useParams();
+
+  const [property, setProperty] = useState(null);
+  const [user, setUser] = useState(null);
 
   const fadeUp = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
     transition: { duration: 0.6, ease: "easeOut" },
   };
+
+  // Fetch user data
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const user_id = localStorage.getItem("user_id");
+        const response = await axiosInstance.get(`/user/${user_id}`);
+        setUser(response.data);
+        console.log("User Data:", response.data);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+    fetchUser();
+  }, []);
+
+  useEffect(() => {
+    const fetchProperty = async () => {
+      try {
+        const property_id = localStorage.getItem("property_id");
+        const response = await axiosInstance.get(`/property/${property_id}`);
+        setProperty(response.data);
+        console.log("Booking|Fetched Property:", response.data);
+      } catch (error) {
+        console.error("Error fetching property:", error);
+      }
+    };
+    fetchProperty();
+  }, [durasi, totalBiaya]);
+
+  useEffect(() => {
+    if (property && Number(property.data.price) && durasi) {
+      const calculateTotalBiaya = () => {
+        const harga = Number(property.data.price);
+        const total = harga * durasi;
+        setTotalBiaya(total);
+      };
+      calculateTotalBiaya();
+    }
+  }, [durasi, property]);
+
+  useEffect(() => {
+    console.log("Durasi:", durasi);
+    console.log("Tanggal Mulai:", tanggalMulai);
+    console.log("Total Biaya:", Number(totalBiaya));
+    console.log("total bulanan", totalBiaya * 12);
+    console.log("property price" + property.data.price);
+  }, [durasi, tanggalMulai, totalBiaya, property]);
 
   return (
     <div>
@@ -40,7 +95,7 @@ const Booking = () => {
               animate={fadeUp.animate}
               transition={{ ...fadeUp.transition, delay: 0.1 }}
             >
-              <InformasiPenyewa />
+              <InformasiPenyewa user={user} />
             </motion.div>
 
             <motion.div
@@ -113,7 +168,11 @@ const Booking = () => {
             animate={fadeUp.animate}
             transition={{ ...fadeUp.transition, delay: 0.2 }}
           >
-            <RincianPembayaran totalBiaya={totalBiaya} />
+            <RincianPembayaran
+              totalBiaya={totalBiaya}
+              property={property}
+              durasi={durasi}
+            />
           </motion.div>
         </div>
       </main>

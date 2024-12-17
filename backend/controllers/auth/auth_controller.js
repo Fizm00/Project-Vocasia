@@ -6,7 +6,7 @@ const redis = require("../../config/redis");
 require("dotenv").config();
 
 const loginUser = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, _id } = req.body;
   try {
     if (!email || !password) {
       return res

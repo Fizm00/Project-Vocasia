@@ -1,20 +1,20 @@
 import React from "react";
 
-const DurasiNgekos = ({ durasi, setDurasi, setTotalBiaya }) => {
-  const biayaPerBulan = 1600000; // Biaya ngekos per bulan
-
+const DurasiNgekos = ({ durasi, setDurasi }) => {
   const handleTambahDurasi = () => {
-    if (durasi < 12) {
-      setDurasi(durasi + 1);
-      setTotalBiaya((durasi + 1) * biayaPerBulan);
-    }
+    // if (durasi < 12) {
+    //   setDurasi(durasi + 1);
+    //   setTotalBiaya((durasi + 1) * biayaPerBulan);
+    // }
+    if (durasi < 12) setDurasi(durasi + 1);
   };
 
   const handleKurangDurasi = () => {
-    if (durasi > 1) {
-      setDurasi(durasi - 1);
-      setTotalBiaya((durasi - 1) * biayaPerBulan);
-    }
+    // if (durasi > 1) {
+    //   setDurasi(durasi - 1);
+    //   setTotalBiaya((durasi - 1) * biayaPerBulan);
+    // }
+    if (durasi > 1) setDurasi(durasi - 1);
   };
 
   return (
@@ -38,7 +38,9 @@ const DurasiNgekos = ({ durasi, setDurasi, setTotalBiaya }) => {
         >
           +
         </button>
-        <span className="text-sm text-gray-500">Durasi dapat disesuaikan kembali di lain waktu</span>
+        <span className="text-sm text-gray-500">
+          Durasi dapat disesuaikan kembali di lain waktu
+        </span>
       </div>
     </section>
   );
