@@ -1,17 +1,17 @@
-import React from 'react';
+import React from "react";
 
 const PopupFilter = ({ filters, setFilters, closeFilterModal }) => {
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
-    setFilters({
-      ...filters,
-      [name]: value
-    });
+    setFilters((prev) => ({
+      ...prev,
+      [name]: name.includes("price") ? Number(value) || 0 : value,
+    }));
   };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white w-full sm:w-1/3 md:w-1/4 lg:w-1/4 xl:w-1/5 p-6 rounded-lg shadow-lg max-w-lg sm:max-w-full">
+      <div className="bg-white w-full sm:w-1/3 md:w-1/4 p-6 rounded-lg shadow-lg max-w-lg">
         <h2 className="font-bold text-xl mb-4">Filter Pencarian</h2>
 
         {/* Filter Nama Kost */}
@@ -19,8 +19,8 @@ const PopupFilter = ({ filters, setFilters, closeFilterModal }) => {
           <label className="block text-sm font-semibold">Nama Kost</label>
           <input
             type="text"
-            name="namaKost"
-            value={filters.namaKost}
+            name="name"
+            value={filters.name}
             onChange={handleFilterChange}
             className="w-full p-2 border rounded"
             placeholder="Nama Kost"
@@ -31,8 +31,8 @@ const PopupFilter = ({ filters, setFilters, closeFilterModal }) => {
         <div className="mb-4">
           <label className="block text-sm font-semibold">Tipe Kost</label>
           <select
-            name="tipeKost"
-            value={filters.tipeKost}
+            name="property_type"
+            value={filters.property_type}
             onChange={handleFilterChange}
             className="w-full p-2 border rounded"
           >
@@ -43,72 +43,61 @@ const PopupFilter = ({ filters, setFilters, closeFilterModal }) => {
           </select>
         </div>
 
-        {/* Filter Durasi */}
-        <div className="mb-4">
-          <label className="block text-sm font-semibold">Durasi</label>
-          <select
-            name="durasi"
-            value={filters.durasi}
-            onChange={handleFilterChange}
-            className="w-full p-2 border rounded"
-          >
-            <option value="">Pilih Durasi</option>
-            <option value="Bulan">Bulan</option>
-            <option value="Hari">Hari</option>
-          </select>
-        </div>
-
         {/* Filter Lokasi */}
         <div className="mb-4">
           <label className="block text-sm font-semibold">Lokasi</label>
           <input
             type="text"
-            name="lokasi"
-            value={filters.lokasi}
+            name="city"
+            value={filters.city}
             onChange={handleFilterChange}
             className="w-full p-2 border rounded"
-            placeholder="Lokasi"
+            placeholder="Lokasi (Contoh: Jakarta)"
           />
         </div>
 
         {/* Filter Harga */}
         <div className="mb-4">
-          <label className="block text-sm font-semibold mb-2"> Rentang Harga</label>
+          <label className="block text-sm font-semibold mb-2">Rentang Harga</label>
           <div className="flex space-x-4">
-            {/* Input Harga Min */}
             <div className="flex-1">
-              <label className="block text-xs font-semibold mb-1">Harga Minimal</label>
+              <label className="block text-xs font-semibold mb-1">Harga Min</label>
               <input
                 type="number"
-                name="hargaMin"
-                value={filters.hargaMin}
+                name="price_min"
+                value={filters.price_min}
                 onChange={handleFilterChange}
                 className="w-full p-2 border rounded"
-                placeholder="Harga Minimal"
+                placeholder="Minimal"
               />
             </div>
-            {/* Input Harga Max */}
             <div className="flex-1">
-              <label className="block text-xs font-semibold mb-1">Harga Maksimal</label>
+              <label className="block text-xs font-semibold mb-1">Harga Max</label>
               <input
                 type="number"
-                name="hargaMax"
-                value={filters.hargaMax}
+                name="price_max"
+                value={filters.price_max}
                 onChange={handleFilterChange}
                 className="w-full p-2 border rounded"
-                placeholder="Harga Maksimal"
+                placeholder="Maksimal"
               />
             </div>
           </div>
         </div>
 
-        {/* Tombol Tutup */}
-        <div className="flex justify-end mt-4">
+        {/* Tombol Aksi */}
+        <div className="flex justify-end space-x-4 mt-4">
+          <button
+            onClick={closeFilterModal}
+            className="bg-gray-300 px-4 py-2 rounded-md hover:bg-gray-400"
+          >
+            Batal
+          </button>
           <button
             onClick={closeFilterModal}
             className="bg-greenButton text-white font-semibold px-4 py-2 rounded-md hover:bg-hoverGreen"
           >
-            Tutup
+            Terapkan
           </button>
         </div>
       </div>

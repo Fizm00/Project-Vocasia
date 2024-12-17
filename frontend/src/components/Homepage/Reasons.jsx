@@ -10,7 +10,8 @@ const Reasons = () => {
 
   return (
     <section className="flex flex-col md:flex-row justify-between items-center py-16 px-8 bg-white">
-      <div className="w-full md:w-1/3 mb-8 md:mb-0 transition-all duration-500 hover:scale-105">
+      {/* Gambar */}
+      <div className="w-full md:w-1/3 mb-8 md:mb-0 md:ml-36 transition-all duration-500 hover:scale-105">
         <img
           src="/7-kostImage.png"
           alt="Property Image"
@@ -18,7 +19,8 @@ const Reasons = () => {
         />
       </div>
 
-      <div className="w-full md:w-1/2 md:pl-8 flex flex-col items-start justify-center transition-all duration-500 hover:translate-x-[-50px]">
+      {/* Teks */}
+      <div className="w-full md:w-1/2 md:pl-8 md:ml-[-10px] lg:ml-[-20px] flex flex-col items-start justify-center">
         <h2 className="text-3xl font-extrabold mb-4 text-[#193F3D]">
           Kenapa Harus AnakKost?
         </h2>

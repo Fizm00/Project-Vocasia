@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { FaEnvelope, FaPhoneAlt, FaInstagram } from "react-icons/fa";
+import Aos from "aos";
+import "aos/dist/aos.css";
 
 function Contact() {
+  useEffect(() => {
+    Aos.init({ duration: 1000, once: true }); // Inisialisasi AOS
+  }, []);
+
   const [formData, setFormData] = useState({ email: "", subject: "", message: "" });
   const [error, setError] = useState({ email: "", subject: "", message: "" });
   const [isLoading, setIsLoading] = useState(false);
@@ -57,15 +63,29 @@ function Contact() {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
+
+      {/* Hero Section */}
       <section className="bg-[#193F3D] text-white py-6 md:py-8">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-2xl md:text-3xl font-extrabold mb-4 transition-transform duration-300 hover:scale-110">
+          <h1
+            className="text-2xl md:text-3xl font-extrabold mb-4"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
             Hubungi Kami
           </h1>
-          <p className="text-lg font-medium mb-6">
+          <p
+            className="text-lg font-medium mb-6"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
             Punya pertanyaan terkait AnakKost? Kirimkan pesan Anda, dan kami akan segera membantu!
           </p>
-          <div className="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-12">
+          <div
+            className="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-12"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
             <ContactInfo
               href="mailto:anakkost.company@gmail.com"
               icon={<FaEnvelope size={20} />}
@@ -84,9 +104,18 @@ function Contact() {
           </div>
         </div>
       </section>
-      <main className="flex-grow flex justify-center items-center py-6 md:py-8">
+
+      {/* Form Section */}
+      <main
+        className="flex-grow flex justify-center items-center py-6 md:py-8"
+        data-aos="fade-up"
+        data-aos-delay="200"
+      >
         <div className="p-4 md:p-6 space-y-4 w-full md:w-3/4 lg:w-1/2 xl:w-3/4">
-          <h2 className="text-2xl md:text-3xl font-semibold text-[#193F3D] text-center mb-4 transition-transform duration-500 hover:scale-105">
+          <h2
+            className="text-2xl md:text-3xl font-semibold text-[#193F3D] text-center mb-4"
+            data-aos="fade-up"
+          >
             Kirimkan Pesan Anda
           </h2>
           <form onSubmit={handleSubmit}>
@@ -97,6 +126,8 @@ function Contact() {
               value={formData.email}
               error={error.email}
               onChange={handleChange}
+              data-aos="fade-up"
+              data-aos-delay="200"
             />
             <InputField
               id="subject"
@@ -105,6 +136,8 @@ function Contact() {
               value={formData.subject}
               error={error.subject}
               onChange={handleChange}
+              data-aos="fade-up"
+              data-aos-delay="200"
             />
             <TextAreaField
               id="message"
@@ -112,26 +145,24 @@ function Contact() {
               value={formData.message}
               error={error.message}
               onChange={handleChange}
+              data-aos="fade-up"
+              data-aos-delay="200"
             />
-            {error.general && (
-              <div className="text-center mb-4">
-                <div className="bg-red-500 text-white py-2 px-4 rounded-md">
-                  {error.general}
-                </div>
-              </div>
-            )}
             <button
               type="submit"
               className={`w-full py-2 px-4 mt-6 rounded-md text-white text-lg font-semibold ${
                 isLoading ? "cursor-not-allowed" : "bg-[#193F3D] hover:bg-[#145F5D]"
               }`}
               disabled={isLoading}
+              data-aos="fade-up"
+              data-aos-delay="200"
             >
               {isLoading ? "Mengirim..." : "Kirim"}
             </button>
           </form>
         </div>
       </main>
+
       <Footer />
     </div>
   );
