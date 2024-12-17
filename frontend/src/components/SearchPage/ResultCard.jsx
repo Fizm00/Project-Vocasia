@@ -14,15 +14,15 @@ const ResultCard = ({ kost }) => {
 
   const handleTabLink = (event) => {
     event.preventDefault();
-    window.open("/property/" + kost._id, "blank", "noopener,noreferrer");
+    window.open("/detail/" + kost._id, "blank", "noopener,noreferrer");
   };
 
   const handleCardClick = (event) => {
     event.preventDefault();
-    window.open("/property/" + kost._id, "blank", "noopener,noreferrer");
+    window.open("/detail/" + kost._id, "blank", "noopener,noreferrer");
   };
 
-  const url_domain = "http://localhost:3000";
+  const url_domain = "https://api-anakkost.vocasia-fsjs-c.fun/api/v1";
 
   return (
     <div

@@ -107,7 +107,7 @@ function App() {
           <Route
             path="/property/:id"
             key={"property"}
-            element={<DetailPage />}
+            element={<Properties />}
           />
         </Routes>
       </Router>

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import { getReviews } from "../../api/review";
 import { FaStar, FaRegStar } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
 
 const renderStars = (rating) => {
   const stars = [];
@@ -14,13 +15,27 @@ const renderStars = (rating) => {
 };
 
 const RatingDetail = ({ kostDetail }) => {
-  // const averageRating = kostDetail.averageRating;
-  // const [showAllReviews, setShowAllReviews] = useState(false);
-
+  const averageRating = kostDetail.averageRating;
+  const [showAllReviews, setShowAllReviews] = useState(false);
+  const [reviews, setReviews] = useState([]);
   // Menampilkan review terbatas atau semua review
   // const reviewsToShow = showAllReviews
   //   ? kostDetail.reviews
   //   : kostDetail.reviews.slice(0, 8);
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await getReviews();
+        setReviews(response.data.data);
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+      }
+    };
+
+    fetchReviews();
+  },[])
+  console.log(reviews);
 
   return (
     <div className="mt-10 sm:ml-0 lg:ml-20">
@@ -39,10 +54,10 @@ const RatingDetail = ({ kostDetail }) => {
 
       {/* Menampilkan list review */}
       <div>
-        {kostDetail.reviews && kostDetail.reviews.length > 0 ? (
+        {reviews && reviews.length > 0 ? (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {reviewsToShow.map((review) => (
+              {reviews.map((review) => (
                 <div
                   key={review.id}
                   className="bg-white shadow-md rounded-lg p-4 mb-4"
@@ -50,17 +65,17 @@ const RatingDetail = ({ kostDetail }) => {
                   {/* Foto dan Nama Pengguna */}
                   <div className="flex items-center mb-2">
                     <img
-                      src={review.user.photo}
-                      alt={review.user.name}
+                      src={review?.user_id?.photo}
+                      alt={review?.user_id?.name}
                       className="w-12 h-12 rounded-full object-cover mr-4"
                     />
                     <div>
                       <p className="font-bold text-gray-700">
-                        {review.user.name}
+                        {review?.user_id?.name}
                       </p>
-                      <p className="text-sm text-gray-500">
+                      {/* <p className="text-sm text-gray-500">
                         {new Date(review.createdAt).toLocaleDateString()}
-                      </p>
+                      </p> */}
                     </div>
                   </div>
 
@@ -75,7 +90,7 @@ const RatingDetail = ({ kostDetail }) => {
 
             {/* Tombol untuk menampilkan semua review */}
             <div className="text-center">
-              {kostDetail.reviews.length > 8 && (
+              {reviews?.length > 8 && (
                 <button
                   onClick={() => setShowAllReviews(!showAllReviews)}
                   className="mt-4 text-darkGreen underline text-md hover:text-green-500"

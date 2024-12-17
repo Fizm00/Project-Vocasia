@@ -5,7 +5,7 @@ const DetailImage = ({ images, openModal }) => {
     return <p>No images available</p>;
   }
 
-  const URI_DOMAIN = "http://localhost:3000";
+  const URI_DOMAIN = "https://api-anakkost.vocasia-fsjs-c.fun/api/v1";
   console.log("cekgambar: " + URI_DOMAIN + images[0]);
   return (
     <div className="flex flex-col sm:flex-row sm:space-x-4 justify-center">

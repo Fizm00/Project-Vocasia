@@ -8,6 +8,7 @@ import MapSection from "../components/DetailPage/MapSection";
 import RatingDetail from "../components/DetailPage/RatingDetail";
 import BookingSection from "../components/DetailPage/BookingSection";
 // import usePropertyStore from "../store/usePropertyStore";
+import { getReviews } from "../api/review";
 import axiosInstance from "../config/axiosInstance";
 
 const DetailPage = () => {
@@ -19,6 +20,21 @@ const DetailPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [property, setProperty] = useState(null);
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+      const fetchReviews = async () => {
+        try {
+          const response = await getReviews();
+          setReviews(response.data.data);
+        } catch (error) {
+          console.error("Error fetching reviews:", error);
+        }
+      };
+  
+      fetchReviews();
+    },[])
+    console.log(`data reviews:`, reviews);
 
   useEffect(() => {
     const fetchProperty = async () => {
@@ -38,7 +54,7 @@ const DetailPage = () => {
 
     if (id) fetchProperty();
   }, [id, navigate]);
-
+  console.log(property);
   useEffect(() => {
     if (property) {
       setSelectedImage(property); // Ambil gambar pertama jika ada

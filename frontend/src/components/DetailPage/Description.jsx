@@ -81,7 +81,7 @@ const Description = ({ kostDetail }) => {
         <div className="w-16 h-16 rounded-full overflow-hidden">
           <img
             src={
-              kostDetail.data.photo ||
+              kostDetail?.data.photo ||
               "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
             }
             alt="Pemilik Kost"
@@ -91,7 +91,7 @@ const Description = ({ kostDetail }) => {
         <div>
           <p className="text-gray-700 text-sm">Pemilik Kost:</p>
           <p className="text-gray-700 text-xl font-bold">
-            {kostDetail.data.user_id.name}
+            {kostDetail?.data?.user_id?.name}
           </p>
         </div>
       </div>
@@ -99,7 +99,7 @@ const Description = ({ kostDetail }) => {
       {/* Deskripsi Kost */}
       <div className="w-full">
         <p className="font-bold text-2xl mb-4">Deskripsi Kost</p>
-        <p className="text-gray-500">{kostDetail.data.description}</p>
+        <p className="text-gray-500">{kostDetail?.data.description}</p>
       </div>
 
       {/* Spesifikasi Kost */}
@@ -123,7 +123,7 @@ const Description = ({ kostDetail }) => {
       <div className="w-full">
         <p className="font-bold text-2xl mt-10 mb-4">Fasilitas Kost</p>
         <div className="grid grid-cols-2 gap-4 mt-2">
-          {kostDetail.data.facility}
+          {kostDetail?.data.facility}
           {/* {kostDetail.facility.map((facility) => (
             <div key={facility.id} className="flex items-center">
               {facility.icon}
