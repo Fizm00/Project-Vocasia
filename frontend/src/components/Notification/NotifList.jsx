@@ -15,12 +15,12 @@ const NotificationList = ({ notifications, handleDelete }) => {
       <div className="divide-y divide-gray-200">
         {notifications.map((notification) => (
           <div
-            key={notification.id}
+            key={notification._id}
             className="flex justify-between items-center px-4 py-3 hover:bg-gray-100"
           >
             <div>
-              <h3 className="text-sm font-semibold text-gray-800">{notification.title}</h3>
-              <p className="text-xs text-gray-500">{notification.date}</p>
+              <h3 className="text-sm font-semibold text-gray-800">{notification.content}</h3>
+              <p className="text-xs text-gray-500">{notification.createdAt}</p>
             </div>
             <button
               onClick={() => handleDelete(notification.id)}
