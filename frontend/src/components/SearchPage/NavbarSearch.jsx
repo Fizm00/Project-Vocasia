@@ -115,7 +115,11 @@ const NavbarSearch = ({ toggleFilterSidebar, setSearchQuery }) => {
             Kontak
             <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-white scale-x-0 transition-all duration-300 group-hover:scale-x-100"></span>
           </Link>
-
+          {isLoggedIn && (
+            <Link to="/notification" className="text-md font-semibold text-white relative group">
+              Notification
+            </Link>
+          )}
           {isLoggedIn ? (
             <div className="flex items-center space-x-3">
               <FaUserCircle className="text-white text-2xl" />
@@ -160,7 +164,11 @@ const NavbarSearch = ({ toggleFilterSidebar, setSearchQuery }) => {
           <Link to="/contact" className="text-md font-semibold text-white py-2">
             Contact
           </Link>
-
+          {isLoggedIn && (
+            <Link to="/notification" className="text-md font-semibold text-white py-2">
+              Notification
+            </Link>
+          )}
           {isLoggedIn ? (
             <div className="flex items-center space-x-3 text-white py-2">
               <FaUserCircle className="text-2xl" />
