@@ -1,7 +1,15 @@
 import React from 'react';
 import { FaEdit, FaCamera } from 'react-icons/fa';
 
-const ProfileDetail = ({ formData, isEditing, setFormData, handleSave, handleEdit, handleCancel, handleImageUpload }) => { 
+const ProfileDetail = ({
+  formData,
+  isEditing,
+  setFormData,
+  handleSave,
+  handleEdit,
+  handleCancel,
+  handleImageUpload
+}) => {
   return (
     <div className="w-full sm:w-2/3 p-8 bg-white border rounded-lg shadow-lg">
       <div className="text-2xl font-bold mb-2">Biodata Diri</div>
@@ -20,9 +28,9 @@ const ProfileDetail = ({ formData, isEditing, setFormData, handleSave, handleEdi
             <input
               type="file"
               accept="image/*"
-              onChange={handleImageUpload} 
+              onChange={handleImageUpload}
               className="hidden"
-              id="upload-photo" 
+              id="upload-photo"
             />
             <label htmlFor="upload-photo">
               <button className="w-full text-center text-darkGreen py-2 px-4 border border-darkGreen rounded-md">
@@ -39,9 +47,9 @@ const ProfileDetail = ({ formData, isEditing, setFormData, handleSave, handleEdi
             <label className="block text-sm font-semibold">Nama Lengkap</label>
             <input
               type="text"
-              value={formData.fullName}
+              value={formData.name}
               disabled={!isEditing}
-              onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               className="w-full p-2 border rounded-md"
             />
           </div>
@@ -90,29 +98,20 @@ const ProfileDetail = ({ formData, isEditing, setFormData, handleSave, handleEdi
             />
           </div>
 
-          {/* Save / Cancel / Edit Buttons */}
-          <div className="flex flex-col sm:flex-row sm:space-x-4 mt-6 font-semibold">
+          {/* Buttons */}
+          <div className="flex justify-end space-x-4">
             {isEditing ? (
               <>
-                <button
-                  onClick={handleSave}
-                  className="py-2 px-6 bg-darkGreen text-white rounded-md hover:bg-white hover:text-darkGreen border border-darkGreen"
-                >
-                  Simpan
+                <button onClick={handleSave} className="px-4 py-2 bg-darkGreen text-white rounded-md">
+                  Save
                 </button>
-                <button
-                  onClick={handleCancel}
-                  className="py-2 px-6 bg-red-700 text-white rounded-md hover:bg-white hover:text-red-700 border border-red-700"
-                >
-                  Batal
+                <button onClick={handleCancel} className="px-4 py-2 bg-gray-500 text-white rounded-md">
+                  Cancel
                 </button>
               </>
             ) : (
-              <button
-                onClick={handleEdit}
-                className="py-2 px-6 bg-darkGreen text-white rounded-md hover:bg-white hover:text-darkGreen border border-darkGreen"
-              > <FaEdit className="inline mr-2" />
-                Edit
+              <button onClick={handleEdit} className="px-4 py-2 bg-darkGreen text-white rounded-md">
+                <FaEdit className="inline mr-2" /> Edit Profile
               </button>
             )}
           </div>
