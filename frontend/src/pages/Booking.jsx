@@ -7,6 +7,8 @@ import InformasiPenyewa from "../components/Booking/InformasiPenyewa";
 import CatatanTambahan from "../components/Booking/CatatanTambahan";
 import RincianPembayaran from "../components/Booking/RincianPembayaran";
 // import { getBookings, createBooking } from "../api/booking";
+import { format, addMonths } from "date-fns";
+import idLocale from "date-fns/locale/id";
 import { motion } from "framer-motion";
 
 import axiosInstance from "../config/axiosInstance";
@@ -14,6 +16,7 @@ import axiosInstance from "../config/axiosInstance";
 const Booking = () => {
   const [durasi, setDurasi] = useState(1);
   const [tanggalMulai, setTanggalMulai] = useState("");
+  const [tanggalAkhir, setTanggalAkhir] = useState("");
   const [catatan, setCatatan] = useState("");
   const [totalBiaya, setTotalBiaya] = useState("");
   //new
@@ -69,11 +72,10 @@ const Booking = () => {
   }, [durasi, property]);
 
   useEffect(() => {
-    console.log("Durasi:", durasi);
-    console.log("Tanggal Mulai:", tanggalMulai);
-    console.log("Total Biaya:", Number(totalBiaya));
-    console.log("total bulanan", totalBiaya * 12);
-    console.log("property price" + property.data.price);
+    console.log("durasi:", durasi);
+    console.log("tanggalMulai:", tanggalMulai);
+    console.log("tanggalAkhir:");
+    console.log("property:" + localStorage.getItem("property_id"));
   }, [durasi, tanggalMulai, totalBiaya, property]);
 
   return (
@@ -107,57 +109,17 @@ const Booking = () => {
               <hr className="border-gray-300" />
             </motion.div>
 
-            {/* Durasi Ngekos */}
-            <motion.div
-              initial={fadeUp.initial}
-              animate={fadeUp.animate}
-              transition={{ ...fadeUp.transition, delay: 0.5 }}
-            >
-              <DurasiNgekos
-                durasi={durasi}
-                setDurasi={setDurasi}
-                setTotalBiaya={setTotalBiaya}
-                tanggalMulai={tanggalMulai}
-              />
-            </motion.div>
-
-            <motion.div
-              className="mt-4 w-full lg:w-[70%] lg:ml-[2.5rem]"
-              initial={fadeUp.initial}
-              animate={fadeUp.animate}
-              transition={{ ...fadeUp.transition, delay: 0.6 }}
-            >
-              <hr className="border-gray-300" />
-            </motion.div>
-
-            {/* Tanggal Mulai */}
-            <motion.div
-              initial={fadeUp.initial}
-              animate={fadeUp.animate}
-              transition={{ ...fadeUp.transition, delay: 0.7 }}
-            >
-              <TanggalMulai
-                tanggalMulai={tanggalMulai}
-                setTanggalMulai={setTanggalMulai}
-                durasi={durasi} // Kirim durasi ke komponen TanggalMulai
-              />
-            </motion.div>
-
-            <motion.div
-              className="mt-4 w-full lg:w-[70%] lg:ml-[2.5rem]"
-              initial={fadeUp.initial}
-              animate={fadeUp.animate}
-              transition={{ ...fadeUp.transition, delay: 0.8 }}
-            >
-              <hr className="border-gray-300" />
-            </motion.div>
-
             <motion.div
               initial={fadeUp.initial}
               animate={fadeUp.animate}
               transition={{ ...fadeUp.transition, delay: 0.9 }}
             >
-              <CatatanTambahan catatan={catatan} setCatatan={setCatatan} />
+              <CatatanTambahan
+                catatan={catatan}
+                setCatatan={setCatatan}
+                setTanggalAkhir={setTanggalAkhir}
+                setTanggalMulai={setTanggalMulai}
+              />
             </motion.div>
           </div>
 
@@ -172,6 +134,8 @@ const Booking = () => {
               totalBiaya={totalBiaya}
               property={property}
               durasi={durasi}
+              tanggalMulai={tanggalMulai}
+              tanggalAkhir={tanggalAkhir}
             />
           </motion.div>
         </div>

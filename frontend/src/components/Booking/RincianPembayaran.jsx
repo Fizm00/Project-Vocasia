@@ -22,7 +22,7 @@ const RincianPembayaran = ({ totalBiaya, property, durasi }) => {
       <div className="flex flex-col md:flex-row items-center md:items-start md:space-x-3">
         <img
           src={URI_DOMAIN + property?.data.images[0] || "Data tidak tersedia"}
-          alt={property?.data.images[0] || "Data tidak tersedia"}
+          alt={"Gambar tidak tersedia"}
           className="w-20 h-20 rounded-md object-cover"
         />
         <div
@@ -64,7 +64,14 @@ const RincianPembayaran = ({ totalBiaya, property, durasi }) => {
         </div>
         <div className="flex justify-between items-center text-xs">
           <span>Durasi</span>
-          <span>{durasi} Bulan</span>
+          <span>{durasi} Hari</span>
+        </div>
+        <div className="flex justify-between items-center text-xs">
+          <span>Logic</span>
+          <span>
+            {formatHarga(property?.data.price) || "Data tidak tersedia"} X{" "}
+            {durasi} Hari
+          </span>
         </div>
         {/* Biaya layanan dihapus */}
         <hr className="border-gray-300" />

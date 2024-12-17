@@ -65,13 +65,21 @@ function App() {
           />
           <Route path="/about" element={<About />} />
           <Route
-            path="/payment"
+            path="/payment/:id"
             element={
               <ProtectedRoute>
                 <Payment />
               </ProtectedRoute>
             }
           />
+          {/* <Route
+            path="/payment"
+            element={
+              <ProtectedRoute>
+                <Payment />
+              </ProtectedRoute>
+            }
+          /> */}
           <Route
             path="/booking"
             element={
