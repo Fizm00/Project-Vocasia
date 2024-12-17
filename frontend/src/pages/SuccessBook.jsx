@@ -1,17 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { MdLocationOn } from "react-icons/md";
 import { BsCheckCircle } from "react-icons/bs";
+import { getBookingById } from "../api/booking";
+import { getPropertyById } from "../api/property";
 
 const SuccessBook = () => {
   const [kost, setKost] = useState(null);
   const [payment, setPayment] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [booking, setBooking] = useState({});
+  const [property, setProperty] = useState({});
+  const { id } = useParams();
 
-  useEffect(() => {
-    const fetchData = () => {
+  useEffect(()  => {
+    const fetchData = async () => {
+      // const booking_id = '67617c8d24caa404d33e627a';
+      const response = await getBookingById(id);
+      console.log(response.data.data)
+      // const property_id = '67602377c2bd4f0236c198c0';
+      const getProperty = await getPropertyById(response.data.data.property_id)
+      
+      setProperty(getProperty.data.data)
+      setBooking(response.data.data)
       setIsLoading(true);
       setTimeout(() => {
         const dummyKost = {
@@ -43,7 +57,19 @@ const SuccessBook = () => {
     };
 
     fetchData();
+
+
   }, []);
+  console.log(booking)
+  useEffect (() => {
+    const feathProperty = async () => {
+      // const property_id = '67602377c2bd4f0236c198c0';
+      // const getProperty = await getPropertyById(property_id)
+      // setProperty(getProperty.data.data)
+    }
+    feathProperty()
+  },[])
+  console.log(property)
 
   if (isLoading) {
     return <div className="min-h-screen flex justify-center items-center">Loading...</div>;
@@ -65,7 +91,6 @@ const SuccessBook = () => {
       </div>
     );
   }
-
   const durationInMonths = parseInt(kost.duration.split(" ")[0]);
   const totalPayment = kost.price * durationInMonths;
 
@@ -85,28 +110,35 @@ const SuccessBook = () => {
                 <div className="space-y-6 text-gray-900 text-sm">
                   <div className="flex justify-between">
                     <span className="font-medium text-gray-600">No. Invoice</span>
-                    <span className="text-gray-800">{payment.transaction_id}</span>
+                    <span className="text-gray-800">{booking.payment.transaction_id}</span>
                   </div>
-                  <div className="flex justify-between">
+                  {/* <div className="flex justify-between">
                     <span className="font-medium text-gray-600">Tanggal Transaksi</span>
                     <span className="text-gray-800">{payment.transaction_date}</span>
-                  </div>
-                  <div className="flex justify-between">
+                  </div> */}
+                  {/* <div className="flex justify-between">
                     <span className="font-medium text-gray-600">Jenis Pembayaran</span>
                     <span className="text-gray-800">{payment.payment_method}</span>
-                  </div>
+                  </div> */}
                   <div className="flex justify-between">
                     <span className="font-medium text-gray-600">Dibayar pada</span>
-                    <span className="text-gray-800">{payment.transaction_date}</span>
+                    <span>
+                    {booking.start_date ? 
+                      new Date(booking.start_date).toLocaleDateString('id-ID', {
+                        day: '2-digit',
+                        month: 'long',
+                        year: 'numeric',
+                      }).replace(/\s/g, '-') : '-'}
+                  </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium text-gray-600">Status Transaksi</span>
-                    <span className="text-gray-800">{payment.payment_status}</span>
+                    <span className="text-gray-800">{booking.status}</span>
                   </div>
                   <div className="flex justify-start mt-8">
                     <Link
                       to="/"
-                      className="bg-[#193F3D] text-white px-7 py-2 rounded-md hover:bg-green-900 text-sm shadow-md transition-all"
+                      className="bg-[#193F3D] text-white mt-14 px-7 py-2 rounded-md hover:bg-green-900 text-sm shadow-md transition-all"
                     >
                       Beranda
                     </Link>
@@ -117,18 +149,18 @@ const SuccessBook = () => {
             <div className="bg-white rounded-lg shadow-lg hover:shadow-2xl transform transition-all duration-300 p-4 mx-auto w-full max-w-lg sm:max-w-xl md:max-w-2xl hover:scale-105 hover:translate-y-2">
               <div className="flex items-center space-x-4 mb-4">
                 <img
-                  src={kost.image}
-                  alt={kost.name}
+                  src={property.images[0]}
+                  alt={property.name}
                   className="rounded-md w-16 h-16 object-cover"
                 />
                 <div className="flex flex-col justify-center">
                   <button className="px-3 py-0 text-xs font-normal rounded-full bg-[#DADCC0] text-[#193F3D] w-fit mt-1">
-                    {kost.type}
+                    {property.gender_type}
                   </button>
-                  <p className="text-gray-800 font-bold text-sm mt-2 mb-1">{kost.name}</p>
+                  <p className="text-gray-800 font-bold text-sm mt-2 mb-1">{property.name}</p>
                   <div className="flex items-center text-xs text-gray-600 space-x-2">
                     <MdLocationOn className="text-gray-600 text-sm" />
-                    <span className="text-xs">{kost.location}</span>
+                    <span className="text-xs">{property.city}</span>
                   </div>
                 </div>
               </div>
@@ -137,25 +169,39 @@ const SuccessBook = () => {
                 <p className="text-gray-800 font-semibold text-xs">Informasi Sewa</p>
                 <div className="flex justify-between text-xs">
                   <span className="text-gray-600">Tanggal Masuk</span>
-                  <span>{kost.startDate}</span>
+                  <span>
+                    {booking.start_date ? 
+                      new Date(booking.start_date).toLocaleDateString('id-ID', {
+                        day: '2-digit',
+                        month: 'long',
+                        year: 'numeric',
+                      }).replace(/\s/g, '-') : '-'}
+                  </span>
                 </div>
                 <div className="flex justify-between text-xs">
                   <span className="text-gray-600">Tanggal Keluar</span>
-                  <span>{kost.endDate}</span>
+                  <span>
+                    {booking.end_date ? 
+                      new Date(booking.end_date).toLocaleDateString('id-ID', {
+                        day: '2-digit',
+                        month: 'long',
+                        year: 'numeric',
+                      }).replace(/\s/g, '-') : '-'}
+                  </span>
                 </div>
-                <div className="flex justify-between text-xs">
+                {/* <div className="flex justify-between text-xs">
                   <span className="text-gray-600">Durasi Sewa</span>
                   <span>{kost.duration}</span>
-                </div>
+                </div> */}
                 <hr className="my-4" />
                 <div className="flex justify-between text-xs">
                   <span className="text-gray-600">Biaya Sewa Kos</span>
-                  <span>Rp {kost.price.toLocaleString()}</span>
+                  <span>Rp {booking.total_price.toLocaleString()}</span>
                 </div>
                 <hr className="my-4" />
                 <div className="flex justify-between font-semibold text-xs">
                   <span>Total Pembayaran</span>
-                  <span>Rp {totalPayment.toLocaleString()}</span>
+                  <span>Rp {booking.total_price.toLocaleString()}</span>
                 </div>
               </div>
             </div>

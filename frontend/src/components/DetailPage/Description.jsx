@@ -102,7 +102,7 @@ const Description = ({ kostDetail }) => {
         <p className="text-gray-500">{kostDetail?.data.description}</p>
       </div>
 
-      {/* Spesifikasi Kost */}
+      {/* Spesifikasi Kost
       <div className="space-y-4">
         <p className="font-bold text-2xl mt-10 mb-4">Spesifikasi Kost</p>
         {/* {spesifikasi.map((item) => {
@@ -117,7 +117,7 @@ const Description = ({ kostDetail }) => {
             )
           );
         })} */}
-      </div>
+      {/* </div> */}
 
       {/* Fasilitas Kost */}
       <div className="w-full">
