@@ -1,28 +1,42 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Banner from "../components/Banner";
 import Footer from "../components/Footer";
+import Aos from "aos";
+import "aos/dist/aos.css";
 
-const HeroSection = () => (
-  <section
-    className="relative w-full min-h-screen bg-cover bg-center bg-no-repeat"
-    style={{ backgroundImage: "url('/aboutImage.png')" }}
-  >
-    <div className="relative z-20 text-left text-white flex flex-col items-start justify-center min-h-screen px-20 md:px-20">
-      <h1 className="text-3xl md:text-4xl font-bold mb-8 transition-all duration-500 ease-out hover:scale-110 hover:translate-x-[-10px] hover:translate-y-2 leading-snug">
-        AnakKost Hadir untuk Menyediakan Kost
-        <br />
-        Berkualitas dengan Fasilitas Terbaik!
-      </h1>
-      <p className="text-lg text-white mb-16 max-w-xl leading-relaxed mt-8 text-justify">
-        AnakKost adalah platform pencarian kost terbaik di Indonesia yang
-        memudahkan kamu menemukan hunian nyaman, strategis, dan ramah di
-        kantong. Kami berkomitmen menyediakan informasi akurat dan fasilitas
-        terbaik untuk pengalaman kost yang nyaman dan aman.
-      </p>
-    </div>
-  </section>
-);
+const HeroSection = () => {
+  return (
+    <section
+      className="relative w-full min-h-screen bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('/aboutImage.png')" }}
+    >
+      <div className="relative z-20 text-left text-white flex flex-col items-start justify-center min-h-screen px-20 md:px-20">
+        {/* Judul */}
+        <h1
+          className="text-3xl md:text-4xl font-bold mb-8 transition-all duration-500 ease-out hover:scale-110 hover:translate-x-[-10px] hover:translate-y-2 leading-snug"
+          data-aos="fade-up"
+          data-aos-duration="1000"
+        >
+          AnakKost Hadir untuk Menyediakan Kost
+          <br />
+          Berkualitas dengan Fasilitas Terbaik!
+        </h1>
+        {/* Paragraf */}
+        <p
+          className="text-lg text-white mb-16 max-w-xl leading-relaxed mt-8 text-justify"
+          data-aos="fade-up"
+          data-aos-duration="1000"
+        >
+          AnakKost adalah platform pencarian kost terbaik di Indonesia yang
+          memudahkan kamu menemukan hunian nyaman, strategis, dan ramah di
+          kantong. Kami berkomitmen menyediakan informasi akurat dan fasilitas
+          terbaik untuk pengalaman kost yang nyaman dan aman.
+        </p>
+      </div>
+    </section>
+  );
+};
 
 const SectionWithImage = ({ title, subtitle, text, imgSrc, reverse }) => (
   <section
@@ -102,7 +116,12 @@ const StatisticsSection = () => (
 );
 
 const About = () => {
+  useEffect(() => {
+    Aos.init({ duration: 1000, once: true }); // Inisialisasi AOS di sini
+  }, []);
+
   return (
+
     <>
       <Navbar />
       <HeroSection />
