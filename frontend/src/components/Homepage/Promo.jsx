@@ -20,7 +20,7 @@ const Promo = () => {
 
         setKosts(response.data.data);
         setLoading(false);
-        console.log("Response Data:", response.data);
+        console.log("Response Data properti:", response.data);
       } catch (error) {
         setError("Promo | setError:" + error.message);
 

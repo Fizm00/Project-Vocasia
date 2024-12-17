@@ -125,35 +125,7 @@ const Navbar = () => {
           </div>
         </button>
       </div>
-      {isMenuOpen && (
-        <div className="md:hidden flex flex-col items-center bg-darkGreen p-4 space-y-2">
-          <Link to="/" className="text-md font-semibold text-white">
-            Beranda
-          </Link>
-          <Link to="/search" className="text-md font-semibold text-white">
-            Cari
-          </Link>
-          <Link to="/about" className="text-md font-semibold text-white">
-            Tentang
-          </Link>
-          <Link to="/contact" className="text-md font-semibold text-white">
-            Kontak
-          </Link>
-          {isLoggedIn && (
-            <div className="flex flex-col items-start space-y-2">
-              <Link to="/profile" className="text-md font-semibold text-white">
-                Profile
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="text-md font-semibold text-white"
-              >
-                Logout
-              </button>
-            </div>
-          )}
-        </div>
-      )}
+      
     </header>
   );
 };

@@ -9,9 +9,10 @@ const loginUser = async (email, password) => {
     localStorage.setItem("token", response.data.data.token);
     localStorage.setItem("email", JSON.stringify(response.data.data.email));
     localStorage.setItem("name", JSON.stringify(response.data.data.name));
+    localStorage.setItem("id", JSON.stringify(response.data.data.id));
     console.log(response.data.data);
 
-    return response.data.data; // Return the response data
+    return response.data.data;
   } catch (error) {
     throw error.response?.data || "An error occurred";
   }
