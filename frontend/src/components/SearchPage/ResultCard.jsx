@@ -38,12 +38,12 @@ const ResultCard = ({ kost }) => {
       {/* Gambar */}
       <div className="w-full sm:w-1/3 h-40 sm:h-48">
         <a
-          href={`/property/${kost._id}`}
+          href={`/detail/${kost._id}`}
           onClick={handleTabLink}
           className="flex flex-col sm:flex-row w-full h-full"
         >
           <img
-            src={url_domain + kost.images[0]}
+            src={kost.images[0]}
             alt={kost.name || "Name Kost"}
             className="w-full h-full object-cover"
           />
@@ -56,7 +56,7 @@ const ResultCard = ({ kost }) => {
         <div>
           <div className="flex items-center space-x-2 text-sm mb-2">
             <span className="bg-white border font-bold px-2 py-1 rounded-md">
-              {kost.property_type}
+              {kost.gender_type}
             </span>
             <span className="text-gray-400 font-semibold">
               Sisa {kost.stock} Kamar
@@ -108,10 +108,10 @@ const ResultCard = ({ kost }) => {
         {/* Rating dan Harga */}
         <div className="flex justify-between items-center mt-4">
           <div className="flex items-center text-yellow-500 space-x-1">
-            <FaStar />
-            <span className="text-md font-bold text-black">
+            {/* <FaStar /> */}
+            {/* <span className="text-md font-bold text-black">
               {kost.averageRating}
-            </span>
+            </span> */}
           </div>
           <div className="text-right">
             <p className="text-xl font-bold">

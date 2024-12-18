@@ -64,11 +64,11 @@ const RatingDetail = ({ kostDetail }) => {
                 >
                   {/* Foto dan Nama Pengguna */}
                   <div className="flex items-center mb-2">
-                    <img
+                    {/* <img
                       src={review?.user_id?.photo}
                       alt={review?.user_id?.name}
                       className="w-12 h-12 rounded-full object-cover mr-4"
-                    />
+                    /> */}
                     <div>
                       <p className="font-bold text-gray-700">
                         {review?.user_id?.name}

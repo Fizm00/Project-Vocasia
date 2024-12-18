@@ -30,16 +30,16 @@ const Description = ({ kostDetail }) => {
 
   return (
     <div className="px-4 sm:px-2 lg:px-20">
-      <h1 className="text-4xl font-bold mb-4">{kostDetail.data.name}</h1>
+      <h1 className="text-4xl font-bold mb-4">{kostDetail.name}</h1>
       <div className="flex flex-wrap items-center space-x-4 mb-4">
         <div className="flex items-center">
           <FaMapMarkerAlt className="text-gray-400 text-sm mr-2" />
-          <p className="text-gray-400 text-sm">{kostDetail.data.address}</p>
+          <p className="text-gray-400 text-sm">{kostDetail.address}</p>
         </div>
         <div className="flex items-center">
           <IoBedOutline className="text-red-500 text-sm mr-2" />
           <p className="text-red-500 text-sm">
-            {kostDetail.data.stock} kamar tersedia
+            {kostDetail.stock} kamar tersedia
           </p>
         </div>
       </div>
@@ -81,7 +81,7 @@ const Description = ({ kostDetail }) => {
         <div className="w-16 h-16 rounded-full overflow-hidden">
           <img
             src={
-              kostDetail?.data.photo ||
+              kostDetail?.user_id?.photo ||
               "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
             }
             alt="Pemilik Kost"
@@ -91,7 +91,7 @@ const Description = ({ kostDetail }) => {
         <div>
           <p className="text-gray-700 text-sm">Pemilik Kost:</p>
           <p className="text-gray-700 text-xl font-bold">
-            {kostDetail?.data?.user_id?.name}
+            {kostDetail?.user_id?.name}
           </p>
         </div>
       </div>
@@ -99,7 +99,7 @@ const Description = ({ kostDetail }) => {
       {/* Deskripsi Kost */}
       <div className="w-full">
         <p className="font-bold text-2xl mb-4">Deskripsi Kost</p>
-        <p className="text-gray-500">{kostDetail?.data.description}</p>
+        <p className="text-gray-500 text-justify">{kostDetail.description}</p>
       </div>
 
       {/* Spesifikasi Kost
@@ -122,14 +122,13 @@ const Description = ({ kostDetail }) => {
       {/* Fasilitas Kost */}
       <div className="w-full">
         <p className="font-bold text-2xl mt-10 mb-4">Fasilitas Kost</p>
-        <div className="grid grid-cols-2 gap-4 mt-2">
-          {kostDetail?.data.facility}
-          {/* {kostDetail.facility.map((facility) => (
-            <div key={facility.id} className="flex items-center">
-              {facility.icon}
-              <p>{facility.name}</p>
+        <div className="grid grid-cols-1 gap-2 mt-2">
+          {/* {kostDetail.facility} */}
+          {kostDetail.facility.map((facility) => (
+            <div className="flex items-center">
+              <p> - {facility}</p>
             </div>
-          ))} */}
+          ))}
           {/* {fasilitas.map(
             ({ key, icon, label }) =>
               kostDetail.fasilitas[key] && (

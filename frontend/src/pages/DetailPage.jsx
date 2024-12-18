@@ -21,6 +21,7 @@ const DetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [property, setProperty] = useState(null);
   const [reviews, setReviews] = useState([]);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
       const fetchReviews = async () => {
@@ -34,7 +35,7 @@ const DetailPage = () => {
   
       fetchReviews();
     },[])
-    console.log(`data reviews:`, reviews);
+    // console.log(`data reviews:`, reviews);
 
   useEffect(() => {
     const fetchProperty = async () => {
@@ -55,6 +56,7 @@ const DetailPage = () => {
     if (id) fetchProperty();
   }, [id, navigate]);
   console.log(property);
+
   useEffect(() => {
     if (property) {
       setSelectedImage(property); // Ambil gambar pertama jika ada
@@ -116,17 +118,17 @@ const DetailPage = () => {
           {/* Section Detail */}
           <div className="flex flex-col sm:flex-row justify-start space-y-4 sm:space-y-0 sm:space-x-1 mt-12">
             <div className="h-full sm:w-2/3 p-1">
-              <Description kostDetail={property} />
+              <Description kostDetail={property.data} />
             </div>
             <div className="h-full sm:w-1/4 p-6 bg-white border rounded-lg shadow-lg">
-              <BookingSection kostDetail={property} />
+              <BookingSection kostDetail={property.data} />
             </div>
           </div>
 
-          {/* Maps Section */}
+          {/* Maps Section
           <div className="mt-10">
             <MapSection kostDetail={property} />
-          </div>
+          </div> */}
 
           {/* Rating Section */}
           <div className="mt-10">
