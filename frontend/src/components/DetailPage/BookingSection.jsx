@@ -18,7 +18,7 @@ const BookingSection = ({ kostDetail }) => {
   };
 
   useEffect(() => {
-    console.log("Booking Section|Kost Detail:" + kostDetail.data.user_id);
+    console.log("Booking Section|Kost Detail:" + kostDetail?.data?.user_id);
   });
 
   const handleContactOwner = () => {

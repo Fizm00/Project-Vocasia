@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { postReview } from "../api/review";
 import { getPropertyById } from "../api/property";
-import { getBookingById } from "../api/booking";
+import { getBookingsById } from "../api/booking";
 
 const AddReview = () => {
   const [rating, setRating] = useState(0);
@@ -15,14 +15,15 @@ const AddReview = () => {
   const [rentalDetails, setRentalDetails] = useState(null);
   const [ property, setProperty ] = useState(null);
 
-  // const booking_id = localStorage.getItem("booking_id");
+  const booking_id = localStorage.getItem("booking_id");
   const token = localStorage.getItem("token");
-  const booking_id = '67617c8d24caa404d33e627a';
+  // const booking_id = '67628d6e8b89ac98421fa654';
   
   useEffect(() => {
     const fetchRentalDetails = async () => {
-      const response = await getBookingById(booking_id);
-      setRentalDetails(response.data.data);
+      const response = await getBookingsById(booking_id);
+      setRentalDetails(response.data);
+      console.log(response.data);
     }
     fetchRentalDetails();
   }, [booking_id]);
@@ -32,7 +33,7 @@ useEffect(() => {
     try {
       const propertyId = rentalDetails?.property_id; 
       const data = await getPropertyById(propertyId);
-      setProperty(data.data.data); 
+      setProperty(data.data); 
     } catch (err) {
       console.error("Error fetching rental details:", err);
     }

@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 import { MdLocationOn } from "react-icons/md";
 import { BsCheckCircle } from "react-icons/bs";
 import axiosInstance from "../config/axiosInstance";
-import { getBookingById } from "../api/booking";
+import { getBookingsById } from "../api/booking";
 import { getPropertyById } from "../api/property";
 
 const SuccessBook = () => {
@@ -34,7 +34,7 @@ const SuccessBook = () => {
   useEffect(()  => {
     const fetchData = async () => {
       // const booking_id = '67617c8d24caa404d33e627a';
-      const response = await getBookingById(id);
+      const response = await getBookingsById(id);
       console.log(response.data.data)
       // const property_id = '67602377c2bd4f0236c198c0';
       const getProperty = await getPropertyById(response.data.data.property_id)
@@ -68,8 +68,8 @@ const SuccessBook = () => {
         setKost(dummyKost);
         setPayment(dummyPayment);
         setIsLoading(false);
-      }
-    };
+      }); 
+    }
 
     //historyPayment();
     fetchData();
