@@ -33,10 +33,10 @@ const Promo = () => {
   }, [getProperty]);
 
   const handleCardClick = (kostId) => {
-    navigate(`property/${kostId}`);
+    window.open(`/property/${kostId}`, "_blank", "noopener,noreferrer");
   };
 
-  const URI_DOMAIN = "http://localhost:3000";
+  const URI_DOMAIN = import.meta.env.VITE_URI_DOMAIN;
 
   // Render UI
   if (loading) return <p>Loading...</p>;

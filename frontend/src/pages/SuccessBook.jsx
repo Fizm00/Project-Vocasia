@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { MdLocationOn } from "react-icons/md";
 import { BsCheckCircle } from "react-icons/bs";
+import axiosInstance from "../config/axiosInstance";
 
 const SuccessBook = () => {
   const [kost, setKost] = useState(null);
@@ -11,54 +12,85 @@ const SuccessBook = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const fetchData = () => {
-      setIsLoading(true);
-      setTimeout(() => {
-        const dummyKost = {
-          id: 1,
-          name: "Kost Trinanda",
-          startDate: "12 Mar 2023",
-          endDate: "12 Apr 2023",
-          duration: "1 Bulan",
-          price: 1500000,
-          image: "/1-kostImage.png",
-          status: "Disetujui",
-          location: "Jakarta Selatan, Jalan Jagakarsa No. 1",
-          type: "Putri",
-        };
-        const dummyPayment = {
-          booking_id: "1",
-          transaction_id: "INV/202231268",
-          order_id: "ORD12345",
-          payment_method: "DANA",
-          payment_status: "Disetujui",
-          amount: 1500000,
-          transaction_date: "20 November 2022, 15:10 WIB",
-        };
-
-        setKost(dummyKost);
-        setPayment(dummyPayment);
+    const historyPayment = async () => {
+      try {
+        const booking_id = localStorage.getItem("booking_id");
+        localStorage.getItem("user_id");
+        localStorage.getItem("property_id");
+        const response = await axiosInstance.get(`/booking/${booking_id}`);
+        console.log(response.data);
+        setPayment(response.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
         setIsLoading(false);
-      }, 1000);
+      }
     };
 
-    fetchData();
+    historyPayment();
   }, []);
 
+  // useEffect(() => {
+  //   const fetchData = () => {
+  //     setIsLoading(true);
+  //     setTimeout(() => {
+  //       const dummyKost = {
+  //         id: 1,
+  //         name: "Kost Trinanda",
+  //         startDate: "12 Mar 2023",
+  //         endDate: "12 Apr 2023",
+  //         duration: "1 Bulan",
+  //         price: 1500000,
+  //         image: "/1-kostImage.png",
+  //         status: "Disetujui",
+  //         location: "Jakarta Selatan, Jalan Jagakarsa No. 1",
+  //         type: "Putri",
+  //       };
+  //       const dummyPayment = {
+  //         booking_id: "1",
+  //         transaction_id: "INV/202231268",
+  //         order_id: "ORD12345",
+  //         payment_method: "DANA",
+  //         payment_status: "Disetujui",
+  //         amount: 1500000,
+  //         transaction_date: "20 November 2022, 15:10 WIB",
+  //       };
+
+  //       setKost(dummyKost);
+  //       setPayment(dummyPayment);
+  //       setIsLoading(false);
+  //     }, 1000);
+  //   };
+
+  //   fetchData();
+  // }, []);
+
   if (isLoading) {
-    return <div className="min-h-screen flex justify-center items-center">Loading...</div>;
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        Loading...
+      </div>
+    );
   }
 
-  if (!kost || !payment || kost.status !== "Disetujui" || payment.payment_status !== "Disetujui") {
+  if (
+    !kost ||
+    !payment ||
+    kost.status !== "Disetujui" ||
+    payment.payment_status !== "Disetujui"
+  ) {
     return (
       <div className="min-h-screen flex flex-col bg-gray-100 mb-9">
         <Navbar />
         <main className="container mx-auto flex-grow px-4 lg:px-8 py-4 bg-white rounded-lg shadow-lg mt-4">
           <h2 className="text-lg font-semibold text-red-600 mb-6 flex items-center">
-            Pengajuan Sewa Gagal! <span className="ml-2 text-red-700 text-xl">✖</span>
+            Pengajuan Sewa Gagal!{" "}
+            <span className="ml-2 text-red-700 text-xl">✖</span>
           </h2>
           <div className="flex justify-center">
-            <p className="text-gray-800 text-lg">Status pembayaran atau status booking belum disetujui.</p>
+            <p className="text-gray-800 text-lg">
+              Status pembayaran atau status booking belum disetujui.
+            </p>
           </div>
         </main>
         <Footer />
@@ -81,27 +113,49 @@ const SuccessBook = () => {
                 <BsCheckCircle className="ml-2 text-green-700 text-2xl" />
               </h2>
               <div className="space-y-6 mt-2">
-                <h3 className="text-md font-bold text-gray-800 mt-4">Detail Pengajuan</h3>
+                <h3 className="text-md font-bold text-gray-800 mt-4">
+                  Detail Pengajuan
+                </h3>
                 <div className="space-y-6 text-gray-900 text-sm">
                   <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">No. Invoice</span>
-                    <span className="text-gray-800">{payment.transaction_id}</span>
+                    <span className="font-medium text-gray-600">
+                      No. Invoice
+                    </span>
+                    <span className="text-gray-800">
+                      {payment.transaction_id}
+                    </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Tanggal Transaksi</span>
-                    <span className="text-gray-800">{payment.transaction_date}</span>
+                    <span className="font-medium text-gray-600">
+                      Tanggal Transaksi
+                    </span>
+                    <span className="text-gray-800">
+                      {payment.transaction_date}
+                    </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Jenis Pembayaran</span>
-                    <span className="text-gray-800">{payment.payment_method}</span>
+                    <span className="font-medium text-gray-600">
+                      Jenis Pembayaran
+                    </span>
+                    <span className="text-gray-800">
+                      {payment.payment_method}
+                    </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Dibayar pada</span>
-                    <span className="text-gray-800">{payment.transaction_date}</span>
+                    <span className="font-medium text-gray-600">
+                      Dibayar pada
+                    </span>
+                    <span className="text-gray-800">
+                      {payment.transaction_date}
+                    </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Status Transaksi</span>
-                    <span className="text-gray-800">{payment.payment_status}</span>
+                    <span className="font-medium text-gray-600">
+                      Status Transaksi
+                    </span>
+                    <span className="text-gray-800">
+                      {payment.payment_status}
+                    </span>
                   </div>
                   <div className="flex justify-start mt-8">
                     <Link
@@ -125,7 +179,9 @@ const SuccessBook = () => {
                   <button className="px-3 py-0 text-xs font-normal rounded-full bg-[#DADCC0] text-[#193F3D] w-fit mt-1">
                     {kost.type}
                   </button>
-                  <p className="text-gray-800 font-bold text-sm mt-2 mb-1">{kost.name}</p>
+                  <p className="text-gray-800 font-bold text-sm mt-2 mb-1">
+                    {kost.name}
+                  </p>
                   <div className="flex items-center text-xs text-gray-600 space-x-2">
                     <MdLocationOn className="text-gray-600 text-sm" />
                     <span className="text-xs">{kost.location}</span>
@@ -134,7 +190,9 @@ const SuccessBook = () => {
               </div>
               <hr className="my-4" />
               <div className="space-y-4 text-gray-900">
-                <p className="text-gray-800 font-semibold text-xs">Informasi Sewa</p>
+                <p className="text-gray-800 font-semibold text-xs">
+                  Informasi Sewa
+                </p>
                 <div className="flex justify-between text-xs">
                   <span className="text-gray-600">Tanggal Masuk</span>
                   <span>{kost.startDate}</span>

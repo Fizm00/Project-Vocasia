@@ -5,7 +5,7 @@ require("dotenv").config();
 
 const getBooking = async (req, res) => {
   try {
-    const booking = await Booking.find();
+    const booking = await Booking.find({});
 
     res.status(200).json({
       status: "success | OK",
