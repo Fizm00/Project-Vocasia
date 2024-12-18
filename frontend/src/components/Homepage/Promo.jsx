@@ -33,6 +33,10 @@ const Promo = () => {
   }, [getProperty]);
 
   const handleCardClick = (kostId) => {
+   // window.open(`/property/${kostId}`, "_blank", "noopener,noreferrer");
+ // };
+
+  // const URI_DOMAIN = import.meta.env.VITE_URI_DOMAIN;
     navigate(`detail/${kostId}`);
   };
 

@@ -1,31 +1,69 @@
-import React from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../config/axiosInstance";
 
-
-const CatatanTambahan = ({ catatan, setCatatan }) => {
+const CatatanTambahan = ({ setTanggalMulai, setTanggalAkhir }) => {
   const navigate = useNavigate();
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
-  const handleAjukanSewa = () => {
-    navigate("/Riwayat-sewa");
-  }
+  const handleAjukanSewa = async () => {
+    try {
+      const user_id = localStorage.getItem("user_id");
+      const property_id = localStorage.getItem("property_id");
+
+      const response = await axiosInstance.post("/booking", {
+        user_id,
+        property_id,
+        start_date: new Date(startDate).toISOString(),
+        end_date: new Date(endDate).toISOString(),
+      });
+      console.log("Booking Response:", response.data);
+      console.log("Booking ID:", response.data.data.booking._id);
+
+      alert("Booking Berhasil! Mengalihkan ke halaman pembayaran...");
+      localStorage.setItem("booking_id", response.data.data.booking._id);
+      localStorage.setItem("payment_url", response.data.data.payment_url);
+      // console.log("URL Payment:", response.data.data.payment_url);
+      // const getBookingId = localStorage.getItem("booking_id");
+      navigate(`/payment/${response.data.data.booking._id}`);
+    } catch (error) {
+      console.error("Error saat mengajukan booking:", error);
+      alert("Terjadi kesalahan saat mengajukan booking");
+    }
+    // navigate("/booking");
+  };
 
   return (
     <section className="mt-4 mb-16 lg:ml-[2.5rem] space-y-4">
-      <h2 className="text-lg font-bold text-gray-800">Catatan Tambahan</h2>
-      <p className="text-sm text-gray-500">Jelaskan tentang pengajuan sewa kamu</p>
-      <textarea
-        placeholder="Misal: Saya ingin ngekos bersama pacar"
-        value={catatan}
-        onChange={(e) => setCatatan(e.target.value)}
-        className="w-full lg:w-[70%] h-52 border border-gray-400 rounded-lg px-4 py-2 text-sm focus:border-[#193F3D] focus:ring-[#193F3D] outline-none bg-gray-100 mt-2"
-        aria-label="Isi catatan tambahan"
-      />
+      <div>
+        <label className="block text-sm font-medium mb-1">Tanggal Mulai</label>
+        <input
+          type="date"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+          required
+          className="border rounded p-2 w-full"
+        />
+      </div>
+
+      {/* Tanggal Akhir */}
+      <div>
+        <label className="block text-sm font-medium mb-1">Tanggal Akhir</label>
+        <input
+          type="date"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+          required
+          className="border rounded p-2 w-full"
+        />
+      </div>
       <div className="mt-4">
-        <button 
+        <button
           onClick={handleAjukanSewa}
           className="bg-darkGreen text-white rounded-lg px-6 py-2 hover:bg-green-700 transition-transform transform hover:scale-105"
         >
-          Ajukan Sewa
+          Pesan Sekarang -handleAjukanSewa
         </button>
       </div>
     </section>

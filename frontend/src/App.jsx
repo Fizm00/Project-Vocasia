@@ -17,11 +17,11 @@ import About from "./pages/About.jsx";
 import Payment from "./pages/Payment.jsx";
 import Booking from "./pages/Booking.jsx";
 import SuccessBook from "./pages/SuccessBook.jsx";
-import ProfilePage from './pages/ProfilePage.jsx';
+import ProfilePage from "./pages/ProfilePage.jsx";
 import Otp from "./pages/Otp";
-import Contact from './pages/Contact.jsx';
-import Notification from './pages/Notification.jsx';
-import TransactionsHistory from './pages/TransactionsHistory.jsx';
+import Contact from "./pages/Contact.jsx";
+import Notification from "./pages/Notification.jsx";
+import TransactionsHistory from "./pages/TransactionsHistory.jsx";
 import AddReview from "./pages/AddReviewPage.jsx";
 //Owner Page
 import RentalApproval from "./components/RentalPageOwner/RentalApproval.jsx";
@@ -65,13 +65,21 @@ function App() {
           />
           <Route path="/about" element={<About />} />
           <Route
-            path="/payment"
+            path="/payment/:id"
             element={
               <ProtectedRoute>
                 <Payment />
               </ProtectedRoute>
             }
           />
+          {/* <Route
+            path="/payment"
+            element={
+              <ProtectedRoute>
+                <Payment />
+              </ProtectedRoute>
+            }
+          /> */}
           <Route
             path="/booking"
             element={

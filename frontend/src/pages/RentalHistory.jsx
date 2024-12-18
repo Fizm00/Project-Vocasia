@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { SlArrowLeft } from "react-icons/sl";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
@@ -18,7 +18,7 @@ const RentalHistory = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-grow bg-white">
-        <div className="max-w-5xl mx-auto py-6 px-6"> 
+        <div className="max-w-5xl mx-auto py-6 px-6">
           <div className="flex items-center mb-4">
             <button
               onClick={handleBackToBooking}

@@ -40,6 +40,7 @@ const DetailPage = () => {
   useEffect(() => {
     const fetchProperty = async () => {
       try {
+        localStorage.setItem("property_id", id);
         const response = await axiosInstance.get(`/property/${id}`);
         setProperty(response.data);
         setLoading(false);
