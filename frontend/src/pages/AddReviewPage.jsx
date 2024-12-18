@@ -13,35 +13,36 @@ const AddReview = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [rentalDetails, setRentalDetails] = useState(null);
-  const [ property, setProperty ] = useState(null);
+  const [property, setProperty] = useState(null);
 
   const booking_id = localStorage.getItem("booking_id");
   const token = localStorage.getItem("token");
   // const booking_id = '67628d6e8b89ac98421fa654';
-  
+
   useEffect(() => {
     const fetchRentalDetails = async () => {
       const response = await getBookingsById(booking_id);
       setRentalDetails(response.data);
       console.log(response.data);
-    }
+    };
     fetchRentalDetails();
   }, [booking_id]);
 
-useEffect(() => {
-  async function fetchPropertyDetails() {
-    try {
-      const propertyId = rentalDetails?.property_id; 
-      const data = await getPropertyById(propertyId);
-      setProperty(data.data); 
-    } catch (err) {
-      console.error("Error fetching rental details:", err);
+  useEffect(() => {
+    async function fetchPropertyDetails() {
+      try {
+        const propertyId = rentalDetails?.property_id;
+        const data = await getPropertyById(propertyId);
+        setProperty(data.data.data);
+        console.log("fetchPropertyDetails" + data.data.data.images[0]);
+      } catch (err) {
+        console.error("Error fetching rental details:", err);
+      }
     }
-  }
-  fetchPropertyDetails();
-}, [booking_id]);
+    fetchPropertyDetails();
+  }, [rentalDetails]);
 
-console.log(rentalDetails);
+  console.log(rentalDetails);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -66,14 +67,14 @@ console.log(rentalDetails);
     }
 
     const reviewData = {
-      user_id: rentalDetails?.user_id, 
+      user_id: rentalDetails?.user_id,
       property_id: rentalDetails?.property_id,
-      booking_id: booking_id, 
-      rating: rating.toString(), 
+      booking_id: booking_id,
+      rating: rating.toString(),
       comment,
     };
-    console.log(reviewData)
-    console.log(token)
+    console.log(reviewData);
+    console.log(token);
     setLoading(true);
     setError(null);
 
@@ -146,8 +147,8 @@ console.log(rentalDetails);
               Tulis review kamu lebih lanjut:
             </label>
             <p className="text-sm">
-              Review yang lengkap akan membantu pencari kost yang lain
-              menemukan kost yang tepat!
+              Review yang lengkap akan membantu pencari kost yang lain menemukan
+              kost yang tepat!
             </p>
             <textarea
               id="comment"
