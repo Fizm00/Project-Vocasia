@@ -123,7 +123,6 @@ const Booking = () => {
             </motion.div>
           </div>
 
-          {/* Rincian Pembayaran */}
           <motion.div
             className="col-span-1"
             initial={fadeUp.initial}
