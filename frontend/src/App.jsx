@@ -96,7 +96,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/success-book" element={<SuccessBook />} />
+          <Route path="/success-book/:id" element={<SuccessBook />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/notification" element={<Notification />} />
@@ -115,7 +115,7 @@ function App() {
           <Route
             path="/property/:id"
             key={"property"}
-            element={<DetailPage />}
+            element={<Properties />}
           />
         </Routes>
       </Router>

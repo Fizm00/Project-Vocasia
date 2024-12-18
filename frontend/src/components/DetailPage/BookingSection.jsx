@@ -52,7 +52,7 @@ const BookingSection = ({ kostDetail }) => {
             {new Intl.NumberFormat("id-ID", {
               style: "currency",
               currency: "IDR",
-            }).format(kostDetail.data.price)}
+            }).format(kostDetail.price)}
             <span className="text-gray-500 text-sm md:text-md font-semibold">
               {/* /{kostDetail.durasi} */}
               /Bulan
@@ -61,7 +61,7 @@ const BookingSection = ({ kostDetail }) => {
         </div>
         <div className="w-full mt-2 border border-darkGreen text-center py-1 px-4 rounded-md md:mt-4 md:px-1">
           <p className="text-sm md:text-md text-darkGreen font-bold">
-            {kostDetail.data.property_type}
+            {kostDetail.gender_type}
           </p>
         </div>
       </div>

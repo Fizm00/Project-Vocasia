@@ -3,7 +3,7 @@ import axiosInstance from "../config/axiosInstance";
 export const getPropertyById = async (id) => {
   try {
     const response = axiosInstance.get(`/property/${id}`);
-    return response.data;
+    return response;
   } catch (error) {
     console.error(
       " Error Fetching data by id| getPropertyById - error:" + error

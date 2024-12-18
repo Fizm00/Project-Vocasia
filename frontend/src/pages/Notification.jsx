@@ -1,21 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import NotificationList from "../components/Notification/NotifList";
+import axiosInstance from "../config/axiosInstance";
 
 const Notification = () => {
   const [notifications, setNotifications] = useState([
-    { id: 1, title: "Invite Your Friends!", date: "12 Mar 2021" },
-    { id: 2, title: "Connect to your facebook account.", date: "12 Mar 2021" },
-    { id: 3, title: "New privacy alert!", date: "12 Mar 2021" },
-    { id: 4, title: "Invite Your Friends!", date: "12 Mar 2021" },
-    { id: 5, title: "Connect to your facebook account.", date: "12 Mar 2021" },
-    { id: 6, title: "New privacy alert!", date: "12 Mar 2021" },
   ]);
+
+  const userId = localStorage.getItem("id");
+  console.log(userId);
+
+  useEffect(() => {
+    // Fungsi untuk mengambil notifikasi
+    const fetchNotifications = async () => {
+      try {
+        const response = await axiosInstance.get(
+          `/notifications/${JSON.parse(localStorage.getItem("id"))}`
+        );
+        setNotifications(response.data.data); // Simpan data notifikasi ke state
+      } catch (err) {
+        console.error("Error fetching notifications:", err.message);
+      }
+    };
+    // Panggil fungsi fetch jika userId tersedia
+    if (userId) {
+      fetchNotifications();
+    }
+  }, [userId]); // useEffect akan dijalankan setiap kali userId berubah
 
   const handleDelete = (id) => {
     // Filter out the notification with the matching id
-    setNotifications((prev) => prev.filter((notification) => notification.id !== id));
+    setNotifications((prev) =>
+      prev.filter((notification) => notification.id !== id)
+    );
   };
 
   return (
@@ -23,7 +41,10 @@ const Notification = () => {
       <Navbar />
       <main className="flex-grow bg-gray-50 px-4 lg:px-20 py-10">
         {/* Pass the notifications and handleDelete function as props */}
-        <NotificationList notifications={notifications} handleDelete={handleDelete} />
+        <NotificationList
+          notifications={notifications}
+          handleDelete={handleDelete}
+        />
       </main>
       <Footer />
     </div>

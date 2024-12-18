@@ -20,7 +20,7 @@ const Promo = () => {
 
         setKosts(response.data.data);
         setLoading(false);
-        console.log("Response Data:", response.data);
+        console.log("Response Data properti:", response.data);
       } catch (error) {
         setError("Promo | setError:" + error.message);
 
@@ -33,10 +33,14 @@ const Promo = () => {
   }, [getProperty]);
 
   const handleCardClick = (kostId) => {
-    window.open(`/property/${kostId}`, "_blank", "noopener,noreferrer");
+   // window.open(`/property/${kostId}`, "_blank", "noopener,noreferrer");
+ // };
+
+  // const URI_DOMAIN = import.meta.env.VITE_URI_DOMAIN;
+    navigate(`detail/${kostId}`);
   };
 
-  const URI_DOMAIN = import.meta.env.VITE_URI_DOMAIN;
+  const URI_DOMAIN = "https://api-anakkost.vocasia-fsjs-c.fun/api/v1";
 
   // Render UI
   if (loading) return <p>Loading...</p>;
@@ -57,23 +61,30 @@ const Promo = () => {
               onClick={() => handleCardClick(kost._id)}
             >
               <img
-                src={URI_DOMAIN + kost.images[0]}
+                src={kost.images[0]}
                 alt={kost.name}
                 className="h-40 w-full object-cover rounded-lg mb-4 transition-transform duration-500 group-hover:scale-110"
               />
               <div className="flex items-center justify-between mb-2">
-                <span className="text-gray-500 text-sm">
-                  {kost.price}/bulan
+              <p className="text-sm font-semibold text-darkGreen">
+                {new Intl.NumberFormat("id-ID", {
+                  style: "currency",
+                  currency: "IDR",
+                }).format(kost.price)}
+                <span className="text-gray-500 text-sm md:text-md font-semibold">
+                  {/* /{kostDetail.durasi} */}
+                  /Bulan
                 </span>
+              </p>
                 <button className="px-3 py-1 text-xs font-medium rounded-full bg-[#DADCC0] text-[#193F3D]">
-                  {kost.property_type}
+                  {kost.gender_type}
                 </button>
               </div>
               <h3 className="text-base font-extrabold text-[#193F3D] mb-1">
                 {kost.name}
               </h3>
               <p className="text-xs text-[#193F3D] mb-3">
-                {kost.city},{kost.address}
+                {kost.city}, {kost.address}
               </p>
               <div className="flex items-center gap-4 text-[#193F3D] text-sm">
                 {/* {kost.icons.map((item, index) => (

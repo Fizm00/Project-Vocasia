@@ -2,6 +2,21 @@ import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
+function formatDateToIndo(dateString) {
+  const months = [
+    "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+    "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+  ];
+
+  const date = new Date(dateString);
+
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+
+  return `${day} ${month} ${year}`;
+}
+
 const NotificationList = ({ notifications, handleDelete }) => {
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
@@ -15,20 +30,13 @@ const NotificationList = ({ notifications, handleDelete }) => {
       <div className="divide-y divide-gray-200">
         {notifications.map((notification) => (
           <div
-            key={notification.id}
+            key={notification._id}
             className="flex justify-between items-center px-4 py-3 hover:bg-gray-100"
           >
             <div>
-              <h3 className="text-sm font-semibold text-gray-800">{notification.title}</h3>
-              <p className="text-xs text-gray-500">{notification.date}</p>
+              <h3 className="text-sm font-semibold text-gray-800">{notification.content}</h3>
+              <p className="text-xs text-gray-500">{formatDateToIndo(notification.createdAt)}</p>
             </div>
-            <button
-              onClick={() => handleDelete(notification.id)}
-              className="text-gray-500 hover:text-red-700 font-bold text-lg"
-              aria-label="Delete notification"
-            >
-              &#x2715;
-            </button>
           </div>
         ))}
         {notifications.length === 0 && (

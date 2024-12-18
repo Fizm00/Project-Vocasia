@@ -7,6 +7,7 @@ const email_otp_routes = require("./email_otp_route");
 const property_routes = require("./property_route");
 const booking_routes = require("./booking_route");
 const review_routes = require("./review_route");
+const notif_routes = require("./notif_route");
 
 // init express router
 const routes = express.Router();
@@ -18,6 +19,7 @@ routes.use(email_otp_routes);
 routes.use(property_routes);
 routes.use(booking_routes);
 routes.use(review_routes);
+routes.use(notif_routes);
 
 // routes setup
 module.exports = routes;
