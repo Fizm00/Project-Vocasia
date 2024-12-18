@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IoStar } from "react-icons/io5";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { postReview } from "../api/review";
+import { getPropertyById } from "../api/property";
+import { getBookingById } from "../api/booking";
 
 const AddReview = () => {
   const [rating, setRating] = useState(0);
@@ -9,17 +12,36 @@ const AddReview = () => {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [rentalDetails, setRentalDetails] = useState(null);
+  const [ property, setProperty ] = useState(null);
 
-  const rentalDetails = {
-    image:
-      "https://i.pinimg.com/736x/3c/32/cd/3c32cdbe6323e085400f43447133169d.jpg",
-    startDate: "2023-08-01",
-    endDate: "2023-09-01",
-    name: "Kost Trinanda",
-    location: "Jl. Kostan No. 10, Jakarta",
-  };
+  // const booking_id = localStorage.getItem("booking_id");
+  const token = localStorage.getItem("token");
+  const booking_id = '67617c8d24caa404d33e627a';
+  
+  useEffect(() => {
+    const fetchRentalDetails = async () => {
+      const response = await getBookingById(booking_id);
+      setRentalDetails(response.data.data);
+    }
+    fetchRentalDetails();
+  }, [booking_id]);
 
-  // Fungsi untuk mengubah format tanggal menjadi tanggal, bulan, tahun
+useEffect(() => {
+  async function fetchPropertyDetails() {
+    try {
+      const propertyId = rentalDetails?.property_id; 
+      const data = await getPropertyById(propertyId);
+      setProperty(data.data.data); 
+    } catch (err) {
+      console.error("Error fetching rental details:", err);
+    }
+  }
+  fetchPropertyDetails();
+}, [booking_id]);
+
+console.log(rentalDetails);
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -33,7 +55,7 @@ const AddReview = () => {
   const handleRatingClick = (index) => {
     setRating(index);
   };
-
+  console.log(rating, comment);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -43,47 +65,25 @@ const AddReview = () => {
     }
 
     const reviewData = {
-      user_id: "6761114624caa404d33e3687",
-      property_id: "676020252bc81f604c8dd97d",
-      booking_id: "6761178224caa404d33e36ee",
-      rating: rating.toString(), // Pastikan format rating adalah string
+      user_id: rentalDetails?.user_id, 
+      property_id: rentalDetails?.property_id,
+      booking_id: booking_id, 
+      rating: rating.toString(), 
       comment,
     };
-
+    console.log(reviewData)
+    console.log(token)
     setLoading(true);
     setError(null);
 
     try {
-      const token = localStorage.getItem("token"); // Ambil token dari localStorage
-      if (!token) {
-        throw new Error("Token tidak ditemukan. Silakan login terlebih dahulu.");
-      }
-
-      const response = await fetch(
-        "https://api-anakkost.vocasia-fsjs-c.fun/api/v1/review",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(reviewData),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(
-          `Gagal mengirimkan review: ${response.statusText}`
-        );
-      }
-
-      const data = await response.json();
-      console.log("Review berhasil dikirim:", data);
+      const response = await postReview(reviewData, token);
+      console.log("Review berhasil dikirim:", response);
       setSubmitted(true);
       alert("Review berhasil ditambahkan!");
     } catch (err) {
       console.error("Error saat mengirim review:", err);
-      setError(err.message);
+      setError(err.message || "Terjadi kesalahan.");
     } finally {
       setLoading(false);
     }
@@ -97,24 +97,27 @@ const AddReview = () => {
           <h1 className="text-left text-md md:text-xl font-bold text-gray-800 mb-4">
             Yuk kasih review kost yang kamu sewa!
           </h1>
-          {/* Display Kost */}
-          <div className="flex flex-col md:flex-row rental-details mt-2 space-y-4 md:space-y-0">
-            <div className="w-full md:w-1/3">
-              <img
-                src={rentalDetails.image}
-                alt="Kost"
-                className="w-full h-48 object-cover rounded-lg"
-              />
+          {rentalDetails ? (
+            <div className="flex flex-col md:flex-row rental-details mt-2 space-y-4 md:space-y-0">
+              <div className="w-full md:w-1/3">
+                <img
+                  src={property?.images[0]}
+                  alt="Kost"
+                  className="w-full h-48 object-cover rounded-lg"
+                />
+              </div>
+              <div className="w-full md:w-2/3 md:pl-6">
+                <p className="mt-2 text-center text-sm py-1 px-1 border border-gray-300 font-semibold rounded-lg w-full md:w-2/3">
+                  {formatDate(rentalDetails?.start_date)} -{" "}
+                  {formatDate(rentalDetails?.end_date)}
+                </p>
+                <p className="mt-3 text-xl font-bold">{property?.name}</p>
+                <p className="text-gray-600">{property?.address}</p>
+              </div>
             </div>
-            <div className="w-full md:w-2/3 md:pl-6">
-              <p className="mt-2 text-center text-sm py-1 px-1 border border-gray-300 font-semibold rounded-lg w-full md:w-2/3">
-                {formatDate(rentalDetails.startDate)} -{" "}
-                {formatDate(rentalDetails.endDate)}
-              </p>
-              <p className="mt-3 text-xl font-bold">{rentalDetails.name}</p>
-              <p className="text-gray-600">{rentalDetails.location}</p>
-            </div>
-          </div>
+          ) : (
+            <p className="text-center">Loading rental details...</p>
+          )}
 
           <hr className="my-4 border border-3" />
 
@@ -138,10 +141,7 @@ const AddReview = () => {
 
           {/* Comment Section */}
           <div className="comment mt-4">
-            <label
-              htmlFor="comment"
-              className="block text-lg font-semibold"
-            >
+            <label htmlFor="comment" className="block text-lg font-semibold">
               Tulis review kamu lebih lanjut:
             </label>
             <p className="text-sm">
