@@ -18,20 +18,31 @@ const CatatanTambahan = ({ setTanggalMulai, setTanggalAkhir }) => {
         start_date: new Date(startDate).toISOString(),
         end_date: new Date(endDate).toISOString(),
       });
+
       console.log("Booking Response:", response.data);
       console.log("Booking ID:", response.data.data.booking._id);
 
       alert("Booking Berhasil! Mengalihkan ke halaman pembayaran...");
       localStorage.setItem("booking_id", response.data.data.booking._id);
       localStorage.setItem("payment_url", response.data.data.payment_url);
-      // console.log("URL Payment:", response.data.data.payment_url);
-      // const getBookingId = localStorage.getItem("booking_id");
+
       navigate(`/payment/${response.data.data.booking._id}`);
     } catch (error) {
       console.error("Error saat mengajukan booking:", error);
       alert("Terjadi kesalahan saat mengajukan booking");
     }
-    // navigate("/booking");
+  };
+
+  const handleStartDateChange = (e) => {
+    const value = e.target.value;
+    setStartDate(value);
+    setTanggalMulai(value); 
+  };
+
+  const handleEndDateChange = (e) => {
+    const value = e.target.value;
+    setEndDate(value);
+    setTanggalAkhir(value); 
   };
 
   return (
@@ -41,19 +52,17 @@ const CatatanTambahan = ({ setTanggalMulai, setTanggalAkhir }) => {
         <input
           type="date"
           value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
+          onChange={handleStartDateChange}
           required
           className="border rounded p-2 w-full"
         />
       </div>
-
-      {/* Tanggal Akhir */}
       <div>
         <label className="block text-sm font-medium mb-1">Tanggal Akhir</label>
         <input
           type="date"
           value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
+          onChange={handleEndDateChange}
           required
           className="border rounded p-2 w-full"
         />
@@ -63,7 +72,7 @@ const CatatanTambahan = ({ setTanggalMulai, setTanggalAkhir }) => {
           onClick={handleAjukanSewa}
           className="bg-darkGreen text-white rounded-lg px-6 py-2 hover:bg-green-700 transition-transform transform hover:scale-105"
         >
-          Pesan Sekarang -handleAjukanSewa
+          Pesan Sekarang
         </button>
       </div>
     </section>

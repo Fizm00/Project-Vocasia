@@ -73,7 +73,7 @@ const Promo = () => {
                 }).format(kost.price)}
                 <span className="text-gray-500 text-sm md:text-md font-semibold">
                   {/* /{kostDetail.durasi} */}
-                  /Bulan
+                  /Hari
                 </span>
               </p>
                 <button className="px-3 py-1 text-xs font-medium rounded-full bg-[#DADCC0] text-[#193F3D]">

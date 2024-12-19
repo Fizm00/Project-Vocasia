@@ -1,11 +1,19 @@
 import React from "react";
 import { FaArrowLeft } from "react-icons/fa";
+import { useNavigate } from "react-router-dom"; 
 
 const Header = () => {
+  const navigate = useNavigate();
+
+  const handleBackClick = () => {
+    navigate(-1); 
+  };
+
   return (
     <div>
       <div className="grid grid-cols-[auto,1fr] items-center gap-4">
         <button
+          onClick={handleBackClick} 
           className="text-darkGreen text-xl transition-transform transform hover:scale-110"
           aria-label="Kembali ke halaman sebelumnya"
         >

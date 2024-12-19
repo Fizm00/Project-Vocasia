@@ -24,7 +24,7 @@ const DurasiNgekos = ({ durasi, tanggalAkhir, setTanggalAkhir }) => {
         value={tanggalAkhir}
         onChange={(e) => setTanggalAkhir(e.target.value)}
         className="border border-gray-400 rounded-lg px-4 py-2 text-sm hover:border-[#193F3D] focus:border-[#193F3D] focus:ring-[#193F3D] outline-none bg-white"
-        placeholder="Masukkan durasi dalam bulan"
+        placeholder="Masukkan durasi ngekos"
         aria-label="Pilih durasi ngekos"
       />
       <p className="text-sm font-medium text-gray-500 mt-2">

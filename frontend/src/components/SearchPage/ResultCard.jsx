@@ -3,7 +3,7 @@ import { FaBed, FaBath, FaCar, FaWifi, FaStar } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 
 const ResultCard = ({ kost }) => {
-  const navigate = useNavigate(); // Hook untuk navigasi
+  const navigate = useNavigate(); 
 
   const formatHarga = (harga) => {
     return new Intl.NumberFormat("id-ID", {
@@ -118,7 +118,7 @@ const ResultCard = ({ kost }) => {
               {formatHarga(kost.price)}
               <span className="text-gray-500 text-lg font-semibold">
                 {/* /{kost.durasi} */}
-                /Bulan
+                /Hari
               </span>
             </p>
           </div>

@@ -28,14 +28,14 @@ const Payment = () => {
             <PaymentChoice />
           </motion.div>
 
-          {/* Kolom Kanan: Rincian Pembayaran */}
+          {/* Kolom Kanan: Rincian Pembayaran
           <motion.div
             initial={fadeUp.initial}
             animate={fadeUp.animate}
             transition={{ ...fadeUp.transition }}
           >
             <RincianPembayaran totalBiaya={1600000} />
-          </motion.div>
+          </motion.div> */}
         </div>
       </main>
     </div>

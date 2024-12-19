@@ -18,7 +18,7 @@ const Booking = () => {
   const [tanggalMulai, setTanggalMulai] = useState("");
   const [tanggalAkhir, setTanggalAkhir] = useState("");
   const [catatan, setCatatan] = useState("");
-  const [totalBiaya, setTotalBiaya] = useState("");
+  const [totalBiaya, setTotalBiaya] = useState("0");
   //new
   // const { id } = useParams();
 
@@ -61,22 +61,36 @@ const Booking = () => {
   }, [durasi, totalBiaya]);
 
   useEffect(() => {
-    if (property && Number(property.data.price) && durasi) {
-      const calculateTotalBiaya = () => {
-        const harga = Number(property.data.price);
-        const total = harga * durasi;
-        setTotalBiaya(total);
-      };
-      calculateTotalBiaya();
+    if (tanggalMulai && tanggalAkhir) {
+      const start = new Date(tanggalMulai);
+      const end = new Date(tanggalAkhir);
+      const diffTime = Math.abs(end - start);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      setDurasi(diffDays || 1); // Set durasi minimal 1 hari
     }
-  }, [durasi, property]);
+  }, [tanggalMulai, tanggalAkhir]);
 
   useEffect(() => {
-    console.log("durasi:", durasi);
-    console.log("tanggalMulai:", tanggalMulai);
-    console.log("tanggalAkhir:");
-    console.log("property:" + localStorage.getItem("property_id"));
-  }, [durasi, tanggalMulai, totalBiaya, property]);
+    setTotalBiaya(durasi * (property?.data.price || 0));
+  }, [durasi, property]);
+
+  // useEffect(() => {
+  //   if (property && Number(property.data.price) && durasi) {
+  //     const calculateTotalBiaya = () => {
+  //       const harga = Number(property.data.price);
+  //       const total = harga * durasi;
+  //       setTotalBiaya(total);
+  //     };
+  //     calculateTotalBiaya();
+  //   }
+  // }, [durasi, property]);
+
+  // useEffect(() => {
+  //   console.log("durasi:", durasi);
+  //   console.log("tanggalMulai:", tanggalMulai);
+  //   console.log("tanggalAkhir:");
+  //   console.log("property:" + localStorage.getItem("property_id"));
+  // }, [durasi, tanggalMulai, totalBiaya, property]);
 
   return (
     <div>

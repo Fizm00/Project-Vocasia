@@ -55,7 +55,7 @@ const BookingSection = ({ kostDetail }) => {
             }).format(kostDetail.price)}
             <span className="text-gray-500 text-sm md:text-md font-semibold">
               {/* /{kostDetail.durasi} */}
-              /Bulan
+              /Hari
             </span>
           </p>
         </div>
