@@ -20,13 +20,15 @@ export const getUsers = async () => {
   }
 };
 
-export const updateUser = async (id, data) => {
+export const updateUser = async (id, data, contentType = "application/json") => {
   try {
-    const response = await axiosInstance.put(`/user/${id}`, data);
+    const headers = { "Content-Type": contentType };
+    const response = await axiosInstance.put(`/user/${id}`, data, { headers });
     return response.data;
   } catch (error) {
     console.error("Error updating user data | updateUser - error:", error);
     throw error.response;
   }
 };
+
 
