@@ -117,7 +117,7 @@ const StatisticsSection = () => (
 
 const About = () => {
   useEffect(() => {
-    Aos.init({ duration: 1000, once: true }); // Inisialisasi AOS di sini
+    Aos.init({ duration: 1000, once: true }); 
   }, []);
 
   return (
@@ -171,7 +171,7 @@ const About = () => {
                   />
                 </div>
                 <h3 className="text-lg font-semibold text-white mb-1">Firza Himawan</h3>
-                <p className="text-xs text-white mb-10">Front End Developer</p>
+                <p className="text-xs text-white mb-10">UI/UX Designer</p>
               </div>
             </div>
             <div className="bg-[#193F3D] p-4 rounded-full w-48 mx-auto transition-all duration-700 hover:scale-105 hover:shadow-xl">
