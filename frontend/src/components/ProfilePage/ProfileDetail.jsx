@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaEdit, FaCamera } from 'react-icons/fa';
 
 const ProfileDetail = ({
@@ -10,6 +10,33 @@ const ProfileDetail = ({
   handleCancel,
   handleImageUpload
 }) => {
+  const [previewImage, setPreviewImage] = useState(formData.photo);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      if (!file.type.startsWith("image/")) {
+        alert("Please upload a valid image file.");
+        return;
+      }
+  
+      if (file.size > 2 * 1024 * 1024) {
+        alert("File size should not exceed 2MB.");
+        return;
+      }
+  
+      const imageUrl = URL.createObjectURL(file);
+      setPreviewImage(imageUrl); // Preview sementara sebelum upload
+      handleImageUpload(file); // Kirim file ke backend
+    }
+  };  
+  
+
+  const triggerFileInput = () => {
+    const fileInput = document.getElementById("upload-photo");
+    if (fileInput) fileInput.click();
+  };
+
   return (
     <div className="w-full sm:w-2/3 p-8 bg-white border rounded-lg shadow-lg">
       <div className="text-2xl font-bold mb-2">Biodata Diri</div>
@@ -18,27 +45,32 @@ const ProfileDetail = ({
       <div className="flex flex-col sm:flex-row space-y-6 sm:space-x-6">
         {/* Profile Picture Section */}
         <div className="w-full sm:w-1/4 bg-white">
-          <div className="p-2 border border-gray-300 rounded-md">
+          <div className="p-2 rounded-md">
             <img
-              src={formData.image || 'https://via.placeholder.com/100'}
+              src={previewImage || formData.photo || "https://via.placeholder.com/100"}
               alt="User"
-              className="w-40 h-40 mb-2 mt-2 ml-16 mr-12 sm:ml-2 object-cover rounded-md"
+              className="w-48 h-48 mb-2 mt-2 ml-20 sm:ml-2 object-cover rounded-md"
             />
             {/* File Input for Image Upload */}
             <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}
-              className="hidden"
-              id="upload-photo"
-            />
-            <label htmlFor="upload-photo">
-              <button className="w-full text-center text-darkGreen py-2 px-4 border border-darkGreen rounded-md">
-                <FaCamera className="inline mr-2" /> Upload Foto
-              </button>
-            </label>
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            style={{ display: "none" }}
+            id="upload-photo"
+          />
+          <label htmlFor="upload-photo" className="cursor-pointer">
+          <button
+            type="button"
+            onClick={triggerFileInput}
+            className="w-full text-center text-darkGreen py-2 px-4 border border-darkGreen rounded-md"
+          >
+            <FaCamera className="inline mr-2" /> Upload Foto
+          </button>
+          </label>
           </div>
         </div>
+
 
         {/* Profile Form */}
         <div className="flex-1">

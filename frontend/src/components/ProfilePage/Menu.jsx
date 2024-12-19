@@ -7,11 +7,11 @@ const Menu = ({ formData }) => {
         <div className="w-full sm:w-1/4 mb-8 sm:mb-0">
             <div className="p-6 pl-8 bg-white rounded-lg shadow-lg border">
                 <div className="flex items-center mb-4">
-                    <img
+                    {/* <img
                         src={formData.image || 'https://via.placeholder.com/100'}  // Placeholder jika image kosong
                         alt="User"
                         className="rounded-full w-12 h-12 mr-2 object-cover"
-                    />
+                    /> */}
                     <div className="text-lg font-bold">{formData.name}</div>
                 </div>
                 <hr className="w-full my-4 border-t-1 border-gray-300" />

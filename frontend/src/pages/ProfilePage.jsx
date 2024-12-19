@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axiosInstance from "../config/axiosInstance";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Menu from '../components/ProfilePage/Menu';
@@ -45,48 +46,57 @@ const ProfilePage = () => {
 
   const handleSave = async () => {
     if (!cleanedUserId) {
-      setError('User ID is required.');
+      setError("User ID is required.");
       return;
     }
   
     try {
-      const updatedData = await updateUser(cleanedUserId, formData);
-      setFormData(updatedData.data);
-      setIsEditing(false);
+      const response = await updateUser(cleanedUserId, formData);
+  
+      if (response.success) {
+        setFormData(response.data); // Perbarui state dengan data terbaru
+        console.log("Updated Data:", response.data);
+        setIsEditing(false);
+      } else {
+        setError("Failed to save data.");
+      }
     } catch (error) {
-      console.error('Error updating user data:', error);
-      setError(error.message || 'Failed to update user data.');
+      console.error("Error saving user data:", error);
+      setError("Failed to save user data.");
     }
   };
-
+  
   const handleCancel = () => {
     setIsEditing(false);
     setFormData(formData);
   };
 
-  const handleImageUpload = async (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setFormData({ ...formData, photo: imageUrl });
+  const handleImageUpload = async (file) => {
+    const formDataForUpload = new FormData();
   
-      const formDataForUpload = new FormData();
-      formDataForUpload.append("photo", file);
+    formDataForUpload.append("photo", file);
   
-      try {
-        const uploadResponse = await axios.put(`/user/${cleanedUserId}/photo`, formDataForUpload);
-        if (uploadResponse.data.success) {
-          setFormData({ ...formData, photo: uploadResponse.data.photo });
-        } else {
-          setError("Error uploading photo.");
-        }
-      } catch (error) {
-        console.error("Error uploading photo:", error);
+    try {
+      const response = await axiosInstance.put(`/user/${cleanedUserId}`, formDataForUpload, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+  
+      if (response.data.success) {
+        setFormData((prev) => ({
+          ...prev,
+          photo: response.data.data.photo, // Perbarui URL gambar
+        }));
+        console.log("Updated Photo URL:", response.data.data.photo);
+      } else {
         setError("Failed to upload photo.");
       }
+    } catch (error) {
+      console.error("Error uploading photo:", error);
+      setError("Failed to upload photo.");
     }
-  };
-  
+  };            
 
   if (loading) {
     return (
@@ -128,14 +138,7 @@ const ProfilePage = () => {
 
         {/* Profile Detail */}
         <ProfileDetail
-          formData={{
-            name: formData.name || 'Nama Tidak Tersedia',
-            email: formData.email,
-            gender: formData.gender || 'Not Available',
-            phone: formData.phone,
-            address: formData.address,
-            image: formData.photo,
-          }}
+          formData={formData}
           isEditing={isEditing}
           setFormData={setFormData}
           handleSave={handleSave}
