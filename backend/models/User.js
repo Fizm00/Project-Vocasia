@@ -27,19 +27,20 @@ const userSchema = new mongoose.Schema({
   },
   gender: {
     type: String,
-    // required: true,
+    required: true,
   },
   role: {
     type: String,
+    enum: ["admin", "owner", "user"],
     default: "user",
   },
   phone: {
     type: String,
-    // required: true,
+    required: true,
   },
   address: {
     type: String,
-    // required: true,
+    required: true,
   },
   is_verified: {
     type: Boolean,

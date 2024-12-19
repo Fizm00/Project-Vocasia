@@ -3,6 +3,7 @@ const passport = require("passport");
 
 const auth_controller = require("../controllers/auth/auth_controller");
 const authenticateJWT = require("../middleware/authenticateJWT");
+const adminRole = require("../middleware/admin/admin_role_middleware");
 const get_password = require("../controllers/auth/get_password_controller");
 
 const router = express.Router();

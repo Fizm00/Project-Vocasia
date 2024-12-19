@@ -29,7 +29,7 @@ const loginUser = async (req, res) => {
 
       // payload
       const token = jwt.sign(
-        { id: user._id, email: user.email },
+        { id: user._id, email: user.email, role: user.role },
         process.env.JWT_SECRET_KEY,
         {
           expiresIn: "1d",
@@ -42,7 +42,13 @@ const loginUser = async (req, res) => {
         status: "success | OK",
         message: "Login Success",
         success: true,
-        data: { id: user._id, name: user.name, email: user.email, token },
+        data: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          token,
+        },
       });
     }
   } catch (error) {
@@ -52,7 +58,7 @@ const loginUser = async (req, res) => {
 };
 
 const registerUser = async (req, res) => {
-  const { name, email, password, phone } = req.body;
+  const { name, email, password, phone, role } = req.body;
 
   try {
     // Cek apakah email sudah terdaftar
@@ -74,6 +80,7 @@ const registerUser = async (req, res) => {
       password: hashedPassword,
       otp,
       phone,
+      role: role || "user", // Default role user
     });
 
     // Kirim OTP melalui email
@@ -87,8 +94,11 @@ const registerUser = async (req, res) => {
     console.log("Email sent: ", mailInfo.response); // Logging hasil pengiriman
 
     res.status(200).json({
+      status: "success | OK",
       message:
         "User Created Successfully. Please verify your email with the OTP.",
+      success: true,
+      data: user,
     });
   } catch (error) {
     res.status(500).json({ message: "Register User :" + error.message });
