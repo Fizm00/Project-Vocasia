@@ -142,62 +142,66 @@ const About = () => {
       <StatisticsSection />
       <Banner />
 
-      <section className="py-12 bg-[#f9fafb]">
+      <section className="py-12">
         <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-4xl font-extrabold text-[#193F3D] mb-14 transition-all duration-200 hover:scale-105">
-            Meet Our Team
+          <h2 className="text-4xl font-extrabold text-[#193F3D] mb-14">
+            AnakKost Team
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="bg-[#193F3D] p-4 rounded-full w-48 mx-auto transition-all duration-700 hover:scale-105 hover:shadow-xl">
               <div className="flex flex-col items-center">
-                <div className="w-13 h-13 rounded-full overflow-hidden mb-8">
+                <div className="w-40 h-40 rounded-full overflow-hidden mb-4">
                   <img
-                    src="/amaliyahAbout.jpg" 
+                    src="/amaliyahAbout.png" 
                     alt="Amaliyah"
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <h3 className="text-lg font-semibold text-white mb-1">Amaliyah</h3>
-                <p className="text-xs text-white mb-10">Front End Developer</p>
+                <p className="text-xs text-white mb-7">Chief Product Officer AnakKost</p>
+                <p className="text-sm text-white mb-10">Front End Developer</p>
               </div>
             </div>
             <div className="bg-[#193F3D] p-4 rounded-full w-48 mx-auto transition-all duration-700 hover:scale-105 hover:shadow-xl">
               <div className="flex flex-col items-center">
-                <div className="w-13 h-13 rounded-full overflow-hidden mb-4">
+                <div className="w-40 h-40 rounded-full overflow-hidden mb-4">
                   <img
-                    src="/firzaAbout.jpg" 
+                    src="/firzaAbout.png" 
                     alt="Firza Himawan"
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <h3 className="text-lg font-semibold text-white mb-1">Firza Himawan</h3>
-                <p className="text-xs text-white mb-10">UI/UX Designer</p>
+                <p className="text-xs text-white mb-7">Chief Executive Officer AnakKost</p>
+                <p className="text-sm text-white mb-10">UI/UX Designer</p>
               </div>
             </div>
             <div className="bg-[#193F3D] p-4 rounded-full w-48 mx-auto transition-all duration-700 hover:scale-105 hover:shadow-xl">
               <div className="flex flex-col items-center">
-                <div className="w-13 h-13 rounded-full overflow-hidden mb-4">
+                <div className="w-40 h-40 rounded-full overflow-hidden mb-4">
                   <img
-                    src="/nazwaAbout.jpg" 
+                    src="/nazwaAbout.png" 
                     alt="Nazwa Praditta"
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <h3 className="text-lg font-semibold text-white mb-1">Nazwa Praditta</h3>
-                <p className="text-xs text-white mb-10">Front End Developer</p>
+                <p className="text-xs text-white mb-7">Chief Operating Officer AnakKost</p>
+                <p className="text-sm text-white mb-10">Front End Developer</p>
               </div>
             </div>
             <div className="bg-[#193F3D] p-4 rounded-full w-48 mx-auto transition-all duration-700 hover:scale-105 hover:shadow-xl">
               <div className="flex flex-col items-center">
-                <div className="w-13 h-13 rounded-full overflow-hidden mb-4">
+                <div className="w-40 h-40 rounded-full overflow-hidden mb-4">
                   <img
-                    src="/nurdianAbout.jpg"
+                    src="/nurdianAbout.png"
                     alt="Nurdian Aprilianto"
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <h3 className="text-lg font-semibold text-white mb-1">Nurdian Aprilianto</h3>
-                <p className="text-xs text-white mb-10">Back End Developer</p>
+                <p className="text-xs text-white mb-7">Chief Technology Officer AnakKost</p>
+                <p className="text-sm text-white mb-10">Back End Developer</p>
               </div>
             </div>
           </div>
