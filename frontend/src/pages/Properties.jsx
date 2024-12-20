@@ -1,49 +1,99 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout";
-
-// Generate 50 properties
-const allProperties = Array.from({ length: 50 }, (_, i) => ({
-  id: i + 1,
-  name: `Kost ${['Damai', 'Sejahtera', 'Bahagia', 'Harmoni', 'Indah'][i % 5]} ${['Permai', 'Asri', 'Tentram', 'Makmur', 'Sentosa'][Math.floor(i / 5) % 5]}`,
-  type: i % 2 === 0 ? "Tipe Ekonomis" : "Tipe Premium",
-  image: `/kost${(i % 12) + 1}.jpg`
-}));
+import axiosInstance from "../config/axiosInstance";
 
 const ITEMS_PER_PAGE = 12;
 
 export default function Properties() {
+  const [properties, setProperties] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        const response = await axiosInstance.get("/properties");
+        setProperties(response.data.data);
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to fetch properties: " + err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchProperties();
+  }, []);
+
+  const deleteProperty = async (id) => {
+    try {
+      const propertyExists = properties.find((property) => property._id === id);
+      if (!propertyExists) {
+        alert("Properti tidak ditemukan.");
+        return;
+      }
+
+      if (!window.confirm("Apakah Anda yakin ingin menghapus properti ini?")) return;
+
+      const updatedProperties = properties.filter((property) => property._id !== id);
+      setProperties(updatedProperties);
+
+      const response = await axiosInstance.delete(`/property/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      if (response.status === 200 && response.data.success) {
+        alert(response.data.message || "Properti berhasil dihapus!");
+      } else {
+        throw new Error(response.data.message || "Gagal menghapus properti.");
+      }
+    } catch (error) {
+      alert("Gagal menghapus properti: " + error.message);
+      setProperties(properties);
+    }
+  };
 
   const indexOfLastProperty = currentPage * ITEMS_PER_PAGE;
   const indexOfFirstProperty = indexOfLastProperty - ITEMS_PER_PAGE;
-  const currentProperties = allProperties.slice(indexOfFirstProperty, indexOfLastProperty);
+  const currentProperties = properties.slice(indexOfFirstProperty, indexOfLastProperty);
 
-  const totalPages = Math.ceil(allProperties.length / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(properties.length / ITEMS_PER_PAGE);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <Layout>
       <div className="mx-auto max-w-7xl">
-        <h1 className="mb-8 text-3xl font-bold">Listed Properties</h1>
+        <h1 className="mb-8 text-3xl text-darkGreen font-extrabold">Daftar Kost Anda</h1>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {currentProperties.map((property) => (
-            <div key={property.id} className="overflow-hidden bg-white rounded-lg shadow">
+            <div
+              key={property._id}
+              className="overflow-hidden bg-white rounded-lg shadow transition-all transform hover:scale-100 hover:shadow-lg"
+            >
               <img
-                src={property.image}
+                src={property.images[0]}
                 alt={property.name}
-                className="object-cover w-full h-48"
+                className="object-cover w-full h-48 transition-all duration-300 ease-in-out transform hover:scale-110"
               />
               <div className="p-4">
-                <h3 className="mb-2 text-lg font-semibold truncate">{property.name}</h3>
-                <p className="mb-4 text-sm text-gray-500">{property.type}</p>
+                <h3 className="mb-2 text-lg font-bold truncate text-darkGreen">{property.name}</h3>
+                <p className="mb-4 text-sm text-gray-500">{property.gender_type}</p>
+                <p className="text-xs text-darkGreen mb-3">
+                {property.city}, {property.address}
+                </p>
                 <div className="flex space-x-2">
-                  <button className="flex-1 px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-600">
-                    Remove
-                  </button>
-                  <button className="flex-1 px-4 py-2 text-white rounded-md bg-darkGreen hover:opacity-90">
-                    Modify
+                  <button
+                    className="flex-1 px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-800 transition-all duration-300"
+                    onClick={() => deleteProperty(property._id)}
+                  >
+                    Hapus Kost
                   </button>
                 </div>
               </div>
