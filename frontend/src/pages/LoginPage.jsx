@@ -36,11 +36,11 @@ const LoginPage = () => {
     if (name === "email" && !/\S+@\S+\.\S+/.test(value)) {
       errorMessage = "Email tidak valid.";
     }
-    const passwordRegex = /^(?=.[A-Z])(?=.\d)[A-Za-z\d]{8,}$/;
-    if (name === "password" && !passwordRegex.test(value)) {
-      errorMessage =
-        "Password harus minimal 8 karakter, mengandung satu huruf besar, dan satu angka.";
-    }
+    // const passwordRegex = /^(?=.[A-Z])(?=.\d)[A-Za-z\d]{8,}$/;
+    // if (name === "password" && !passwordRegex.test(value)) {
+    //   errorMessage =
+    //     "Password harus minimal 8 karakter, mengandung satu huruf besar, dan satu angka.";
+    // }
 
     setErrors((prev) => ({ ...prev, [name]: errorMessage }));
   };

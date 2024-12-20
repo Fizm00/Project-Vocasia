@@ -1,124 +1,70 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { MdLocationOn } from "react-icons/md";
+import { SlArrowLeft } from "react-icons/sl";
 import { BsCheckCircle } from "react-icons/bs";
-import axiosInstance from "../config/axiosInstance";
 import { getBookingsById } from "../api/booking";
 import { getPropertyById } from "../api/property";
 
 const SuccessBook = () => {
-  const [kost, setKost] = useState(null);
-  const [payment, setPayment] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [booking, setBooking] = useState({});
-  const [property, setProperty] = useState({});
+  const [booking, setBooking] = useState(null);
+  const [property, setProperty] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
   const { id } = useParams();
 
+  // Fetch booking data
+  useEffect(() => {
+    const fetchBooking = async () => {
+      try {
+        setIsLoading(true);
+        console.log("Fetching booking data with ID:", id);
 
- // useEffect(() => {
- //   const historyPayment = async () => {
- //     try {
- //       const booking_id = localStorage.getItem("booking_id");
- //      localStorage.getItem("user_id");
- //       localStorage.getItem("property_id");
- //       const response = await axiosInstance.get(`/booking/${booking_id}`);
- //      console.log(response.data);
- //       setPayment(response.data);
- //     } catch (error) {
- //       console.error(error);
- //     } finally {
-  
-  useEffect(()  => {
-    const fetchData = async () => {
-      // const booking_id = '67617c8d24caa404d33e627a';
-      const response = await getBookingsById(id);
-      console.log(response.data.data);
-      // const property_id = '67602377c2bd4f0236c198c0';
-      const getProperty = await getPropertyById(response.data.data.property_id);
-      
-      setProperty(getProperty.data.data)
-      setBooking(response.data.data)
-      setIsLoading(true);
-      setTimeout(() => {
-        // const dummyKost = {
-        //   id: 1,
-        //   name: "Kost Trinanda",
-        //   startDate: "12 Mar 2023",
-        //   endDate: "12 Apr 2023",
-        //   duration: "1 Bulan",
-        //   price: 1500000,
-        //   image: "/1-kostImage.png",
-        //   status: "Disetujui",
-        //   location: "Jakarta Selatan, Jalan Jagakarsa No. 1",
-        //   type: "Putri",
-        // };
-        // const dummyPayment = {
-        //   booking_id: "1",
-        //   transaction_id: "INV/202231268",
-        //   order_id: "ORD12345",
-        //   payment_method: "DANA",
-        //   payment_status: "Disetujui",
-        //   amount: 1500000,
-        //   transaction_date: "20 November 2022, 15:10 WIB",
-        // };
+        const bookingResponse = await getBookingsById(id);
+        const bookingData = bookingResponse.data
 
-        setKost(dummyKost);
-        setPayment(dummyPayment);
+        if (!bookingData) {
+          throw new Error("Data booking tidak ditemukan.");
+        }
+
+        console.log("Booking data:", bookingData);
+        setBooking(bookingData);
+      } catch (error) {
+        console.error("Error fetching booking data:", error.message);
+      } finally {
         setIsLoading(false);
-      }); 
-    }
+      }
+    };
 
-    //historyPayment();
-    fetchData();
-  }, []);
-  console.log(booking)
-  useEffect (() => {
-    const feathProperty = async () => {
-      // const property_id = '67602377c2bd4f0236c198c0';
-      // const getProperty = await getPropertyById(property_id)
-      // setProperty(getProperty.data.data)
-    }
-    feathProperty()
-  },[])
-  console.log(property)
+    fetchBooking();
+  }, [id]);
 
-  // useEffect(() => {
-  //   const fetchData = () => {
-  //     setIsLoading(true);
-  //     setTimeout(() => {
-  //       const dummyKost = {
-  //         id: 1,
-  //         name: "Kost Trinanda",
-  //         startDate: "12 Mar 2023",
-  //         endDate: "12 Apr 2023",
-  //         duration: "1 Bulan",
-  //         price: 1500000,
-  //         image: "/1-kostImage.png",
-  //         status: "Disetujui",
-  //         location: "Jakarta Selatan, Jalan Jagakarsa No. 1",
-  //         type: "Putri",
-  //       };
-  //       const dummyPayment = {
-  //         booking_id: "1",
-  //         transaction_id: "INV/202231268",
-  //         order_id: "ORD12345",
-  //         payment_method: "DANA",
-  //         payment_status: "Disetujui",
-  //         amount: 1500000,
-  //         transaction_date: "20 November 2022, 15:10 WIB",
-  //       };
+  // Fetch property data after booking is set
+  useEffect(() => {
+    const fetchProperty = async () => {
+      if (!booking || !booking.property_id) return;
 
-  //       setKost(dummyKost);
-  //       setPayment(dummyPayment);
-  //       setIsLoading(false);
-  //     }, 1000);
-  //   };
+      try {
+        console.log("Fetching property data with ID:", booking.property_id);
 
-  //   fetchData();
-  // }, []);
+        const propertyResponse = await getPropertyById(booking.property_id);
+        const propertyData = propertyResponse?.data?.data;
+
+        if (!propertyData) {
+          throw new Error("Data properti tidak ditemukan.");
+        }
+
+        console.log("Property data:", propertyData);
+        setProperty(propertyData);
+      } catch (error) {
+        console.error("Error fetching property data:", error.message);
+      }
+    };
+
+    fetchProperty();
+  }, [booking]);
 
   if (isLoading) {
     return (
@@ -128,23 +74,17 @@ const SuccessBook = () => {
     );
   }
 
-  if (
-    !kost ||
-    !payment ||
-    kost.status !== "Disetujui" ||
-    payment.payment_status !== "Disetujui"
-  ) {
+  if (!booking || !property) {
     return (
       <div className="min-h-screen flex flex-col bg-gray-100 mb-9">
         <Navbar />
         <main className="container mx-auto flex-grow px-4 lg:px-8 py-4 bg-white rounded-lg shadow-lg mt-4">
           <h2 className="text-lg font-semibold text-red-600 mb-6 flex items-center">
-            Pengajuan Sewa Gagal!{" "}
-            <span className="ml-2 text-red-700 text-xl">✖</span>
+            Data tidak ditemukan
           </h2>
           <div className="flex justify-center">
             <p className="text-gray-800 text-lg">
-              Status pembayaran atau status booking belum disetujui.
+              Kami tidak dapat menemukan informasi booking atau properti.
             </p>
           </div>
         </main>
@@ -152,8 +92,10 @@ const SuccessBook = () => {
       </div>
     );
   }
-  const durationInMonths = parseInt(kost.duration.split(" ")[0]);
-  const totalPayment = kost.price * durationInMonths;
+
+  const handleBack = () => {
+    navigate(-1);
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -162,10 +104,18 @@ const SuccessBook = () => {
         <main className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             <div className="md:col-span-2 flex flex-col justify-start">
-              <h2 className="text-2xl font-extrabold text-gray-800 flex items-center">
-                Pengajuan Sewa Berhasil!{" "}
-                <BsCheckCircle className="ml-2 text-green-700 text-2xl" />
-              </h2>
+              <div className="flex items-center mb-4">
+                <button
+                  onClick={handleBack}
+                  className="mr-4 text-[#193F3D] hover:text-green-600 text-xl font-bold"
+                >
+                  <SlArrowLeft size={18} className="font-semibold" />
+                </button>
+                <h1 className="text-2xl font-extrabold text-gray-800 flex items-center">
+                  Pengajuan Sewa Berhasil!{" "}
+                  <BsCheckCircle className="ml-2 text-green-700 text-2xl" />
+                </h1>
+              </div>
               <div className="space-y-6 mt-2">
                 <h3 className="text-md font-bold text-gray-800 mt-4">
                   Detail Pengajuan
@@ -173,37 +123,30 @@ const SuccessBook = () => {
                 <div className="space-y-6 text-gray-900 text-sm">
                   <div className="flex justify-between">
                     <span className="font-medium text-gray-600">No. Invoice</span>
-                    <span className="text-gray-800">{booking.payment.transaction_id}</span>
+                    <span className="text-gray-800">{booking.payment?.transaction_id}</span>
                   </div>
-                  {/* <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Tanggal Transaksi</span>
-                    <span className="text-gray-800">{payment.transaction_date}</span>
-                  </div> */}
-                  {/* <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Jenis Pembayaran</span>
-                    <span className="text-gray-800">{payment.payment_method}</span>
-                  </div> */}
                   <div className="flex justify-between">
                     <span className="font-medium text-gray-600">Dibayar pada</span>
                     <span>
-                    {booking.start_date ? 
-                      new Date(booking.start_date).toLocaleDateString('id-ID', {
-                        day: '2-digit',
-                        month: 'long',
-                        year: 'numeric',
-                      }).replace(/\s/g, '-') : '-'}
-                  </span>
+                      {booking.start_date
+                        ? new Date(booking.start_date).toLocaleDateString("id-ID", {
+                            day: "2-digit",
+                            month: "long",
+                            year: "numeric",
+                          })
+                        : "-"}
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium text-gray-600">Status Transaksi</span>
-                    <span className="text-gray-800">{booking.status}</span>
+                    <span className="text-gray-800">Sukses</span>
                   </div>
                   <div className="flex justify-start mt-8">
                     <Link
-                      to="/"
+                      to="/add-review"
                       className="bg-[#193F3D] text-white mt-14 px-7 py-2 rounded-md hover:bg-green-900 text-sm shadow-md transition-all"
                     >
-                      Beranda
+                      Tambahkan Review
                     </Link>
                   </div>
                 </div>
@@ -229,44 +172,50 @@ const SuccessBook = () => {
               </div>
               <hr className="my-4" />
               <div className="space-y-4 text-gray-900">
-                <p className="text-gray-800 font-semibold text-xs">
-                  Informasi Sewa
-                </p>
+                <p className="text-gray-800 font-semibold text-xs">Informasi Sewa</p>
                 <div className="flex justify-between text-xs">
                   <span className="text-gray-600">Tanggal Masuk</span>
                   <span>
-                    {booking.start_date ? 
-                      new Date(booking.start_date).toLocaleDateString('id-ID', {
-                        day: '2-digit',
-                        month: 'long',
-                        year: 'numeric',
-                      }).replace(/\s/g, '-') : '-'}
+                    {booking.start_date
+                      ? new Date(booking.start_date).toLocaleDateString("id-ID", {
+                          day: "2-digit",
+                          month: "long",
+                          year: "numeric",
+                        })
+                      : "-"}
                   </span>
                 </div>
                 <div className="flex justify-between text-xs">
                   <span className="text-gray-600">Tanggal Keluar</span>
                   <span>
-                    {booking.end_date ? 
-                      new Date(booking.end_date).toLocaleDateString('id-ID', {
-                        day: '2-digit',
-                        month: 'long',
-                        year: 'numeric',
-                      }).replace(/\s/g, '-') : '-'}
+                    {booking.end_date
+                      ? new Date(booking.end_date).toLocaleDateString("id-ID", {
+                          day: "2-digit",
+                          month: "long",
+                          year: "numeric",
+                        })
+                      : "-"}
                   </span>
                 </div>
-                {/* <div className="flex justify-between text-xs">
-                  <span className="text-gray-600">Durasi Sewa</span>
-                  <span>{kost.duration}</span>
-                </div> */}
                 <hr className="my-4" />
                 <div className="flex justify-between text-xs">
                   <span className="text-gray-600">Biaya Sewa Kos</span>
-                  <span>Rp {booking.total_price.toLocaleString()}</span>
+                  <span>
+                    {new Intl.NumberFormat("id-ID", {
+                      style: "currency",
+                      currency: "IDR",
+                    }).format(booking.total_price)}
+                  </span>
                 </div>
                 <hr className="my-4" />
                 <div className="flex justify-between font-semibold text-xs">
                   <span>Total Pembayaran</span>
-                  <span>Rp {booking.total_price.toLocaleString()}</span>
+                  <span>
+                    {new Intl.NumberFormat("id-ID", {
+                      style: "currency",
+                      currency: "IDR",
+                    }).format(booking.total_price)}
+                  </span>
                 </div>
               </div>
             </div>

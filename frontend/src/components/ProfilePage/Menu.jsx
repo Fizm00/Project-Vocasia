@@ -21,7 +21,7 @@ const Menu = ({ formData }) => {
                 <div className="space-y-4">
                     <Link to="/riwayat-sewa" className="flex items-center text-gray-800">
                         <FaHistory className="mr-2" /> 
-                        <p>Riwayat Pengajuan Sewa</p>
+                        <p>Daftar Riwayat Sewa</p>
                     </Link>
                     <Link to="/" className="flex items-center text-gray-800">
                         <FaHome className="mr-2" />
