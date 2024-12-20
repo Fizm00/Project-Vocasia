@@ -49,7 +49,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="otp" element={<Otp />} />
           <Route path="/logout" />
-          <Route path="/success" element={<SuccessBook />} />
+          <Route path="/success-book/:id" element={<SuccessBook />} />
           <Route
             path="/detail/:id"
             element={<DetailPage />}

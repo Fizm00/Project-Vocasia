@@ -27,7 +27,7 @@ const RentalHistory = () => {
               <SlArrowLeft size={18} className="font-semibold" />
             </button>
             <h1 className="text-2xl font-semibold text-[#193F3D] transition-all duration-300 transform hover:translate-x-2">
-              Daftar Pengajuan Sewa
+              Daftar Riwayat Sewa
             </h1>
           </div>
           <TabNavigation setActiveTab={setActiveTab} activeTab={activeTab} />
