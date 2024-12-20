@@ -10,6 +10,7 @@ const loginUser = async (email, password) => {
     localStorage.setItem("email", JSON.stringify(response.data.data.email));
     localStorage.setItem("name", JSON.stringify(response.data.data.name));
     localStorage.setItem("user_id", response.data.data.id);
+    localStorage.setItem("role", response.data.data.role);
     localStorage.setItem("id", JSON.stringify(response.data.data.id));
 
     console.log(response.data.data);
