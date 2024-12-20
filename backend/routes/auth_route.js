@@ -13,6 +13,10 @@ router.post("/login", auth_controller.loginUser);
 router.post("/register", auth_controller.registerUser);
 router.post("/logout", authenticateJWT, auth_controller.logoutUser);
 
+// == reset password
+router.post("/forgot-password", get_password.forgotPassword);
+router.post("/change-password", authenticateJWT, get_password.changePassword);
+
 //otp
 router.post("/verification-otp", auth_controller.verificationOTP);
 router.post("/send-otp-email", auth_controller.send_otp_email);
@@ -31,12 +35,5 @@ router.get(
     res.redirect("/dashboard"); // Ubah ke halaman dashboard atau lainnya
   }
 );
-
-//== end oauth
-
-// == reset password
-router.post("/forgot-password", get_password.forgotPassword);
-router.post("/change-password", authenticateJWT, get_password.changePassword);
-// == end reset password
 
 module.exports = router;

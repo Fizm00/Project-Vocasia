@@ -98,6 +98,8 @@ const createProperty = async (req, res) => {
       property,
       savedProperty: savedProperty._id + savedProperty,
       filePath: images,
+      success: true,
+      data: property,
     });
   } catch (error) {
     res

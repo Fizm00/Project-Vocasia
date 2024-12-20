@@ -4,8 +4,8 @@ const authenticateJWT = require("../middleware/authenticateJWT");
 
 const router = express.Router();
 
-router.get("/bookings", booking_controller.getBooking);
-router.get("/booking/:id", booking_controller.getBookingById);
+router.get("/bookings", authenticateJWT, booking_controller.getBooking);
+router.get("/booking/:id", authenticateJWT, booking_controller.getBookingById);
 router.post("/booking", authenticateJWT, booking_controller.createBooking);
 router.post(
   "/midtrans-notification",

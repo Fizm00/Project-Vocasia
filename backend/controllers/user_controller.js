@@ -33,12 +33,13 @@ const getuser = async (req, res) => {
 
 const getuserbyid = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const users = await User.findById(req.params.id).select("-password");
+
     res.status(200).json({
       status: "success | OK",
       message: "List Of User By Id",
       success: true,
-      data: user,
+      data: users,
     });
   } catch (error) {
     res.status(400).json({

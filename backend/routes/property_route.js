@@ -3,11 +3,16 @@ const upload = require("../middleware/upload_images");
 
 const property_controller = require("../controllers/property_controller");
 const authenticateToken = require("../middleware/authenticate_token");
+const authenticateJWT = require("../middleware/authenticateJWT");
 
 const router = express.Router();
 
 router.get("/properties", property_controller.getProperties);
-router.get("/property/:id", property_controller.getPropertyById);
+router.get(
+  "/property/:id",
+  authenticateJWT,
+  property_controller.getPropertyById
+);
 router.post(
   "/property",
   authenticateToken,
