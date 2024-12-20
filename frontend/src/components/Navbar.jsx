@@ -94,7 +94,7 @@ const Navbar = () => {
               to="/notification"
               className="text-md font-semibold text-white relative group"
             >
-              Notification
+              Notifikasi
               <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-white scale-x-0 transition-all duration-300 group-hover:scale-x-100"></span>
             </Link>
           )}
