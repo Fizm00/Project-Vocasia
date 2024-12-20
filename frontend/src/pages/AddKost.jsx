@@ -15,7 +15,7 @@ function AddKost() {
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate("/");
+    navigate("/dashboard");
   };
 
   const [propertyName, setPropertyName] = useState("");

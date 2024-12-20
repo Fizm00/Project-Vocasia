@@ -27,7 +27,7 @@ export default function Verification() {
     <LayoutWithoutSidebar>
       <div className="max-w-3xl px-8 py-2 mx-auto">
         <div className="mb-6">
-          <Link to="/dashboard" className="flex items-center mb-4 text-black">
+          <Link to="/profile" className="flex items-center mb-4 text-black">
             <ArrowLeft className="w-5 h-5 mr-2" />
             <span className="text-2xl font-extrabold">Verifikasi Akun</span>
           </Link>

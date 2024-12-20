@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { ChevronDown, ChevronUp, Home, Menu, User } from 'react-feather';
 import { Link } from 'react-router-dom';
+import { MdDashboardCustomize } from "react-icons/md";
+import { MdOutlineAddHomeWork } from "react-icons/md";
+import { IoArrowBackCircleOutline } from "react-icons/io5";
 
 export default function Sidebar() {
   const [isManajemenOpen, setIsManajemenOpen] = useState(true);
@@ -37,8 +40,8 @@ export default function Sidebar() {
             className="flex items-center p-3 space-x-3 text-white rounded-md bg-darkGreen"
             onClick={() => setIsMobileMenuOpen(false)}
           >
-            <Home size={20} />
-            <span>Home</span>
+            <MdDashboardCustomize size={20} />
+            <span>Dashboard</span>
           </Link>
 
           <Link
@@ -47,7 +50,7 @@ export default function Sidebar() {
             onClick={() => setIsMobileMenuOpen(false)}
           >
             <Home size={20} />
-            <span>Kos Saya</span>
+            <span>Kost Saya</span>
           </Link>
 
           <div className="mt-2">
@@ -56,8 +59,8 @@ export default function Sidebar() {
               className="flex items-center justify-between w-full p-3 rounded-md hover:bg-gray-100"
             >
               <div className="flex items-center space-x-3">
-                <Home size={20} />
-                <span>Manajemen Kos</span>
+                <MdOutlineAddHomeWork size={20} />
+                <span>Manajemen Kost</span>
               </div>
               {isManajemenOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
@@ -65,30 +68,30 @@ export default function Sidebar() {
             {isManajemenOpen && (
               <div className="mt-2 ml-8 space-y-2">
                 <Link
-                  to="/rent-approval"
+                  to="/reviews"
                   className="block p-2 rounded-md hover:bg-gray-100"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  Pengajuan Sewa
+                  Review Kost
                 </Link>
                 <Link
                   to="/add-kost"
                   className="block p-2 rounded-md hover:bg-gray-100"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  Tambah Kos
+                  Tambah Kost
                 </Link>
               </div>
             )}
           </div>
 
           <Link
-            to="/account"
+            to="/"
             className="flex items-center p-3 mt-2 space-x-3 rounded-md hover:bg-gray-100"
             onClick={() => setIsMobileMenuOpen(false)}
           >
-            <User size={20} />
-            <span>Akun</span>
+            <IoArrowBackCircleOutline size={20} />
+            <span>Beranda</span>
           </Link>
         </div>
       </div>

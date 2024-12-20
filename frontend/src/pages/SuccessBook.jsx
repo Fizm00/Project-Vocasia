@@ -35,35 +35,35 @@ const SuccessBook = () => {
     const fetchData = async () => {
       // const booking_id = '67617c8d24caa404d33e627a';
       const response = await getBookingsById(id);
-      console.log(response.data.data)
+      console.log(response.data.data);
       // const property_id = '67602377c2bd4f0236c198c0';
-      const getProperty = await getPropertyById(response.data.data.property_id)
+      const getProperty = await getPropertyById(response.data.data.property_id);
       
       setProperty(getProperty.data.data)
       setBooking(response.data.data)
       setIsLoading(true);
       setTimeout(() => {
-        const dummyKost = {
-          id: 1,
-          name: "Kost Trinanda",
-          startDate: "12 Mar 2023",
-          endDate: "12 Apr 2023",
-          duration: "1 Bulan",
-          price: 1500000,
-          image: "/1-kostImage.png",
-          status: "Disetujui",
-          location: "Jakarta Selatan, Jalan Jagakarsa No. 1",
-          type: "Putri",
-        };
-        const dummyPayment = {
-          booking_id: "1",
-          transaction_id: "INV/202231268",
-          order_id: "ORD12345",
-          payment_method: "DANA",
-          payment_status: "Disetujui",
-          amount: 1500000,
-          transaction_date: "20 November 2022, 15:10 WIB",
-        };
+        // const dummyKost = {
+        //   id: 1,
+        //   name: "Kost Trinanda",
+        //   startDate: "12 Mar 2023",
+        //   endDate: "12 Apr 2023",
+        //   duration: "1 Bulan",
+        //   price: 1500000,
+        //   image: "/1-kostImage.png",
+        //   status: "Disetujui",
+        //   location: "Jakarta Selatan, Jalan Jagakarsa No. 1",
+        //   type: "Putri",
+        // };
+        // const dummyPayment = {
+        //   booking_id: "1",
+        //   transaction_id: "INV/202231268",
+        //   order_id: "ORD12345",
+        //   payment_method: "DANA",
+        //   payment_status: "Disetujui",
+        //   amount: 1500000,
+        //   transaction_date: "20 November 2022, 15:10 WIB",
+        // };
 
         setKost(dummyKost);
         setPayment(dummyPayment);
