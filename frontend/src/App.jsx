@@ -32,6 +32,7 @@ import AddKost from "./pages/AddKost.jsx";
 import Verification from "./pages/Verification.jsx";
 // Backend
 import ProtectedRoute from "./services/ProtectedRoute.jsx";
+import OwnerProtectedRoute from "./services/OwnerProtectedRoute.jsx";
 
 function App() {
   return (
@@ -49,7 +50,12 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="otp" element={<Otp />} />
           <Route path="/logout" />
-          <Route path="/success-book/:id" element={<SuccessBook />} />
+          <Route path="/success-book/:id" element={
+              <ProtectedRoute>
+                <SuccessBook />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/detail/:id"
             element={<DetailPage />}
@@ -107,16 +113,27 @@ function App() {
           <Route path="/add-review" element={<AddReview />} />
           {/* Route Owner Page */}
           <Route path="/rental-approval" element={<RentalApproval />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="/properties" element={<Properties />} />
-          <Route path="/reviews" element={<Review />} />
-          <Route path="/add-kost" element={<AddKost />} />
+          <Route path="dashboard" element={
+            <OwnerProtectedRoute>
+              <Dashboard />
+            </OwnerProtectedRoute>
+          } />
+          <Route path="/properties" element={
+            <OwnerProtectedRoute>
+              <Properties />
+            </OwnerProtectedRoute>
+          } />
+          <Route path="/reviews" element={
+            <OwnerProtectedRoute>
+              <Review />
+            </OwnerProtectedRoute>
+          } />
+          <Route path="/add-kost" element={
+            <OwnerProtectedRoute>
+              <AddKost />
+            </OwnerProtectedRoute>
+          } />
           <Route path="/verification" element={<Verification />} />
-          <Route
-            path="/property/:id"
-            key={"property"}
-            element={<Properties />}
-          />
         </Routes>
       </Router>
     </div>
