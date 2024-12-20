@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
   },
   gender: {
     type: String,
-    required: true,
+    // required: true,
   },
   role: {
     type: String,
@@ -40,7 +40,8 @@ const userSchema = new mongoose.Schema({
   },
   address: {
     type: String,
-    required: true,
+    // required: true,
+    default: "Jl . default (Not Found)",
   },
   is_verified: {
     type: Boolean,

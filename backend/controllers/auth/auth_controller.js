@@ -29,7 +29,7 @@ const loginUser = async (req, res) => {
 
       // payload
       const token = jwt.sign(
-        { id: user._id, email: user.email, role: user.role },
+        { id: user._id, email: user.email, name: user.name, role: user.role },
         process.env.JWT_SECRET_KEY,
         {
           expiresIn: "1d",
@@ -197,7 +197,7 @@ const logoutUser = async (req, res) => {
     await redis.set(
       `BLACKLIST_TOKEN:${token}`,
       "blacklist",
-      { EX: 60 * 60 } // Token akan di-*blacklist* selama 1 jam
+      { EX: 1 * 1 } // Token akan di-*blacklist* selama 1 jam
     );
 
     return res.status(200).json({

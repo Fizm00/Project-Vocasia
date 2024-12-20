@@ -13,10 +13,11 @@ const adminRole = async (req, res, next) => {
     if (user.role !== "admin") {
       return res.status(403).json({ message: "Unauthorized: Admins only." });
     }
+
     next();
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: "Internal Server Error - admin role" });
   }
 };
 

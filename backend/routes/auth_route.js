@@ -8,12 +8,13 @@ const get_password = require("../controllers/auth/get_password_controller");
 
 const router = express.Router();
 
-router.post("/login", authenticateJWT, auth_controller.loginUser);
-
+// auth
+router.post("/login", auth_controller.loginUser);
 router.post("/register", auth_controller.registerUser);
-// router.post("/login", auth_controller.loginUser);
+router.post("/logout", authenticateJWT, auth_controller.logoutUser);
+
+//otp
 router.post("/verification-otp", auth_controller.verificationOTP);
-// router.post("/resend-otp", auth_controller.resendOTP);
 router.post("/send-otp-email", auth_controller.send_otp_email);
 
 //== oauth
@@ -30,8 +31,6 @@ router.get(
     res.redirect("/dashboard"); // Ubah ke halaman dashboard atau lainnya
   }
 );
-
-router.post("/logout", authenticateJWT, auth_controller.logoutUser);
 
 //== end oauth
 

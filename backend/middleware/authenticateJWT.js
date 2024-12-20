@@ -27,9 +27,9 @@ const authenticateJWT = async (req, res, next) => {
     }
 
     // Verifikasi token
-    // const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    // req.user = decoded;
-    // console.log("Decoded:", decoded);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    req.user = decoded;
+    console.log("Decoded:", decoded);
 
     next(); // Token valid
   } catch (error) {
