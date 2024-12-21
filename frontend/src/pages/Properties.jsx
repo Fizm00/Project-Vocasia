@@ -13,11 +13,28 @@ export default function Properties() {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const response = await axiosInstance.get("/properties");
-        setProperties(response.data.data);
+        const userId = localStorage.getItem("user_id"); // Ambil user_id dari localStorage
+        if (!userId) {
+          throw new Error("User ID tidak ditemukan. Silakan login kembali.");
+        }
+
+        // Fetch properties berdasarkan user_id
+        const response = await axiosInstance.get(`/properties`, {
+          params: { user_id: userId }, // Kirim user_id sebagai parameter
+        });
+
+        if (!response.data || !response.data.data) {
+          throw new Error("Data properti tidak valid.");
+        }
+
+        const userProperties = response.data.data.filter(
+          (property) => property.user_id === userId // Pastikan hanya properti milik user yang ditampilkan
+        );
+
+        setProperties(userProperties);
         setLoading(false);
       } catch (err) {
-        setError("Failed to fetch properties: " + err.message);
+        setError("Gagal mengambil properti: " + err.message);
         setLoading(false);
       }
     };
@@ -78,7 +95,7 @@ export default function Properties() {
               className="overflow-hidden bg-white rounded-lg shadow transition-all transform hover:scale-100 hover:shadow-lg"
             >
               <img
-                src={property.images[0]}
+                src={property.images[0] || "https://via.placeholder.com/150"}
                 alt={property.name}
                 className="object-cover w-full h-48 transition-all duration-300 ease-in-out transform hover:scale-110"
               />
@@ -86,7 +103,7 @@ export default function Properties() {
                 <h3 className="mb-2 text-lg font-bold truncate text-darkGreen">{property.name}</h3>
                 <p className="mb-4 text-sm text-gray-500">{property.gender_type}</p>
                 <p className="text-xs text-darkGreen mb-3">
-                {property.city}, {property.address}
+                  {property.city}, {property.address}
                 </p>
                 <div className="flex space-x-2">
                   <button
@@ -122,10 +139,11 @@ export default function Properties() {
                 <button
                   key={index}
                   onClick={() => paginate(pageNumber)}
-                  className={`w-10 h-10 flex items-center justify-center rounded-md ${pageNumber === currentPage
-                    ? 'bg-darkGreen text-white'
-                    : 'bg-white text-darkGreen border border-darkGreen'
-                    }`}
+                  className={`w-10 h-10 flex items-center justify-center rounded-md ${
+                    pageNumber === currentPage
+                      ? "bg-darkGreen text-white"
+                      : "bg-white text-darkGreen border border-darkGreen"
+                  }`}
                 >
                   {pageNumber}
                 </button>
