@@ -2,21 +2,22 @@ import React, { useState } from "react";
 import { IoMan, IoWoman } from "react-icons/io5";
 import { ImManWoman } from "react-icons/im";
 
-const PropertyDetails = ({ onChange }) => {
+const PropertyDetails = ({ onNameChange, onAddressChange, onKostTypeChange }) => {
   const [namaTempat, setNamaTempat] = useState("");
   const [alamatTempat, setAlamatTempat] = useState("");
   const [tipePenyewa, setTipePenyewa] = useState("");
 
   const handleInputChange = (field, value) => {
-    if (field === "namaTempat") setNamaTempat(value);
-    if (field === "alamatTempat") setAlamatTempat(value);
-    if (field === "tipePenyewa") setTipePenyewa(value);
-    
-    onChange({
-      namaTempat,
-      alamatTempat,
-      tipePenyewa,
-    });
+    if (field === "namaTempat") {
+      setNamaTempat(value);
+      onNameChange(value); 
+    } else if (field === "alamatTempat") {
+      setAlamatTempat(value);
+      onAddressChange(value); 
+    } else if (field === "tipePenyewa") {
+      setTipePenyewa(value);
+      onKostTypeChange(value); 
+    }
   };
 
   return (
@@ -34,7 +35,7 @@ const PropertyDetails = ({ onChange }) => {
               type="text"
               placeholder="Masukkan nama tempat"
               className="w-full md:w-4/5 border rounded-md p-2"
-              value= {namaTempat}
+              value={namaTempat}
               onChange={(e) => handleInputChange("namaTempat", e.target.value)}
             />
           </div>
