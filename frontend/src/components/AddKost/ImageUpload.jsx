@@ -1,35 +1,42 @@
 import React, { useState } from "react";
 
-const ImageUpload = () => {
+const ImageUpload = ({ onChange }) => {
   const [images, setImages] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
 
-    // Validasi jenis file
     const validFiles = files.filter((file) => file.type.startsWith("image/"));
     if (validFiles.length !== files.length) {
       setErrorMessage("Hanya file gambar yang diperbolehkan.");
       return;
     }
 
-    // Validasi jumlah file
-    const uploadedImages = validFiles.map((file) => URL.createObjectURL(file));
-    if (images.length + uploadedImages.length > 5) {
+    if (images.length + validFiles.length > 5) {
       setErrorMessage("Maksimal 5 foto dapat diunggah.");
       return;
     }
 
-    setErrorMessage(""); // Reset pesan kesalahan
-    setImages((prevImages) => [...prevImages, ...uploadedImages]);
+    setErrorMessage(""); 
+
+    const newImages = validFiles.map((file) => ({
+      file,
+      preview: URL.createObjectURL(file),
+    }));
+
+    setImages((prevImages) => {
+      const updatedImages = [...prevImages, ...newImages];
+      onChange(updatedImages.map((img) => img.file)); 
+      return updatedImages;
+    });
   };
 
   const handleRemoveImage = (index) => {
     setImages((prevImages) => {
-      const newImages = prevImages.filter((_, i) => i !== index);
-      URL.revokeObjectURL(prevImages[index]); // Revoke URL untuk membersihkan memori
-      return newImages;
+      const updatedImages = prevImages.filter((_, i) => i !== index);
+      URL.revokeObjectURL(prevImages[index].preview);
+      onChange(updatedImages.map((img) => img.file)); 
+      return updatedImages;
     });
   };
 
@@ -43,7 +50,10 @@ const ImageUpload = () => {
         {errorMessage && (
           <p className="text-red-600 text-sm mb-4">{errorMessage}</p>
         )}
-        <label htmlFor="file-upload" className="bg-gray-300 text-gray-700 py-2 px-4 rounded cursor-pointer mb-4">
+        <label
+          htmlFor="file-upload"
+          className="bg-gray-300 text-gray-700 py-2 px-4 rounded cursor-pointer mb-4"
+        >
           Choose File
         </label>
         <input
@@ -56,8 +66,15 @@ const ImageUpload = () => {
         />
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 w-full">
           {images.map((image, index) => (
-            <div key={index} className="relative border rounded-lg overflow-hidden">
-              <img src={image} alt={`Foto ${index + 1}`} className="w-full h-32 object-cover" />
+            <div
+              key={index}
+              className="relative border rounded-lg overflow-hidden"
+            >
+              <img
+                src={image.preview}
+                alt={`Foto ${index + 1}`}
+                className="w-full h-32 object-cover"
+              />
               <button
                 onClick={() => handleRemoveImage(index)}
                 className="absolute top-2 right-2 bg-red-600 text-white rounded-full p-1"

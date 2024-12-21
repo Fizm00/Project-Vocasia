@@ -1,27 +1,131 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Upload } from 'react-feather';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LayoutWithoutSidebar from '../components/LayoutWithoutSideBar';
+import UploadPhotoSection from '../components/Verification/UploadPhotoSection';
+import { getUserById, updateUser } from '../api/userApi';
 
-export default function Verification() {
+const Verification = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    identityType: 'KTP',
-    propertyName: '',
-    propertyAddress: ''
+    role: '',
   });
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const userId = localStorage.getItem('user_id');
+  const cleanedUserId = userId ? userId.replace(/"/g, '') : null;
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (!cleanedUserId) {
+        setError('User ID not found.');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const data = await getUserById(cleanedUserId);
+        if (data.success) {
+          console.log("userData", data.data);
+          setUserData(data.data);
+          setFormData((prevState) => ({
+            ...prevState,
+            role: data.data.role || 'user',
+          }));
+        } else {
+          setError('User not found.');
+        }
+        setLoading(false);
+      } catch (error) {
+        setError('Error fetching user data.');
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, [cleanedUserId]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
+  const handleRoleChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      role: e.target.value,
+    }));
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!cleanedUserId) {
+      setError('User ID is required.');
+      return;
+    }
+
+    try {
+      const updatedData = {
+        ...userData,
+        role: formData.role,
+      };
+
+      const response = await updateUser(cleanedUserId, updatedData);
+      if (response.success) {
+        localStorage.setItem('role', formData.role);
+        alert('Berhasil mendaftar sebagai pemilik kost!');
+        navigate('/dashboard');
+      } else {
+        setError('Failed to update role.');
+      }
+    } catch (error) {
+      console.error('Error updating user role:', error);
+      setError('Error updating user role.');
+    }
+  };
+
+  const handleImageUpload = async (file) => {
+    const formDataForUpload = new FormData();
+    formDataForUpload.append("photo", file);
+  
+    try {
+      const response = await updateUser(cleanedUserId, formDataForUpload, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+  
+      if (response.success) {
+        // alert('Photo uploaded successfully!');
+      } else {
+        alert('Failed to upload photo.');
+      }
+    } catch (error) {
+      console.error("Error uploading photo:", error);
+      alert('Error uploading photo.');
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <p>{error}</p>
+      </div>
+    );
+  }
 
   return (
     <LayoutWithoutSidebar>
@@ -42,19 +146,19 @@ export default function Verification() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium">Email</p>
-                <p className="text-sm text-gray-600">johndoe@example.com</p>
+                <p className="text-sm text-gray-600">{userData?.email || 'Email tidak tersedia'}</p>
               </div>
             </div>
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium">Nomor Handphone</p>
-                <p className="text-sm text-gray-600">+62 812-3456-7890</p>
+                <p className="text-sm text-gray-600">{userData?.phone || 'Nomor Handphone tidak tersedia'}</p>
               </div>
             </div>
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form className="space-y-8" onSubmit={handleSubmit}>
           <div className="p-6 bg-white rounded-lg shadow-sm">
             <h2 className="mb-4 text-lg font-bold">Verifikasi Identitas</h2>
             <div className="p-4 mb-4 rounded-md bg-blue-50">
@@ -64,34 +168,31 @@ export default function Verification() {
               </p>
             </div>
 
+            <div>
+              <label className="block mb-1 text-sm text-gray-600">Role</label>
+              <select
+                name="role"
+                value={formData.role}
+                onChange={handleRoleChange}
+                className="w-full p-2 bg-white border rounded-md"
+              >
+                <option value="user">User</option>
+                <option value="owner">Owner</option>
+              </select>
+            </div>
+
             <div className="space-y-4">
               <div>
                 <label className="block mb-1 text-sm text-gray-600">Jenis Identitas</label>
                 <select
                   name="identityType"
-                  value={formData.identityType}
-                  onChange={handleInputChange}
                   className="w-full p-2 bg-white border rounded-md"
                 >
                   <option value="KTP">KTP</option>
                 </select>
               </div>
 
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="p-4 text-center border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-50">
-                  <div className="flex flex-col items-center">
-                    <Upload className="w-8 h-8 mb-2 text-gray-400" />
-                    <p className="text-sm font-medium">Kartu Identitas</p>
-                  </div>
-                </div>
-
-                <div className="p-4 text-center border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-50">
-                  <div className="flex flex-col items-center">
-                    <Upload className="w-8 h-8 mb-2 text-gray-400" />
-                    <p className="text-sm font-medium">Foto diri dengan Kartu Identitas</p>
-                  </div>
-                </div>
-              </div>
+              <UploadPhotoSection onUpload={handleImageUpload} />
 
               <p className="text-xs text-center text-gray-500">
                 Dengan melanjutkan, saya menyetujui data yang diberikan ada di tangan dan merupakan IDENTITAS ASLI
@@ -107,3 +208,5 @@ export default function Verification() {
     </LayoutWithoutSidebar>
   );
 }
+
+export default Verification;  

@@ -103,7 +103,7 @@ const Register = () => {
           className="w-full h-full object-cover"
         />
       </div>
-      <div className="w-full md:w-1/2 flex flex-col justify-center items-center px-6 bg-white">
+      <div className="w-full mt-10 md:w-1/2 flex flex-col justify-center items-center px-6 bg-white">
         <motion.div
           className="w-full max-w-md"
           initial="hidden"
@@ -269,7 +269,7 @@ const Register = () => {
           </motion.form>
 
           <motion.div
-            className="text-sm font-medium text-gray-700 text-center mt-4"
+            className="text-sm font-medium text-gray-700 text-center mt-4 mb-10"
             variants={itemVariants}
           >
             Sudah punya akun?{" "}

@@ -22,4 +22,16 @@ export const getProperty = async () => {
   }
 };
 
-// export default getPropertyById;
+export const addProperty = async (formData) => {
+  try {
+    const response = await axiosInstance.post("/property", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data", 
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error saat menambahkan properti:", error.response?.data || error.message);
+    throw error.response?.data || error;
+  }
+};

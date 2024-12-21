@@ -129,7 +129,7 @@ const SuccessBook = () => {
                     <span className="font-medium text-gray-600">Dibayar pada</span>
                     <span>
                       {booking.start_date
-                        ? new Date(booking.start_date).toLocaleDateString("id-ID", {
+                        ? new Date(booking.createdAt).toLocaleDateString("id-ID", {
                             day: "2-digit",
                             month: "long",
                             year: "numeric",
