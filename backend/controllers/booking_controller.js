@@ -64,8 +64,25 @@ const createBooking = async (req, res) => {
   try {
     const { user_id, property_id, start_date, end_date } = req.body;
 
-    // Cari property berdasarkan property_id
+    if (!user_id || !property_id || !start_date || !end_date) {
+      return res.status(400).json({
+        status: "failed",
+        message: "Missing required fields , Please fill all fields",
+        success: false,
+      });
+    }
+
     const property = await Property.findById(property_id);
+    // cek stock property
+    if (property.stock <= 0) {
+      return res.status(400).json({
+        status: "failed",
+        message: "Stock is not available",
+        success: false,
+      });
+    }
+
+    // Cari property berdasarkan property_id
     if (!property) {
       return res.status(404).json({
         status: "failed",
@@ -82,14 +99,17 @@ const createBooking = async (req, res) => {
     );
 
     // Buat dokumen booking
-    const booking = await Booking.create({
-      user_id,
-      property_id,
-      start_date,
-      end_date,
-      total_price,
-      status: "pending", // Status awal pending
-    });
+    const [properties, booking] = await Promise.all([
+      Property.findById(property_id),
+      Booking.create({
+        user_id,
+        property_id,
+        start_date,
+        end_date,
+        total_price,
+        status: "pending", // Status awal pending
+      }),
+    ]);
 
     // Integrasi Midtrans
     const snap = new midtransClient.Snap({
@@ -97,12 +117,12 @@ const createBooking = async (req, res) => {
       serverKey: process.env.MIDTRANS_SERVER_KEY,
       clientKey: process.env.MIDTRANS_CLIENT_KEY,
     });
-
     const transactionParameter = {
       transaction_details: {
         order_id: "TRX-" + booking._id,
         gross_amount: total_price, // Total harga booking
       },
+
       customer_details: {
         name: req.body.name,
         email: req.body.email,
@@ -116,9 +136,13 @@ const createBooking = async (req, res) => {
     // Update booking dengan data pembayaran
     booking.payment = {
       status: "pending",
-      transaction_id: payment.token, // Token dari Midtrans
-      payment_method: payment.payment_type,
-      payment_date: payment.transaction_time,
+      transaction_id: payment.transaction_id, // Token dari Midtrans
+      payment_method: payment.payment_type, // Metode pembayaran
+      payment_date: new Date(), // Waktu pembayaran
+      order_id: "TRX-" + booking._id,
+      gross_amount: total_price,
+      transaction_status: payment.transaction_status,
+      fraud_status: payment.fraud_status,
     };
     await booking.save();
 
@@ -130,16 +154,9 @@ const createBooking = async (req, res) => {
       status: "success | Created",
       message: "Booking Created Successfully",
       success: true,
-      data: {
-        booking,
-        payment_url: payment.redirect_url, // URL untuk pembayaran
-        payment_token: payment.token,
-        payment_type: payment.payment_type,
-        payment_status: payment.transaction_status,
-        payment_date: payment.transaction_time,
-        payment_amount: payment.gross_amount,
-        payment_method: payment.payment_type,
-      },
+      payment_url: payment.redirect_url, // URL untuk pembayaran
+      payment_token: payment.token,
+      data: booking,
     });
   } catch (error) {
     res.status(400).json({
@@ -150,37 +167,19 @@ const createBooking = async (req, res) => {
   }
 };
 
-const handleMidtransNotification = async (req, res) => {
+const handleAfterBooking = async (req, res) => {
   try {
-    // Konfigurasi Midtrans
+    const { order_id, transaction_status, fraud_status } = req.body;
 
-    const coreApi = new midtransClient.CoreApi({
-      isProduction: false,
-      serverKey: process.env.MIDTRANS_SERVER_KEY,
-      clientKey: process.env.MIDTRANS_CLIENT_KEY,
-    });
-
-    // Dapatkan body notifikasi dari Midtrans
-    const notification = req.body;
-
-    // log notofikasi
-    console.log("Midtrans Notification Data:", notification);
-    if (!notification.order_id) {
-      return res.status(400).json({
-        status: "failed",
-        message: "Invalid notification: Missing order_id",
-        success: false,
-      });
-    }
-
-    // Verifikasi notifikasi dari Midtrans
-    const transactionStatus = notification.transaction_status;
-    const orderId = notification.order_id;
+    console.log(
+      `Transaction notification received. Order ID: ${order_id}. Transaction status: ${transaction_status}. Fraud status: ${fraud_status}`
+    );
 
     // Cari booking berdasarkan order_id
-    const bookingId = orderId.split("TRX-")[1];
-    const booking = await Booking.findById(bookingId);
+    const bookingId = order_id.split("TRX-")[1];
 
+    // Ambil booking berdasarkan order_id
+    const booking = await Booking.findById(bookingId);
     if (!booking) {
       return res.status(404).json({
         status: "failed",
@@ -189,21 +188,49 @@ const handleMidtransNotification = async (req, res) => {
       });
     }
 
-    // Update status pembayaran berdasarkan status transaksi
-    if (transactionStatus === "settlement") {
-      booking.payment.status = "paid";
-      booking.payment.payment_method = notification.payment_type; // Metode pembayaran
-      booking.payment.payment_date = new Date(); // Waktu pembayaran
-      booking.status = "confirmed"; // Ubah status booking
-      booking.status.payment = "confirmed";
-    } else if (transactionStatus === "expire") {
-      booking.payment.status = "failed";
-      booking.status = "cancelled";
-    } else if (transactionStatus === "cancel") {
-      booking.payment.status = "failed";
-      booking.status = "cancelled";
+    // Ambil properti yang dipesan
+    const property = await Property.findById(booking.property_id);
+    if (!property) {
+      return res.status(404).json({
+        status: "failed",
+        message: "Property not found",
+        success: false,
+      });
     }
 
+    // Logika berdasarkan transaction_status dan fraud_status
+    if (
+      transaction_status === "capture" ||
+      transaction_status === "settlement"
+    ) {
+      if (property.stock <= 0) {
+        return res.status(400).json({
+          status: "failed",
+          message: "Stock is unavailable, booking cannot be confirmed",
+          success: false,
+        });
+      }
+      // Kurangi stok properti dan simpan
+      property.stock -= 1;
+      await property.save();
+
+      booking.status = "confirmed";
+      booking.payment.status = "paid";
+      if (transaction_status === "capture" && fraud_status === "challenge") {
+        booking.status = "review";
+        booking.payment.status = "pending";
+      }
+    } else if (
+      transaction_status === "cancel" ||
+      transaction_status === "deny" ||
+      transaction_status === "expire"
+    ) {
+      booking.status = "cancelled";
+      booking.payment.status = "failed";
+    } else if (transaction_status === "pending") {
+      booking.status = "pending";
+      booking.payment.status = "pending";
+    }
     // Simpan perubahan di database
     await booking.save();
 
@@ -218,7 +245,7 @@ const handleMidtransNotification = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      status: "failed bro",
+      status: "failed",
       message: error.message,
       success: false,
     });
@@ -229,5 +256,5 @@ module.exports = {
   getBooking,
   getBookingById,
   createBooking,
-  handleMidtransNotification,
+  handleAfterBooking,
 };

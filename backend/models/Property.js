@@ -20,7 +20,7 @@ const propertySchema = new mongoose.Schema(
       required: true,
       enum: ["Kost", "Rumah", "Apartemen", "Villa"],
     },
-    stock: { type: Number, required: true },
+    stock: { type: Number, required: true, default: 0 },
     price: { type: Number, required: true },
     city: { type: String, required: true },
     address: { type: String, required: true },

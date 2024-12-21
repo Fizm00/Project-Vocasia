@@ -1,6 +1,7 @@
 const express = require("express");
 const booking_controller = require("../controllers/booking_controller");
 const authenticateJWT = require("../middleware/authenticateJWT");
+const verifyMidtransSignature = require("../middleware/verify_midtrans_signature");
 
 const router = express.Router();
 
@@ -9,9 +10,8 @@ router.get("/booking/:id", authenticateJWT, booking_controller.getBookingById);
 router.post("/booking", authenticateJWT, booking_controller.createBooking);
 router.post(
   "/midtrans-notification",
-  booking_controller.handleMidtransNotification
+  // verifyMidtransSignature,
+  booking_controller.handleAfterBooking
 );
-// router.put("/booking/:id", booking_controller.updateBookingById);
-// router.delete("/booking/:id", booking_controller.deleteBookingById);
 
 module.exports = router;

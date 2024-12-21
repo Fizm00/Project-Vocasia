@@ -12,12 +12,17 @@ const bookingSchema = new mongoose.Schema(
       ref: "Property",
       required: true,
     },
-    check_in_date: { type: Date, default: null }, // Tanggal check-in aktual
-    check_out_date: { type: Date, default: null }, // Tanggal check-out aktual
+    check_in_date: { type: Date, default: null },
+    check_out_date: { type: Date, default: null },
     start_date: { type: Date, required: true },
     end_date: { type: Date, required: true },
     total_price: { type: Number, required: true },
-    status: { type: String, required: true, default: "pending" }, // e.g., "pending", "confirmed", "cancelled"
+    status: {
+      type: String,
+      required: true,
+      enum: ["pending", "confirmed", "cancelled"],
+      default: "pending",
+    },
     payment: {
       status: {
         type: String,
@@ -27,6 +32,8 @@ const bookingSchema = new mongoose.Schema(
       transaction_id: { type: String }, // ID dari Midtrans
       payment_method: { type: String }, // e.g., "bank_transfer", "credit_card"
       payment_date: { type: Date },
+      order_id: { type: String },
+      gross_amount: { type: Number },
     },
   },
   {
