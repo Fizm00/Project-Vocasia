@@ -16,11 +16,11 @@ const PriceAndLocationSection = ({ price, location, onPriceChange, onLocationCha
         />
       </div>
       <div className="flex flex-col">
-        <label htmlFor="link-maps" className="mb-2 font-medium text-gray-700">Link Google Maps</label>
+        <label htmlFor="link-maps" className="mb-2 font-medium text-gray-700">Masukkan Kota</label>
         <input
           type="text"
           id="link-maps"
-          placeholder="https://www.google.com/maps/embed"
+          placeholder=""
           className="w-full border rounded p-3 focus:outline-none focus:ring-2 focus:ring-darkGreen"
           value={location} 
           onChange={onLocationChange}
