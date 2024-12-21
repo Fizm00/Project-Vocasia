@@ -36,12 +36,6 @@ const LoginPage = () => {
     if (name === "email" && !/\S+@\S+\.\S+/.test(value)) {
       errorMessage = "Email tidak valid.";
     }
-    // const passwordRegex = /^(?=.[A-Z])(?=.\d)[A-Za-z\d]{8,}$/;
-    // if (name === "password" && !passwordRegex.test(value)) {
-    //   errorMessage =
-    //     "Password harus minimal 8 karakter, mengandung satu huruf besar, dan satu angka.";
-    // }
-
     setErrors((prev) => ({ ...prev, [name]: errorMessage }));
   };
 
@@ -82,8 +76,14 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex h-screen">
-      <div className="w-1/2 flex flex-col justify-center items-center bg-white px-16">
+    <div className="flex flex-col md:flex-row h-screen">
+      <div
+        className="w-full md:w-1/2 h-64 md:h-full bg-cover bg-center"
+        style={{
+          backgroundImage: `url(${bgLogin})`,
+        }}
+      ></div>
+      <div className="w-full mt-10 md:w-1/2 flex flex-col justify-center items-center bg-white px-8 sm:px-16">
         <motion.div
           className="w-full max-w-md"
           initial="hidden"
@@ -229,12 +229,6 @@ const LoginPage = () => {
           </motion.div>
         </motion.div>
       </div>
-      <div
-        className="w-1/2 bg-cover bg-center"
-        style={{
-          backgroundImage: `url(${bgLogin})`,
-        }}
-      ></div>
     </div>
   );
 };
