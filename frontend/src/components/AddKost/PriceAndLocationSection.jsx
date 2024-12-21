@@ -5,7 +5,7 @@ const PriceAndLocationSection = ({ price, location, onPriceChange, onLocationCha
     <h2 className="text-lg font-bold mb-4">Masukkan Detail Harga dan Lokasi</h2>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div className="flex flex-col">
-        <label htmlFor="harga" className="mb-2 font-medium text-gray-700">Harga (Rp)</label>
+        <label htmlFor="harga" className="mb-2 font-medium text-gray-700">Harga Per Hari (Rp)</label>
         <input
           type="text"
           id="harga"

@@ -28,8 +28,8 @@ const FacilitiesSection = ({ onChange }) => {
 
   return (
     <div>
-      <h3 className="text-lg font-bold mb-4">Fasilitas</h3>
-      <div className="grid grid-cols-3 gap-4">
+      <h3 className="text-lg font-bold mt-12">Fasilitas</h3>
+      <div className="grid grid-cols-3 gap-4 mt-4 mb-12">
         {facilitiesData.map((facility) => (
           <div key={facility.key} className="flex items-center">
             <input
